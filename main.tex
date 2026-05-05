@@ -1,0 +1,58 @@
+\documentclass[sigconf]{webmedia}
+
+\settopmatter{printacmref=false, printfolios=false}
+
+\setevent{webmedia}
+\proceedingsDetails[WebMedia’2025]{Proceedings of the Brazilian Symposium on Multimedia and the Web}{2025}{Rio de Janeiro, Brazil} 
+\ISSN{2966-2753}
+
+\begin{document}
+
+\title{Classificação Automática da Dificuldade de Questões de Programação Utilizando Aprendizado de Máquina e LLMs}
+
+\author{Carlos Eduardo Pereira Oliveira - 116233}
+\email{carlos.oliveira1@ufv.br}
+\affiliation{
+  \institution{Universidade Federal de Viçosa}
+  \city{Viçosa}
+  \country{Brasil}
+}
+
+\author{Luis Felipe Martins Pereira - 112710}
+\email{luis.f.pereira@ufv.br}
+\affiliation{
+  \institution{Universidade Federal de Viçosa}
+  \city{Viçosa}
+  \country{Brasil}
+}
+\renewcommand{\shortauthors}{Oliveira e Pereira}
+
+\begin{abstract}
+Este trabalho propõe o desenvolvimento de um sistema para classificação automática da dificuldade de questões de programação em níveis fácil, médio e difícil. Serão utilizadas técnicas de aprendizado de máquina supervisionado e modelos de linguagem (LLMs) para analisar os enunciados textuais. O projeto também investiga o uso de LLMs como baseline, ferramenta de explicação e extração de características. A avaliação será realizada por meio de métricas como acurácia e F1-score.
+\end{abstract}
+
+\keywords{aprendizado de máquina, classificação de texto, LLMs, dificuldade de questões}
+
+\maketitle
+
+\section{Introdução}
+
+A classificação automática da dificuldade de questões de programação é um problema relevante em contextos educacionais, como plataformas de ensino e sistemas de recomendação de exercícios. A capacidade de estimar automaticamente o nível de dificuldade pode auxiliar tanto alunos quanto professores na organização do processo de aprendizagem.
+
+\section{Proposta do Projeto}
+
+O presente projeto tem como objetivo desenvolver um sistema capaz de predizer automaticamente o nível de dificuldade (fácil, médio ou difícil) de questões de programação a partir de seus enunciados textuais.
+
+A tarefa será tratada como um problema de classificação supervisionada. Será utilizada uma base de dados fornecida pelo professor, construída a partir de avaliações empíricas previamente realizadas por uma quantidade relevante de alunos, garantindo que as questões estejam classificadas quanto à dificuldade com base na percepção real dos discentes. O sistema deverá aprender padrões a partir desses dados e generalizar para novas questões não rotuladas.
+
+A principal pergunta que orienta o trabalho é: \textit{é possível inferir automaticamente o nível de dificuldade de uma questão de programação apenas a partir de seu enunciado textual?}
+
+Serão exploradas diferentes técnicas de aprendizado de máquina de famílias distintas, incluindo Regressão Logística, K-Nearest Neighbors (KNN), Support Vector Machines (SVM) e Random Forest. Essas abordagens foram escolhidas por representarem diferentes paradigmas de modelagem e permitirem comparação de desempenho em um mesmo cenário.
+
+Os enunciados serão transformados em representações numéricas utilizando técnicas de Processamento de Linguagem Natural, como TF-IDF e possivelmente embeddings semânticos.
+
+A avaliação dos modelos será realizada por meio de métricas como acurácia e F1-score, adequadas para problemas de classificação.
+
+A implementação do sistema e a condução dos experimentos utilizarão a linguagem Python, aproveitando o vasto ecossistema de bibliotecas de aprendizado de máquina e garantindo alta eficiência computacional. Além disso, Grandes Modelos de Linguagem (LLMs) serão aplicados em diferentes etapas estratégicas do projeto: (i) como baseline de classificação, permitindo comparação com os modelos tradicionais; (ii) para geração de explicações das classificações atribuídas; e (iii) para extração automática de características semânticas dos enunciados, como a identificação de conceitos relevantes (por exemplo, recursão e estruturas de dados). Para essas tarefas, o projeto avaliará a utilização de modelos proprietários de ponta (como o Gemini) ou alternativas robustas de código aberto (como a família LLaMA).
+
+\end{document}
