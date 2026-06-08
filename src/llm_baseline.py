@@ -1,0 +1,133 @@
+"""Etapa 4 — Baseline com LLM (Google Gemini).
+
+Classifica a dificuldade dos enunciados diretamente com o Gemini, em modo
+zero-shot ou few-shot, para comparar com os modelos de ML tradicionais.
+
+Pré-requisito: GEMINI_API_KEY no .env e (para o few-shot) dataset_limpo.csv.
+
+Uso:
+    python -m src.llm_baseline --n 30
+    python -m src.llm_baseline --n 30 --few-shot
+"""
+from __future__ import annotations
+
+import argparse
+import time
+import unicodedata
+
+import pandas as pd
+from sklearn.metrics import accuracy_score, classification_report, f1_score
+from tqdm import tqdm
+
+from . import config, data_utils, gemini_client
+
+SYSTEM = (
+    "Você é um juiz experiente de maratonas de programação competitiva. "
+    "Sua tarefa é estimar a dificuldade de questões a partir do enunciado."
+)
+
+
+def _normalize(label: str) -> str:
+    """Mapeia variações ('fácil', 'easy', 'hard'...) para o rótulo canônico."""
+    txt = unicodedata.normalize("NFKD", str(label).lower())
+    txt = "".join(c for c in txt if not unicodedata.combining(c)).strip()
+    mapa = {
+        "facil": "facil", "easy": "facil", "baixa": "facil", "simples": "facil",
+        "medio": "medio", "media": "medio", "medium": "medio", "moderada": "medio",
+        "dificil": "dificil", "hard": "dificil", "alta": "dificil", "complexa": "dificil",
+    }
+    if txt in mapa:
+        return mapa[txt]
+    for chave, valor in mapa.items():       # casamento parcial
+        if chave in txt:
+            return valor
+    return txt
+
+
+def _build_prompt(statement: str, examples: list[tuple[str, str]] | None = None) -> str:
+    partes: list[str] = []
+    if examples:
+        partes.append("Exemplos de referência (enunciado -> dificuldade):")
+        for texto, rotulo in examples:
+            partes.append(f'- "{texto[:400]}" -> {rotulo}')
+        partes.append("")
+    niveis = ", ".join(config.DIFFICULTY_LABELS)
+    partes.append(
+        f"Classifique a dificuldade do enunciado abaixo em exatamente um nível "
+        f"entre: {niveis}.\n"
+        'Responda APENAS em JSON, no formato: {"dificuldade": "<nivel>"}.\n\n'
+        f"Enunciado:\n{statement[:4000]}"
+    )
+    return "\n".join(partes)
+
+
+def classify_one(statement: str, examples: list[tuple[str, str]] | None = None) -> str:
+    """Classifica um único enunciado via Gemini e retorna o rótulo canônico."""
+    data = gemini_client.generate_json(_build_prompt(statement, examples), SYSTEM)
+    if isinstance(data, dict):
+        return _normalize(data.get("dificuldade", ""))
+    return _normalize(str(data))
+
+
+def few_shot_examples(df: pd.DataFrame, por_classe: int = 1) -> list[tuple[str, str]]:
+    """Sorteia exemplos rotulados (um ou mais por classe) para o few-shot."""
+    exemplos: list[tuple[str, str]] = []
+    for classe in config.DIFFICULTY_LABELS:
+        sub = df[df[config.LABEL_COL].astype(str).str.lower() == classe]
+        if len(sub):
+            amostra = sub.sample(min(por_classe, len(sub)), random_state=config.RANDOM_SEED)
+            for _, row in amostra.iterrows():
+                exemplos.append((str(row[config.TEXT_COL]), classe))
+    return exemplos
+
+
+def classify_series(textos, examples=None, sleep: float = 0.0) -> list[str]:
+    """Classifica uma sequência de enunciados (com barra de progresso)."""
+    preds: list[str] = []
+    for texto in tqdm(list(textos), desc="Gemini (baseline)"):
+        preds.append(classify_one(str(texto), examples))
+        if sleep:
+            time.sleep(sleep)
+    return preds
+
+
+def run(n: int = 30, few_shot: bool = False, sleep: float = 0.0) -> None:
+    config.require_api_key()
+    if not config.CLEAN_DATASET.exists():
+        raise FileNotFoundError(
+            "dataset_limpo.csv não encontrado. Rode antes: python -m src.preprocess"
+        )
+
+    df = pd.read_csv(config.CLEAN_DATASET)
+    _, df_test = data_utils.split_train_test(df)
+    amostra = df_test.sample(min(n, len(df_test)), random_state=config.RANDOM_SEED)
+
+    exemplos = few_shot_examples(df, por_classe=1) if few_shot else None
+    if exemplos:
+        print(f"Few-shot com {len(exemplos)} exemplo(s).")
+
+    preds = classify_series(amostra[config.TEXT_COL], exemplos, sleep=sleep)
+    amostra = amostra.copy()
+    amostra["pred_llm"] = preds
+    amostra.to_csv(config.LLM_BASELINE_PREDS, index=False)
+    print(f"\nPredições salvas em: {config.LLM_BASELINE_PREDS}")
+
+    if config.LABEL_COL in amostra.columns:
+        y_true = amostra[config.LABEL_COL].astype(str).str.lower()
+        acc = accuracy_score(y_true, preds)
+        f1 = f1_score(y_true, preds, average="macro")
+        print(f"\nAcurácia: {acc:.3f} | F1 macro: {f1:.3f}\n")
+        print(classification_report(y_true, preds, zero_division=0))
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Etapa 4 - Baseline de classificação com Gemini")
+    parser.add_argument("--n", type=int, default=30, help="qtd. de exemplos do teste")
+    parser.add_argument("--few-shot", action="store_true", help="inclui exemplos no prompt")
+    parser.add_argument("--sleep", type=float, default=0.0, help="pausa entre chamadas (s)")
+    args = parser.parse_args()
+    run(n=args.n, few_shot=args.few_shot, sleep=args.sleep)
+
+
+if __name__ == "__main__":
+    main()
