@@ -27,15 +27,49 @@ GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash").strip()
 # Caminhos
 # ----------------------------------------------------------------------------
 DATA_DIR = ROOT_DIR / "data"
-RAW_DIR = DATA_DIR / "raw"
-PROCESSED_DIR = DATA_DIR / "processed"
-MODELS_DIR = ROOT_DIR / "models"
 
-# Dados de origem entregues pelo professor (enunciados + avaliações dos alunos).
+# Pasta-container com TODAS as fontes de dados (uma subpasta por fonte:
+# INF110, Neps, SPOJ, OBI, ...). Os arquivos do professor ficam em
+# arquivos/INF110/.
 ARQUIVOS_DIR = ROOT_DIR / os.getenv("ARQUIVOS_DIR", "arquivos").strip()
-TXT_DIR = ARQUIVOS_DIR / "txt"                       # enunciados puros
-TXT_EXEMPLOS_DIR = ARQUIVOS_DIR / "txt_with_example"  # enunciados + casos de exemplo
-TEX_DIR = ARQUIVOS_DIR / "tex"                        # versão LaTeX (não usada no ML)
+
+# Fonte de dados ativa (subpasta de arquivos/). Troque DATASET no .env para
+# apontar o pipeline a outro banco de questões (ex.: Neps).
+DATASET = os.getenv("DATASET", "INF110").strip()
+DATASET_DIR = ARQUIVOS_DIR / DATASET
+
+# Formato da fonte ativa — como a Etapa 1 (src.ingest) lê os dados brutos:
+#   auto        -> detecta automaticamente (padrão)
+#   feedbacks   -> enunciados em txt/ + feedbacks_*.json (ex.: INF110)
+#   judge_json  -> um único JSON com a dificuldade já dada pelo juiz (ex.: Neps)
+DATASET_FORMAT = os.getenv("DATASET_FORMAT", "auto").strip().lower()
+
+# Fontes usadas pelo recomendador (lista separada por vírgula). O recomendador é
+# baseado em conteúdo (similaridade), então questões SEM rótulo (SPOJ, OBI) também
+# servem como candidatas. Vazio -> usa só a fonte ativa (DATASET). Cada fonte
+# listada precisa ter sido consolidada antes (data/raw/<fonte>/questoes.csv).
+RECOMMENDER_SOURCES = [
+    s.strip() for s in os.getenv("RECOMMENDER_SOURCES", "").split(",") if s.strip()
+]
+
+TXT_DIR = DATASET_DIR / "txt"                       # enunciados puros
+TXT_EXEMPLOS_DIR = DATASET_DIR / "txt_with_example"  # enunciados + casos de exemplo
+TEX_DIR = DATASET_DIR / "tex"                        # versão LaTeX (não usada no ML)
+
+# Saídas geradas, separadas por fonte ativa (data/raw/<DATASET>/, etc.), para
+# que processar uma fonte (ex.: Neps) não sobrescreva os artefatos de outra
+# (ex.: INF110). Todas as etapas usam estes caminhos via config.
+RAW_DIR = DATA_DIR / "raw" / DATASET
+PROCESSED_DIR = DATA_DIR / "processed" / DATASET
+MODELS_DIR = ROOT_DIR / "models" / DATASET
+
+
+def questoes_csv_for(dataset: str) -> Path:
+    """Caminho do questoes.csv consolidado de uma fonte qualquer (não só a ativa).
+
+    Útil ao recomendador, que pode combinar várias fontes num só catálogo.
+    """
+    return DATA_DIR / "raw" / dataset.strip() / "questoes.csv"
 
 # Usar a versão com exemplos (casos de teste) como texto do enunciado?
 USE_EXAMPLES = os.getenv("USE_EXAMPLES", "true").strip().lower() in {"1", "true", "sim", "yes"}
@@ -77,6 +111,21 @@ NOTA_PARA_ROTULO = {
     3: "medio",
     4: "dificil",
     5: "muito_dificil",
+}
+
+# Inverso: rótulo canônico -> nota inteira (1-5).
+ROTULO_PARA_NOTA = {rotulo: nota for nota, rotulo in NOTA_PARA_ROTULO.items()}
+
+# Fontes que já trazem a dificuldade rotulada pelo juiz (formato "judge_json"),
+# sem notas de alunos para agregar. Mapeia o rótulo do juiz para a escala
+# canônica de 5 níveis. Chaves normalizadas (minúsculas, sem acento) — o casamento
+# é feito por ingest._normalizar, então acentuação/caixa do JSON não importam.
+NEPS_DIFFICULTY_MAP = {
+    "super facil": "muito_facil",
+    "facil": "facil",
+    "medio": "medio",
+    "dificil": "dificil",
+    "super dificil": "muito_dificil",
 }
 
 # ----------------------------------------------------------------------------

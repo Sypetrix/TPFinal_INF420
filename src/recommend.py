@@ -1,26 +1,34 @@
-"""Recomendação personalizada de exercícios.
+"""Recomendação personalizada de exercícios (baseada em conteúdo).
 
-Recomenda novas questões com base no histórico do aluno (questões já
-resolvidas) e no nível de dificuldade desejado, usando filtragem baseada em
-conteúdo: o perfil do aluno é o centroide dos vetores TF-IDF das questões que
-ele resolveu, e recomendamos as questões não resolvidas mais similares.
+Recomenda novas questões a partir do histórico do aluno (questões já resolvidas)
+e, opcionalmente, do nível de dificuldade desejado: o perfil do aluno é o
+centroide dos vetores TF-IDF das questões que ele resolveu, e recomendamos as
+questões não resolvidas mais similares (similaridade do cosseno).
 
-Pré-requisito: rodar antes `python -m src.preprocess`.
+Por ser baseado em **conteúdo** (e não em rótulo), o recomendador combina várias
+fontes num só catálogo — inclusive as **não rotuladas** (SPOJ, OBI), que não
+servem ao classificador mas são candidatas válidas aqui. As fontes vêm de
+``config.RECOMMENDER_SOURCES`` (no ``.env``); vazio -> usa só a fonte ativa.
+O filtro por nível só se aplica às questões rotuladas (INF110, Neps).
+
+Pré-requisito: cada fonte usada precisa ter sido consolidada antes pela Etapa 1
+(``DATASET=<fonte> python -m src.ingest``).
 
 Uso (demonstração):
     python -m src.recommend
+    RECOMMENDER_SOURCES=INF110,Neps,SPOJ,OBI python -m src.recommend
 """
 from __future__ import annotations
 
 import argparse
 import unicodedata
 
-import joblib
 import numpy as np
 import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-from . import config
+from . import config, data_utils
 
 # Progressão sugerida de nível (para recomendar o "próximo passo").
 PROXIMO_NIVEL = {
@@ -38,16 +46,55 @@ def _norm_nivel(nivel: str) -> str:
 
 
 class RecomendadorConteudo:
-    """Recomendador baseado em conteúdo (TF-IDF + similaridade do cosseno)."""
+    """Recomendador baseado em conteúdo (TF-IDF + similaridade do cosseno).
 
-    def __init__(self) -> None:
-        if not config.CLEAN_DATASET.exists():
-            raise FileNotFoundError(
-                "dataset_limpo.csv não encontrado. Rode antes: python -m src.preprocess"
-            )
-        self.vectorizer = joblib.load(config.TFIDF_VECTORIZER)
-        self.df = pd.read_csv(config.CLEAN_DATASET).reset_index(drop=True)
-        self.X = self.vectorizer.transform(self.df["texto_limpo"].astype(str))
+    Combina as fontes em ``fontes`` (padrão: ``config.RECOMMENDER_SOURCES`` ou,
+    se vazio, só a fonte ativa) num catálogo único e ajusta um TF-IDF sobre todo
+    ele, de modo que questões de qualquer fonte possam ser recomendadas.
+    """
+
+    def __init__(
+        self,
+        fontes: list[str] | None = None,
+        max_features: int = 5000,
+        ngram_max: int = 2,
+        min_df: int = 2,
+    ) -> None:
+        self.fontes = fontes or config.RECOMMENDER_SOURCES or [config.DATASET]
+        self.df = self._carregar_catalogo(self.fontes)
+
+        # Mesma limpeza usada no pré-processamento, para consistência.
+        self.df["texto_limpo"] = self.df[config.TEXT_COL].astype(str).map(data_utils.clean_text)
+        self.df = self.df[self.df["texto_limpo"].str.len() > 0].reset_index(drop=True)
+
+        # TF-IDF ajustado sobre o catálogo combinado (vocabulário cobre todas as
+        # fontes). É independente do vetorizador do classificador.
+        self.vectorizer = TfidfVectorizer(
+            max_features=max_features, ngram_range=(1, ngram_max), min_df=min_df
+        )
+        self.X = self.vectorizer.fit_transform(self.df["texto_limpo"])
+
+    def _carregar_catalogo(self, fontes: list[str]) -> pd.DataFrame:
+        """Lê e concatena o questoes.csv de cada fonte, marcando a origem."""
+        partes: list[pd.DataFrame] = []
+        for fonte in fontes:
+            csv = config.questoes_csv_for(fonte)
+            if not csv.exists():
+                raise FileNotFoundError(
+                    f"Base da fonte '{fonte}' não encontrada em {csv}. "
+                    f"Rode antes: DATASET={fonte} python -m src.ingest"
+                )
+            df = pd.read_csv(csv)
+            if config.LABEL_COL not in df.columns:
+                df[config.LABEL_COL] = pd.NA
+            df = df[[config.ID_COL, config.TEXT_COL, config.LABEL_COL]].copy()
+            df["fonte"] = fonte
+            partes.append(df)
+            rotuladas = df[config.LABEL_COL].notna().sum()
+            print(f"[{fonte}] {len(df)} questões ({rotuladas} rotuladas)")
+        catalogo = pd.concat(partes, ignore_index=True)
+        print(f"Catálogo combinado: {len(catalogo)} questões de {len(fontes)} fonte(s)\n")
+        return catalogo
 
     def recomendar(
         self,
@@ -57,9 +104,9 @@ class RecomendadorConteudo:
     ) -> pd.DataFrame:
         """Recomenda até top_k questões não resolvidas.
 
-        resolvidos_idx : índices (linhas do dataset_limpo) já resolvidos pelo aluno.
-        nivel_alvo     : se informado, filtra recomendações por esse nível
-                         (ex.: 'medio'); caso contrário, considera todas.
+        resolvidos_idx : índices (linhas do catálogo) já resolvidos pelo aluno.
+        nivel_alvo     : se informado, filtra por esse nível (ex.: 'medio'); as
+                         questões sem rótulo (SPOJ/OBI) ficam de fora do filtro.
         """
         df = self.df.copy()
 
@@ -75,7 +122,7 @@ class RecomendadorConteudo:
             alvo = _norm_nivel(nivel_alvo)
             mask &= df[config.LABEL_COL].map(_norm_nivel) == alvo
 
-        colunas = [c for c in (config.ID_COL, config.TEXT_COL, config.LABEL_COL) if c in df.columns]
+        colunas = [c for c in (config.ID_COL, "fonte", config.TEXT_COL, config.LABEL_COL) if c in df.columns]
         colunas.append("similaridade")
         return (
             df[mask]
@@ -89,24 +136,43 @@ class RecomendadorConteudo:
         if not resolvidos_idx or config.LABEL_COL not in self.df.columns:
             return self.recomendar(resolvidos_idx, top_k=top_k)
         niveis = self.df.loc[resolvidos_idx, config.LABEL_COL].map(_norm_nivel)
+        niveis = niveis[niveis != "nan"]
         nivel_atual = niveis.mode().iloc[0] if len(niveis) else "facil"
         alvo = PROXIMO_NIVEL.get(nivel_atual, nivel_atual)
         print(f"Nível predominante do aluno: {nivel_atual} -> recomendando: {alvo}")
         return self.recomendar(resolvidos_idx, nivel_alvo=alvo, top_k=top_k)
 
 
+def _resumo_enunciado(texto: str, n: int = 80) -> str:
+    txt = " ".join(str(texto).split())
+    return txt[:n] + ("…" if len(txt) > n else "")
+
+
 def run(top_k: int = 5) -> None:
     rec = RecomendadorConteudo()
+    print(f"Fontes no catálogo: {', '.join(rec.fontes)}\n")
+
     # Demonstração: simula um aluno que resolveu algumas questões fáceis.
-    if config.LABEL_COL in rec.df.columns:
+    if config.LABEL_COL in rec.df.columns and rec.df[config.LABEL_COL].notna().any():
         faceis = rec.df[rec.df[config.LABEL_COL].map(_norm_nivel) == "facil"]
         resolvidos = faceis.sample(min(3, len(faceis)), random_state=config.RANDOM_SEED).index.tolist()
     else:
         resolvidos = rec.df.sample(min(3, len(rec.df)), random_state=config.RANDOM_SEED).index.tolist()
 
     print(f"Aluno (demo) resolveu os índices: {resolvidos}\n")
-    print(f"=== Recomendações (próximo nível, top {top_k}) ===")
-    print(rec.recomendar_proximo_nivel(resolvidos, top_k=top_k).to_string(index=False))
+
+    def _mostrar(df: pd.DataFrame) -> None:
+        if config.TEXT_COL in df.columns:
+            df = df.assign(**{config.TEXT_COL: df[config.TEXT_COL].map(_resumo_enunciado)})
+        print(df.to_string(index=False))
+
+    print(f"=== Recomendações por nível (próximo passo, top {top_k}) ===")
+    _mostrar(rec.recomendar_proximo_nivel(resolvidos, top_k=top_k))
+
+    # Sem filtro de nível: percorre todo o catálogo, então questões sem rótulo
+    # (SPOJ, OBI) também podem aparecer.
+    print(f"\n=== Recomendações por conteúdo (qualquer fonte, top {top_k}) ===")
+    _mostrar(rec.recomendar(resolvidos, top_k=top_k))
 
 
 def main() -> None:

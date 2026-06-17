@@ -27,24 +27,37 @@ cp .env.example .env             # depois edite o .env
 #   -> coloque sua chave em GEMINI_API_KEY (https://aistudio.google.com/app/apikey)
 ```
 
-> Os dados originais ficam em **`arquivos/`** (entregues pelo professor):
-> enunciados em `arquivos/txt/` e `arquivos/txt_with_example/` e as avaliações
-> dos alunos em `arquivos/feedbacks_<ano>.json`. A **Etapa 1** (`src.ingest`)
-> consolida tudo em `data/raw/questoes.csv` automaticamente.
+> Os dados originais ficam em **`arquivos/`**, organizada por **fonte** (uma
+> subpasta cada: `INF110/`, `Neps/`, `SPOJ/`, `OBI/`). Cada fonte segue um de
+> dois formatos: **`feedbacks`** — enunciados em `txt/`/`txt_with_example/` +
+> avaliações dos alunos em `feedbacks_<ano>.json` (ex.: `INF110`) — ou
+> **`judge_json`** — um único JSON com a dificuldade já dada pelo juiz (ex.:
+> `Neps`). A fonte ativa é definida por `DATASET` no `.env` (padrão `INF110`) e a
+> **Etapa 1** (`src.ingest`) detecta o formato e consolida tudo em
+> `data/raw/<DATASET>/questoes.csv` automaticamente. *Obs.: `SPOJ` e `OBI` não
+> têm dificuldade rotulada (ficam fora do classificador), mas são consolidados e
+> entram no **recomendador por conteúdo** — ver §5.*
 
 ## 2. Estrutura do projeto
 
 ```
 TP_Final_INF420/
-├── arquivos/           # dados originais do professor
-│   ├── txt/                # enunciado puro (exercise_<id>.txt)
-│   ├── txt_with_example/   # enunciado + casos de exemplo
-│   ├── tex/                # versão LaTeX (não usada no ML)
-│   └── feedbacks_*.json    # avaliações dos alunos (nota 1-5 por questão)
-├── data/
-│   ├── raw/            # questoes.csv consolidado (gerado pela Etapa 1)
-│   └── processed/      # saídas do pré-processamento (geradas)
-├── models/             # vetorizador e modelos treinados (gerados)
+├── arquivos/           # dados originais, uma subpasta por fonte
+│   ├── INF110/             # formato 'feedbacks' (DATASET=INF110, padrão)
+│   │   ├── txt/                # enunciado puro (exercise_<id>.txt)
+│   │   ├── txt_with_example/   # enunciado + casos de exemplo
+│   │   ├── tex/                # versão LaTeX (não usada no ML)
+│   │   └── feedbacks_*.json    # avaliações dos alunos (nota 1-5 por questão)
+│   ├── Neps/               # formato 'judge_json' (dificuldade dada pelo juiz)
+│   │   └── Neps_Academy_complete.json
+│   ├── SPOJ/               # 'judge_json' sem rótulo — só no recomendador
+│   │   └── SPOJ-BR_complete.json
+│   └── OBI/                # 'judge_json' sem rótulo — só no recomendador
+│       └── OBI_complete.json
+├── data/                   # saídas separadas por fonte: <DATASET>/
+│   ├── raw/<DATASET>/      # questoes.csv consolidado (gerado pela Etapa 1)
+│   └── processed/<DATASET>/# saídas do pré-processamento (geradas)
+├── models/<DATASET>/   # vetorizador e modelos treinados (gerados)
 ├── notebook/
 │   └── exploracao.ipynb  # Análise Exploratória (EDA)
 ├── src/
@@ -68,7 +81,7 @@ TP_Final_INF420/
 
 | Etapa | O que faz | Como rodar |
 |------:|-----------|------------|
-| 1. Ingestão | Lê `arquivos/` (enunciados + feedbacks) → `questoes.csv` | `python -m src.ingest` |
+| 1. Ingestão | Lê `arquivos/INF110/` (enunciados + feedbacks) → `questoes.csv` | `python -m src.ingest` |
 | 1b. EDA | Distribuição das classes, tamanho dos enunciados | abrir `notebook/exploracao.ipynb` |
 | 2. Pré-processamento | Limpeza de texto + vetorização TF-IDF | `python -m src.preprocess` |
 | 3. Modelos tradicionais | LogReg, KNN, SVM, Random Forest (F1-score) | `python -m src.train_ml` |
@@ -76,7 +89,7 @@ TP_Final_INF420/
 | 5. LLM extrator de features | Gemini identifica conceitos (DP, grafos…) | `python -m src.llm_features` |
 | 6. LLM explicador | Gera justificativas das classificações | `python -m src.llm_explain --n 5` |
 | 7. Avaliação final | Compara ML puro vs LLM vs ML+features LLM | `python -m src.evaluate --n 40` |
-| ➕ Recomendação | Sugere próximos exercícios ao aluno | `python -m src.recommend` |
+| ➕ Recomendação | Sugere exercícios ao aluno (catálogo multi-fonte, §5) | `python -m src.recommend` |
 
 > **Etapa 1 automática:** rodar a Etapa 2 (`src.preprocess`) já dispara a Etapa 1
 > sozinha se `data/raw/questoes.csv` ainda não existir — então o mínimo para
@@ -92,37 +105,76 @@ TP_Final_INF420/
 
 ## 4. Como os dados são consolidados (Etapa 1)
 
-Cada questão tem um `id` (do nome `exercise_<id>.txt`). O texto vem de
-`txt_with_example/` (configurável em `USE_EXAMPLES`) e o **rótulo** é derivado das
-notas 1–5 que os alunos deram nos `feedbacks_*.json`. São **5 níveis**, casando
-diretamente com a escala de avaliação:
+A fonte ativa é escolhida por `DATASET` no `.env`; a Etapa 1 detecta o formato
+(ou use `DATASET_FORMAT` para forçar) e gera `data/raw/<DATASET>/questoes.csv`.
+Em ambos os formatos, são **5 níveis** na escala canônica:
 
-| Nota (1–5) | Rótulo |
-|------------|--------|
-| 1 | `muito_facil` |
-| 2 | `facil` |
-| 3 | `medio` |
-| 4 | `dificil` |
-| 5 | `muito_dificil` |
+| Nota | Rótulo | Neps (juiz) |
+|------|--------|-------------|
+| 1 | `muito_facil`   | Super Fácil   |
+| 2 | `facil`         | Fácil         |
+| 3 | `medio`         | Médio         |
+| 4 | `dificil`       | Difícil       |
+| 5 | `muito_dificil` | Super Difícil |
 
-A nota da questão é a **média aritmética das avaliações arredondada ao inteiro
-mais próximo** (`LABEL_STRATEGY=media`, padrão; `moda` também disponível). A média
-evita classificações falsas em casos bimodais — ex.: 21 alunos votam 1 e 20 votam
-5, a média ≈ 3 classifica como `medio`. Das 138 questões, **80 têm avaliações**
-(usadas no treino/avaliação supervisionados) e as **58 sem avaliação** entram
-apenas no recomendador (similaridade de conteúdo, que não exige rótulo).
+**Formato `feedbacks` (ex.: INF110).** Cada questão tem um `id` (do nome
+`exercise_<id>.txt`); o texto vem de `txt_with_example/` (ou `txt/`, conforme
+`USE_EXAMPLES`) e o **rótulo** é derivado das notas 1–5 dos alunos em
+`feedbacks_*.json`. A nota da questão é a **média aritmética das avaliações
+arredondada ao inteiro mais próximo** (`LABEL_STRATEGY=media`, padrão; `moda`
+também disponível) — a média evita classificações falsas em casos bimodais (ex.:
+21 alunos votam 1 e 20 votam 5 → média ≈ 3 → `medio`). Das 138 questões do
+INF110, **80 têm avaliações** (treino/avaliação supervisionados) e as **58 sem
+avaliação** entram apenas no recomendador.
 
-A base consolidada `data/raw/questoes.csv` tem as colunas:
+**Formato `judge_json` (ex.: Neps Academy).** A fonte é um único JSON em que cada
+questão já traz a dificuldade **atribuída pelo juiz** (`metadata.Difficulty`, em
+português); o texto vem de `Problem_Description` + `Input`/`Output` (+ `Test_Case`
+quando `USE_EXAMPLES`). Não há notas de alunos para agregar — o rótulo do juiz é
+mapeado direto pela coluna acima. Das **1448 questões do Neps**, 1333 têm
+dificuldade rotulada e 115 ficam sem rótulo (só no recomendador).
+
+A base consolidada `data/raw/<DATASET>/questoes.csv` tem as colunas:
 
 | Coluna (.env) | Padrão | Descrição |
 |---------------|--------|-----------|
 | `TEXT_COL`  | `enunciado`   | texto do enunciado da questão |
 | `LABEL_COL` | `dificuldade` | um dos 5 níveis (`muito_facil`…`muito_dificil`) ou vazio |
 | `ID_COL`    | `id`          | identificador da questão |
-| —           | `n_avaliacoes` | nº de avaliações de alunos |
-| —           | `media_dificuldade` / `moda_dificuldade` | estatísticas das notas |
+| —           | `n_avaliacoes` | nº de avaliações de alunos (`feedbacks`); `1`/`0` no `judge_json` |
+| —           | `media_dificuldade` / `moda_dificuldade` | estatísticas das notas (no `judge_json`, o próprio nível) |
 
 > **Não apague a pasta `arquivos/`** — ela é a fonte dos dados. Tudo em
 > `data/raw/` e `data/processed/` é **gerado a partir dela** e não é versionado
 > (`.gitignore`); se apagar `arquivos/`, não será possível regenerar a base nem
 > trocar `USE_EXAMPLES` / `LABEL_STRATEGY`.
+
+> **Adicionar uma nova fonte:** crie `arquivos/<Nome>/`, aponte `DATASET=<Nome>`
+> no `.env` e rode a Etapa 1 (`python -m src.ingest`). Se for formato `feedbacks`,
+> use a estrutura `txt/`, `txt_with_example/` e `feedbacks_*.json`; se for
+> `judge_json`, basta um JSON com `ID`, `Problem_Description` e
+> `metadata.Difficulty` por questão. O formato é detectado sozinho (ou force em
+> `DATASET_FORMAT`). Ex.: `DATASET=Neps python -m src.ingest`.
+
+## 5. Recomendador (catálogo multi-fonte)
+
+O recomendador (`src.recommend`) é **baseado em conteúdo**: representa cada
+questão por seu vetor TF-IDF, modela o aluno como o centroide das questões que
+ele já resolveu e sugere as não resolvidas mais similares (similaridade do
+cosseno), opcionalmente filtrando pelo **próximo nível** de dificuldade.
+
+Como ele não depende de rótulo, **combina várias fontes num só catálogo** —
+inclusive as **não rotuladas** (`SPOJ`, `OBI`), que não servem ao classificador
+mas são candidatas válidas aqui. As fontes vêm de `RECOMMENDER_SOURCES` no `.env`
+(separadas por vírgula; vazio = só a fonte ativa). O padrão já combina as quatro:
+
+```bash
+RECOMMENDER_SOURCES=INF110,Neps,SPOJ,OBI    # no .env
+python -m src.recommend
+```
+
+Cada fonte listada precisa ter sido consolidada antes
+(`DATASET=<fonte> python -m src.ingest`). O filtro por nível só se aplica às
+questões rotuladas; a recomendação por conteúdo puro percorre todo o catálogo
+(e aí `SPOJ`/`OBI` também aparecem). O TF-IDF do recomendador é ajustado sobre o
+catálogo combinado, independente do vetorizador do classificador.
