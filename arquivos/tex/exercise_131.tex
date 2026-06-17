@@ -1,0 +1,90 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Vendas do funcionário do mês}{vendas}{2}
+
+Uma empresa tem uma tabela com o relatório das vendas de cada funcionário em cada dia do mês.
+Por exemplo, a seguinte tabela mostra as vendas dos $3$ funcionários em $4$ dias.
+
+\begin{center}
+\begin{tabular}{cc|ccc|}
+    & & \multicolumn{3}{c|}{Funcionário} \\ %\cline{3-5}
+    & & 1 & 2 & 3 \\ \hline
+    \multirow{4}{*}{\rotatebox{90}{Dia}}
+    & 1 & \cellcolor{gray!20}10 & \cellcolor{gray!20}5  & \cellcolor{gray!20}7  \\
+    & 2 & \cellcolor{gray!20}20 & \cellcolor{gray!20}8  & \cellcolor{gray!20}11 \\
+    & 3 & \cellcolor{gray!20}14 & \cellcolor{gray!20}7  & \cellcolor{gray!20}12 \\
+    & 4 & \cellcolor{gray!20}13 & \cellcolor{gray!20}18 & \cellcolor{gray!20}15 \\ \hline
+    \multicolumn{2}{c|}{Total} & 57 & 38 & 45
+\end{tabular}
+\end{center}
+
+A empresa planeja premiar o ``funcionário do mês'', que é o que efetuou maior total de vendas no mês.
+Como primeiro passo, ela quer saber apenas as vendas do funcionário do mês. No exemplo acima, $57$.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A primeira linha contém dois inteiros, $D$ e $F$, que são o número de dias e de funcionários que constam no relatório.
+Em seguida existem $D$ linhas, uma para cada dia. Cada uma delas contém $F$ inteiros, indicando o total de vendas de cada funcionário naquele dia.
+
+Restrições:
+$2 \leq D \leq 30$
+e $2 \leq F \leq 20$.
+
+\OutputFile
+
+Seu programa deve informar a maior venda total feita por um funcionário.
+
+%\Notes
+
+\Example
+
+\begin{example}
+\exmp{
+4 3
+10 5 7
+20 8 11
+14 7 12
+13 18 15
+}{
+57
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+3 3
+10 20 30
+40 50 60
+70 80 90
+}{
+180
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+2 4
+7 10 4 5
+5 4 8 9
+}{
+14
+}%
+\end{example}
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

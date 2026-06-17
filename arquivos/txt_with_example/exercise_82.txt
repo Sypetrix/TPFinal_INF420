@@ -1,0 +1,13 @@
+Número Primo
+Um número natural N > 1 é um número primo se ele é divisível apenas por 1 e por N.
+Faça um programa que verifica se um dado número é primo.
+Entrada:
+A entrada contém um único valor inteiro N. Restrições: 1 < N ≤ 1000.
+Saída:
+Seu programa deve escrever apenas uma linha na saída, contendo o texto “” caso N seja primo ou o texto “” caso contrário.
+Atenção ao ponto final e à ausência de acentuação.
+Exemplos:
+3
+Primo.
+33
+Nao primo.

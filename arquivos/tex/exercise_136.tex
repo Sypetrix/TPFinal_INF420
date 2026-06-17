@@ -1,0 +1,76 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Candy Crush}{frutas}{2}
+
+Candy Crush é um jogo popular em que se deve trocar doces vizinhos para formar fileiras de três ou mais doces iguais.
+Assim, quando há dois doces iguais um ao lado do outro, é interessante colocar mais um igual na fileira para eliminá-los.
+
+Nesse exercício você deve apenas identificar e contar quantos doces têm um vizinho igual,
+considerando como vizinhos os que estão imediatamente acima, abaixo, à esquerda ou à direita.
+
+A figura abaixo mostra uma versão com frutas. As 10 frutas destacadas são as que têm vizinha igual.
+
+\begin{center}
+\hfill
+\includegraphics[scale=0.325]{figuras/frutas.png}
+\hfill
+\includegraphics[scale=0.325]{figuras/frutas2.png}
+\hfill{ }
+\end{center}
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada começa com dois inteiros, $M$ e $N$, indicando respectivamente o número de linhas e colunas do tabuleiro.
+Em seguida virão $M$ linhas, cada uma com $N$ números inteiros entre 0 e 9, representando as diferentes frutas do jogo.
+Restrições: $1 \leq M, N \leq 100$.
+
+\OutputFile
+
+Seu programa deve escrever o número de frutas com pelo menos uma vizinha igual.
+
+%\Notes
+
+\Example
+
+\begin{example}
+\exmp{
+5 5
+4 2 2 2 3
+0 9 7 6 5
+0 4 4 7 8
+3 5 7 1 1
+7 3 8 1 5
+}{
+10
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+4 4
+1 1 1 2
+2 3 1 1
+2 1 2 2
+1 1 1 1
+}{
+14
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+O primeiro exemplo corresponde ao da imagem mostrada no enunciado (maçã = 4, banana = 2, ...).
+
+\end{problem}
+
+\end{document}

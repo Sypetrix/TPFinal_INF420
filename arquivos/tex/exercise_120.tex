@@ -1,0 +1,89 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{wrapfig}
+\usepackage{olymp}
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{l33t}{l33t}{2}
+
+\begingroup
+\setlength{\intextsep}{0pt}%
+%\setlength{\columnsep}{0pt}
+
+O \textit{Leet} (também chamado de \textit{l33t} ou $1337$) é uma forma de escrita criada na internet em que letras são substituídas por números e símbolos visualmente semelhantes.
+Por exemplo, o número $4$ pode representar a letra `\texttt{A}', $3$ o `\texttt{E}', $1$ o `\texttt{I}' ou `\texttt{L}', e $0$ o `\texttt{O}'.
+
+Essa técnica surgiu nas primeiras comunidades online, especialmente entre hackers e entusiastas de tecnologia,
+para evitar filtros automáticos, criar uma linguagem interna de grupo e demonstrar conhecimento técnico (já que ``elite'' virou ``leet'' e depois ``1337'' (similar a \texttt{LEET} de cabeça para baixo).
+Com o tempo, passou a ser usada também em jogos online, apelidos e memes, muitas vezes de forma irônica ou estilizada.
+
+Hoje, o \textit{leet} é mais um elemento cultural da internet do que uma necessidade prática, mas ainda aparece em nomes de usuário, desafios e exercícios de programação.
+
+Nesta questão, considere somente as seguintes substituições, que são as mais comuns:
+
+\begin{itemize}
+\item `\texttt{E}' $\Rightarrow 3$
+\item `\texttt{A}' $\Rightarrow 4$
+\item `\texttt{I}' $\Rightarrow 1$
+\item `\texttt{O}' $\Rightarrow 0$
+\item `\texttt{S}' $\Rightarrow 5$
+\item `\texttt{T}' $\Rightarrow 7$
+\item `\texttt{L}' $\Rightarrow 1$
+\item `\texttt{B}' $\Rightarrow 8$
+\item `\texttt{G}' $\Rightarrow 6$
+\item `\texttt{Z}' $\Rightarrow 2$
+\end{itemize}
+
+% \Notes
+
+\InputFile
+
+A entrada começa com um linha contendo um número inteiro $N$, seguida por $N$ palavras, uma em cada linha.
+
+Restrições: $1 \leq N \leq 10$; as palavras contém apenas letras maiúsculas e nenhuma possui mais de $10$ caracteres.
+
+\endgroup
+
+\OutputFile
+
+Para cada palavra da entrada, seu programa deve escrever a correspondente após as substituições.
+
+% \Notes
+
+\Example
+
+\begin{example}
+\exmp{
+2
+HACKER
+BRASIL
+}{
+H4CK3R
+8R4511
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+3
+GOOGLE
+PASSWORD
+UFV
+}{
+600613
+P455W0RD
+UFV
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

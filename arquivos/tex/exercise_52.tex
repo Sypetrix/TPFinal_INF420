@@ -1,0 +1,122 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{5}
+
+\begin{document}
+
+\begin{problem}{Trilha na praça}{trilha}{2}
+
+\small
+Carlinhos é um garoto sortudo! Seu avô adora fazer trilhas na praça para ele brincar. Essas trilhas são marcadas por setas no chão, que Carlinhos deve seguir até sair da praça. Um exemplo de trilha feita por seu avô é mostrada abaixo. Começando no canto superior esquerdo, Carlinhos sai da praça após dar 7 passos (veja o caminho seguido por Carlinhos na figura da direita).
+
+\hfill \includegraphics[scale=0.5]{images/exercise_52_0.png} \hfill \includegraphics[scale=0.5]{images/exercise_52_1.png} \hfill{}
+
+Algumas trilhas são bem legais, como as das figuras abaixo, em que Carlinhos percorre a praça toda!
+
+\hfill \includegraphics[scale=0.5]{images/exercise_52_2.png} \hfill \includegraphics[scale=0.5]{images/exercise_52_3.png} \hfill{}
+
+Mas quando seu avô está cansado, ele faz uma armadilha... Note que nas trilhas abaixo Carlinhos não sai da praça. Como ele é criança, continua seguindo as setas, sem perceber que está preso na praça.
+
+\hfill \includegraphics[scale=0.5]{images/exercise_52_4.png} \hfill \includegraphics[scale=0.5]{images/exercise_52_5.png} \hfill{}
+
+Ajude Carlinhos a perceber se ele está entrando numa armadilha!
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada começa com uma linha contendo dois inteiros $N$ e $M$, a dimensão da praça. A seguir existem $N$ linhas, cada uma com $M$ caracteres cada. Os caracteres podem ser '\texttt{>}', '\texttt{<}', '\texttt{V}' ou '\texttt{A}', que indicam respectivamente setas para direita, para esquerda, para baixo e para cima.
+Restrições: $1 \leq N, M \leq 100$.
+
+\OutputFile
+
+Seu programa deve escrever o número de passos que Carlinhos dará até sair da praça, ou '\texttt{armadilha}' caso ele fique preso na praça. Ele sempre começa a trilha no canto superior esquerdo da praça.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+3 5
+>>V<>
+V<>>A
+VA<A>
+}{
+7
+}%
+\end{example}
+
+Este exemplo corresponde à primeira trilha mostrada no enunciado.
+
+\begin{example}
+\exmp{
+3 5
+>>>>V
+V<<<<
+>>>>>
+}{
+15
+}%
+\end{example}
+
+Este exemplo corresponde a uma das trilhas bem legais mostradas no enunciado.
+
+
+\vspace{30pt}
+
+\begin{example}
+\exmp{
+2 4
+<>>>
+A<<<
+}{
+1
+}%
+\end{example}
+
+Uma trilha bem chata, pois Carlinhos já sai da praça no primeiro passo.
+
+
+\vspace{30pt}
+
+\begin{example}
+\exmp{
+3 5
+>>V>A
+VA<><
+>>>>A
+}{
+armadilha
+}%
+\end{example}
+
+A última trilha mostrada no enunciado.
+
+
+\vspace{30pt}
+
+\begin{example}
+\exmp{
+3 3
+>>V
+A<V
+A<<
+}{
+armadilha
+}%
+\end{example}
+
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

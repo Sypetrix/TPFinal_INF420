@@ -1,0 +1,10 @@
+Perímetro e área do lote
+José comprou um lote retangular e agora precisa estimar os gastos para cercar e limpar seu lote.
+Para murá-lo, ele precisa saber o perímetro. Para capiná-lo, precisa saber a área.
+Ajude José com um programa que calcula o perímetro e a área, dados o comprimento e a largura do lote.
+Por exemplo, se o lote tem 20 de largura e 30 de comprimento, seu perímetro é 20+20+30+30 = 100 e sua área é 20 × 30 = 600
+Entrada:
+A entrada contém apenas uma linha, com dois valores inteiros, o comprimento C e a largura L do lote.
+Restrições: 1 ≤ C, L ≤ 1000.
+Saída:
+Escreva uma linha contendo o perímetro e a área do lote.

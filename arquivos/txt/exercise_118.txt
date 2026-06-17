@@ -1,0 +1,11 @@
+Contagem regressiva
+    Astronautas da missão Artemis II
+Após vários adiamentos, está previsto para esta quarta-feira, 1º de abril, o lançamento do primeiro voo tripulado do Programa Artemis, da NASA.
+A missão Artemis II deve partir rumo à Lua com quatro astronautas. É a primeira missão tripulada à Lua em mais de 50 anos!
+Não está previsto pouso na Lua, apenas um sobrevoo ao seu redor, seguido do retorno à Terra, mas a NASA planeja transmitir a missão ao vivo e, assim, todos poderão acompanhar a contagem regressiva final do lançamento.
+Faça um programa para escrever esta contagem final. Tradicionalmente, são 10 segundos de contagem final, mas seu programa deve estar preparado para ler um valor inicial qualquer e depois escrever a contagem a partir dele.
+Entrada:
+A entrada contém apenas um número natural, N, que indica a partida da contagem.
+Restrições: 1 ≤ N ≤ 100.
+Saída:
+Escreva uma linha na saída, com a contagem de N até 0. Os valores devem ser separados por espaço em branco, mas não deve haver espaço em branco após o 0, apenas quebra de linha.

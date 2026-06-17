@@ -1,0 +1,96 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{2}
+
+\begin{document}
+
+\begin{problem}{Siglas [2]}{siglas2}{2}
+ 
+Um acrônimo, ou mais comumente conhecido como sigla, é uma abreviação formada pelos componentes iniciais de uma palavra ou de uma frase. Estes componentes podem ser letras individuais, como em UFV (\underline{\textbf{U}}niversidade \underline{\textbf{F}}ederal
+de \underline{\textbf{V}}içosa), ou partes iniciais das palavras, como em ANVISA (\underline{\textbf{A}}gência \underline{\textbf{N}}acional de \underline{\textbf{Vi}}gilância \underline{\textbf{Sa}}nitária).
+
+Na verdade, não existe um padrão muito rígido para a formação de siglas, e existem siglas que contém partes das palavras que não estão necessariamente no início delas, como em DPI (\underline{\textbf{D}}e\underline{\textbf{p}}artamento de \underline{\textbf{I}}nformática) ou em CCP (\underline{\textbf{C}}iência da \underline{\textbf{C}}om\underline{\textbf{p}}utação).
+
+Algumas siglas parecem até não fazer sentido, como SAPIENS (Sistema de Apoio
+ao Ensino), mas após uma análise é possível perceber que todas as letras
+utilizadas na sigla estão presentes na frase original, e na ordem utilizada (\underline{\textbf{S}}istema
+de \underline{\textbf{Ap}}o\underline{\textbf{i}}o ao \underline{\textbf{Ens}}ino). Mas existem ainda outras que realmente não fazem sentido, já que não é possível encontrar todas as letras da sigla na frase original, na
+mesma ordem. Vários exemplos podem ser encontrados na lista de códigos dos
+aeroportos, como BSB (Brasília - DF) e VIX (Vitória – ES).
+
+Faça um programa que, dada uma ou mais palavras e uma sigla correspondente,
+determine se aquela sigla faz sentido ou não. Para que uma sigla faça sentido, é
+necessário que todas as letras dela estejam presentes na frase original, na
+mesma ordem.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém duas linhas. A primeira linha contém uma única palavra, indicando a sigla utilizada, e a segunda contém uma ou mais palavras, indicando a frase original. Todas as letras da entrada são letras maiúsculas, e as palavras da frase são separadas por espaços. Cada linha da entrada terá no máximo 200
+caracteres.
+
+\OutputFile
+
+Seu programa deve escrever somente ``\texttt{SIM}'' ou ``\texttt{NAO}'', indicando se a sigla dada faz sentido ou não para aquela frase.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+DPI
+DEPARTAMENTO DE INFORMATICA
+}{
+SIM
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+SAPIENS
+SISTEMA DE APOIO AO ENSINO
+}{
+SIM
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+BSB
+BRASILIA DF
+}{
+NAO
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+VIX
+VITORIA ES
+}{
+NAO
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+BBB
+BENSON MUNICIPAL AIRPORT MN
+}{
+NAO
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

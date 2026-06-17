@@ -1,0 +1,8 @@
+Palíndromo
+Palíndromo é uma palavra ou frase que permanece a mesma quando lida de trás pra frente. Ou seja, é a mesma quando lida tanto da esquerda para direita quanto da direita para esquerda.
+Exemplos: ARARA, OSSO, ACAIACA, RADAR.
+Existem frases palíndromas, como “Roma me tem amor” e a famosa “Socorram-me, subi no ônibus em Marrocos!”. Neste exercício você não deve se preocupar com frases, apenas com palavras.
+Entrada:
+A entrada contém apenas uma linha com a palavra a ser testada. Restrições: a palavra contém no máximo 30 letras, todas elas maiúsculas.
+Saída:
+Seu programa deve gerar uma linha de saída para cada caso de teste, contendo a palavra “” ou “”, em maiúsculas e sem acentos, indicando se a palavra da entrada é palíndroma ou não.

@@ -1,0 +1,64 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{Frequência}{freq}{2}
+ 
+Faça um programa que leia uma matriz de dimensões $M \times N$ e um valor $V$ e informe quantas vezes este valor aparece em cada linha da matriz.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A primeira linha contém dois
+números inteiros $M$ e $N$, indicando respectivamente o número de linhas e de colunas da matriz.
+
+As $M$ linhas seguintes contêm $N$ inteiros cada, indicando os
+elementos de cada linha da matriz.
+
+A última linha contém um único inteiro, o valor $V$.
+
+Restrições: $1 \leq M,N \leq 1000$.
+
+\OutputFile
+
+Seu programa deve gerar $M$ linhas na saída, uma para cada linha da matriz, informando o número de vezes que o valor $V$ aparece naquela linha da matriz.
+
+
+%\Notes
+%Nesta questão, seu programa deve usar a função \texttt{fatorial} dada %acima exatamente como está, não a modifique! Sua
+%tarefa é apenas criar o programa com a função \texttt{main}.
+
+\Example
+
+\begin{example}
+\exmp{
+4 5
+1 2 3 2 1
+2 3 4 3 2
+3 4 3 2 3
+0 1 2 1 0
+3
+}{
+1
+2
+3
+0
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

@@ -1,0 +1,11 @@
+Gráfico de faltas
+Preocupado com a frequência dos alunos nas aulas, certo professor quer fazer um gráfico para entender se há alguma relação da frequência com a temperatura na cidade.
+Ele não está com tempo para fazer um gráfico detalhado, então pretende simplesmente marcar quando o número de alunos ausentes esteve abaixo ou acima da média dos últimos dias.
+Mais especificamente, dado o número de alunos ausentes em cada dia,
+ele quer marcar em que dias esse número esteve abaixo da média (com `'), na média  (com `') e acima dela (com `').
+Entrada:
+A entrada contém duas linhas: a primeira contém um valor inteiro N, indicando a quantidade de dias do estudo;
+a segunda contém N números inteiros A_i separados por espaço em branco, indicando o número de estudantes ausentes em cada um dos dias.
+Restrições: 1 ≤ N ≤ 100, 0 ≤ A_i ≤ 100.
+Saída:
+Escreva uma linha na saída, .

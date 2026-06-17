@@ -1,0 +1,91 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Fatorial por extenso}{fatex}{2}
+ 
+O fatorial $N!$ de um número natural $N > 0$ é definido como a multiplicação de todos os naturais entre 1 e $N$, ou seja, $N!=N \times (N-1) \times (n-2) \times \dots \times 1$. Também pode ser definido recursivamente por $N! = N \times (N-1)!$, como na função do programa abaixo. Em todo caso, $0! = 1$, por definição.
+
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{Mulberry}\ttfamily,
+                stringstyle=\color{Maroon}\ttfamily,
+                commentstyle=\color{YellowGreen}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#},
+                basewidth = {.48em},
+                showstringspaces=false
+}
+\begin{lstlisting}
+//Retorna o valor de x!
+long long int fatorial (int n) {
+    if (n<=1)
+        return 1;
+    else
+        return n * fatorial(n-1);
+}
+
+int main() {
+    int n;
+    
+    cin >> n;
+    cout << n << "! = ";
+    cout << fatorial(n) << endl;
+    return 0;
+}
+
+\end{lstlisting}
+
+Para a entrada $5$, o programa imprime \texttt{5!} \texttt{= 120}.
+
+Modifique a função fatorial do programa acima para escrever detalhadamente o cálculo do fatorial, como nos exemplos a seguir.
+
+\Notes
+
+Nesta questão, seu programa deve usar a função \texttt{main} dada acima exatamente como está, não a modifique! Sua tarefa é modificar a função \texttt{fatorial}.
+
+
+\InputFile
+
+A entrada contém um único número natural $N$. Restrições: $2 \leq N \leq 20$.
+
+Note que seu programa não será testado com $N=0$ nem $N=1$.
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha de saída, contendo o cálculo detalhado do fatorial de $N$, como mostrado nos exemplos a seguir.
+
+\Example
+
+\setlength\exmpwidinf{6cm}
+\setlength\exmpwidouf{10cm}
+   
+
+\begin{example}
+\exmp{
+5
+}{
+5! = 5 x 4 x 3 x 2 x 1 = 120
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+7
+}{
+7! = 7 x 6 x 5 x 4 x 3 x 2 x 1 = 5040
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

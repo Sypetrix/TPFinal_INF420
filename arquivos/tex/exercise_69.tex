@@ -1,0 +1,82 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Substring}{substring}{2}
+ 
+Uma \textit{substring} de uma \textit{string} $S$ é uma string $W$ tal que os caracteres de $W$ formem uma sequência existente em $S$. Uma substring tem uma posição inicial $P$ em $S$, e um comprimento $L$. Considere a seguinte string $S$:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+     0 & 1 & 2 & 3 & 4 & 5 \\
+     B & A & T & M & A & N \\
+\hline
+\end{tabular}
+\end{center}
+
+A string ``BATMA'' é uma substring de $S$ com início na posição $P=0$ e comprimento $5$. A string ``MAN'' é uma substring com início na posição $P=3$ e comprimento $3$.
+
+Faça um programa que, dada uma string $S$, uma posição $P$ e um comprimento $L$, imprima a substring de $S$ a partir da posição $P$ de comprimento $L$.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada é composta por uma string $S$ e dois inteiros $P$ e $L$, representando a posição inicial da substring e seu comprimento, respectivamente.
+
+Todas as palavras são compostas apenas por letras maiúsculas, sem caraceteres especiais. Restrições: $1 \leq len(S) \leq 100$, $0 \leq P < len(S)$, $1 \leq L \leq len(S) - P$, onde $len(S)$ é o comprimento da string $S$.
+
+\OutputFile
+
+Seu programa deve imprimir a substring solicitada na entrada, em letras maiúsculas.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+MANGA 0 3
+}{
+MAN
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+PARALELEPIPEDO 4 4
+}{
+LELE
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+VINGADORES 3 4
+}{
+GADO
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+PROGRAMACAO 0 11
+}{
+PROGRAMACAO
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

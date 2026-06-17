@@ -1,0 +1,68 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Vogais}{vogais}{2}
+ 
+Como parte de um trabalho de processamento e pesquisa em textos escritos em vários idiomas, você precisa fazer um programa que calcula a porcentagem de vogais em uma palavra.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém apenas uma linha, contendo uma única palavra. A palavra contém apenas letras (maiúsculas ou minúsculas), sem acentos, cedilhas, hífens nem espaços. Restrições: a palavra tem no máximo 30 caracteres.
+
+\OutputFile
+
+Seu programa deve gerar uma linha na saída, contendo a porcentagem de vogais da palavra lida. O valor deve ser arredondado para não conter casa decimal.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+Vogais
+}{
+50\%
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+Uai
+}{
+100\%
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+Why
+}{
+0\%
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+english
+}{
+29\%
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

@@ -1,0 +1,8 @@
+Siglas
+Um acrônimo, ou mais comumente conhecido como sigla, é uma abreviação formada pelos componentes iniciais de uma palavra ou de uma frase. Estes componentes podem ser letras individuais, como em UFV (Universidade Federal de Viçosa), ou partes das palavras, como em ANVISA (Agência Nacional de Vigilância Sanitária).
+Na verdade, não existe um padrão muito rígido para a formação de siglas, e existem siglas que contém partes das palavras que não estão necessariamente no início delas, como em DPI (Departamento de Informática) ou em CCP (Ciência da Computação).
+Faça um programa que, dada uma ou mais palavras com algumas letras destacadas em maiúsculas, gere a sigla correspondente que contém todas as letras destacadas. Veja os exemplos mais adiante.
+Entrada:
+A entrada contém somente uma linha, com uma ou mais palavras. As palavras contêm somente caracteres simples maiúsculos e minúsculos, e são separadas por espaços. Restrições: a entrada contém no máximo 200 caracteres.
+Saída:
+Seu programa deve escrever a sigla correspondente às letras destacadas na entrada.

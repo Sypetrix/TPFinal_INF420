@@ -1,0 +1,18 @@
+Função para maior de 3
+Faça uma função para determinar e retornar o maior valor entre três números inteiros.
+A função deve seguir o cabeçalho abaixo:
+Faça um programa que lê três valores inteiros, usa a função acima para encontrar o maior valor e então escreve o valor retornado pela função.
+Entrada:
+A entrada contém três valores inteiros, A, B e C.
+Restrições: -2^31≤ A,B,C < 2^31.
+Saída:
+Seu programa deve gerar apenas uma linha na saída, contendo o maior valor entre A, B e C.
+Exemplos:
+9 3 10
+10
+4 -6 0
+4
+-236 -73 -248
+-73
+9 10 10
+10

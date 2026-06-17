@@ -1,0 +1,7 @@
+ccTLD
+O domínio de topo de código de país (ccTLD, do inglês country code top-level domain), também chamado de domínio nacional de nível superior, é o domínio de topo na Internet geralmente usado ou reservado para um país. Os identificadores de ccTLD são de duas letras, como o  usado no Brasil. Assim como no caso do Brasil, muitos países usam as duas letras inicias do seu nome:  na Itália e  na Alemanha (em alemão, Deutschland). Outros usam a letra inicial e alguma outra letra do nome, seja por preferência ou por não estar mais disponível o código com as duas iniciais: México usa  e Paraguai usa  (de Paraguay) (enquanto Panamá usa ). E alguns são forçados a criar alternativas: Benin usa  pois ,  e  já eram usados.
+Nesta questão, seu programa deve verificar se um código usa as duas letras iniciais do nome do país ou a letra inicial e alguma outra letra do nome.
+Entrada:
+A entrada contém vários casos de teste, cada um deles descrito em uma linha contendo um código (ponto e duas letras minúsculas) seguido de um espaço e o nome do país. O nome do país contém apenas letras e espaços, sem acentos ou cedilhas. O código sempre tem duas letras e o nome do país no máximo 50. O código  indica o fim da entrada.
+Saída:
+Para cada caso de teste da entrada, escreva: , se o código usa as duas letras iniciais ou a letra inicial e alguma outra letra do nome informado; ou , caso contrário.

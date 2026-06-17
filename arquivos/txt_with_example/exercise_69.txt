@@ -1,0 +1,20 @@
+Substring
+Uma substring de uma string S é uma string W tal que os caracteres de W formem uma sequência existente em S. Uma substring tem uma posição inicial P em S, e um comprimento L. Considere a seguinte string S:
+0     1     2     3     4     5 
+     B     A     T     M     A     N 
+A string “BATMA” é uma substring de S com início na posição P=0 e comprimento 5. A string “MAN” é uma substring com início na posição P=3 e comprimento 3.
+Faça um programa que, dada uma string S, uma posição P e um comprimento L, imprima a substring de S a partir da posição P de comprimento L.
+Entrada:
+A entrada é composta por uma string S e dois inteiros P e L, representando a posição inicial da substring e seu comprimento, respectivamente.
+Todas as palavras são compostas apenas por letras maiúsculas, sem caraceteres especiais. Restrições: 1 ≤ len(S) ≤ 100, 0 ≤ P < len(S), 1 ≤ L ≤ len(S) - P, onde len(S) é o comprimento da string S.
+Saída:
+Seu programa deve imprimir a substring solicitada na entrada, em letras maiúsculas.
+Exemplos:
+MANGA 0 3
+MAN
+PARALELEPIPEDO 4 4
+LELE
+VINGADORES 3 4
+GADO
+PROGRAMACAO 0 11
+PROGRAMACAO

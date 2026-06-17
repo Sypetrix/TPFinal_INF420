@@ -1,0 +1,85 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{wrapfig}
+\usepackage{olymp}
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{Idade atual}{idadeatual}{2}
+
+\begingroup
+\setlength{\intextsep}{0pt}%
+%\setlength{\columnsep}{0pt}
+
+Estamos em 2026, ano do centenário da UFV!
+
+\begin{center}
+\includegraphics[scale=0.75]{figuras/BronzeLogotipo100anos.png}
+\end{center}
+
+O aniversário da UFV é em agosto, então ela ainda tem 99 anos, já que ainda não fez aniversário neste ano. A partir de 28 de agosto, terá 100 anos!
+
+O curso de Ciência da Computação da UFV também festeja uma data histórica neste ano. A primeira turma do curso foi em 1986, assim o curso está completando 40 anos.
+
+E os estudantes do curso, qual sua idade atual? Faça um programa que calcula essa idade.
+
+% \Notes
+
+\InputFile
+
+A entrada contém apenas uma linha, com um valor inteiro $A$ informando o ano de nascimento do estudante e um caractere informando se já fez aniversário este ano ou não (respectivamente `\texttt{S}' ou `\texttt{N}').
+
+Restrições: $1926 \leq A \leq 2025$.
+
+\endgroup
+
+\OutputFile
+
+Escreva uma linha contendo a idade atual do estudante.
+
+% \Notes
+
+\Example
+
+\begin{example}
+\exmp{
+2008 S
+}{
+18
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+2008 N
+}{
+17
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+1926 N
+}{
+99
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+2000 S
+}{
+26
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

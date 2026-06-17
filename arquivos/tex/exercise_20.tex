@@ -1,0 +1,82 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Caixa de ovos}{caixa}{2}
+ 
+Bob está cansado dos tamanhos usados nas caixas de ovos. Uma caixa com 1 dúzia de ovos é geralmente de tamanho $2 \times 6$. Por que não $3 \times 4$? E uma caixa de 30 ovos, por que sempre $5 \times 6$? Não seria legal também ter os tamanhos $3 \times 10$ e $2 \times 15$?
+
+Faça um programa para ajudar Bob a encontrar os tamanhos possíveis para caixas com diversas quantidades de ovos.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém apenas um inteiro $N$, o número de ovos na caixa. Restrições: $1 \leq N \leq 10000$.
+
+
+\OutputFile
+
+Seu programa deve escrever todas as possíveis configurações de caixa para exatamente $N$ ovos. Cada configuração deve ser escrita em uma linha no formado ``\texttt{L x C}'', sendo \texttt{L} o número de linhas da caixa e \texttt{C} o número de colunas (\texttt{x} é a letra xis minúscula).
+
+\Notes
+As configurações devem ser escritas em ordem crescente de número de linhas e não devem ser escritas configurações espelhadas. Por exemplo, para 30 ovos escreva ``\texttt{5 x 6}'' e não ``\texttt{6 x 5}''.
+
+\Example
+
+\begin{example}
+\exmp{
+30
+}{
+1 x 30
+2 x 15
+3 x 10
+5 x 6
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+5
+}{
+1 x 5
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+25
+}{
+1 x 25
+5 x 5
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+1000
+}{
+1 x 1000
+2 x 500
+4 x 250
+5 x 200
+8 x 125
+10 x 100
+20 x 50
+25 x 40
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

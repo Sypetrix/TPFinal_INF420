@@ -1,0 +1,7 @@
+Interseção
+A interseção entre dois conjuntos A e B, representada por A ∩ B, é um conjunto contendo todos os elementos que pertencem, simultaneamente, aos dois conjuntos. Ou seja, um elemento x ∈ A ∩ B se e somente se x ∈ A e x ∈ B.
+Escreva um programa para calcular a interseção de dois conjuntos.
+Entrada:
+A entrada contém três linhas: a primeira contém dois números inteiros, N e M, representando a quantidade de elementos dos conjuntos A e B, respectivamente; a segunda linha contém N números inteiros, os elementos do conjunto A; e a terceira linha contém M números inteiros, os elementos do conjunto B. Restrições: 1 ≤ N, M ≤ 20.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, contendo o resultado de A ∩ B, em notação de conjuntos, isto é, envolvidos por . Os elementos da interseção devem aparecer na ordem em que são apresentados no conjunto A, e deve haver um espaço em branco entre eles e as chaves (veja exemplos de saída).

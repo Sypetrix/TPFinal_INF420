@@ -1,0 +1,11 @@
+Divisão inteira e seu resto (versão 2)
+Faça uma função que calcule a divisão inteira entre dois números naturais e também seu resto.
+A função deve obrigatoriamente ter o seguinte protótipo:
+;
+Os primeiros dois parâmetros são os valores do dividendo e do divisor, recebidos pela função. Os dois últimos são os valores da divisão inteira e do resto da divisão, retornados por referência. A função deve ainda retornar, por valor, verdadeiro se a divisão for definida ou falso caso contrário.
+Faça um programa que usa essa função para realizar a operação em vários casos de teste.
+Entrada:
+A entrada contém múltiplos casos de teste. A primeira linha contém um número N, indicando o número de testes que serão realizados. As próximas N linhas contêm pares de valores naturais A e B, respectivamente o dividendo e o divisor da operação. Restrições: 1 ≤ N ≤ 1000, 0 ≤ A,B ≤ 100000.
+Saída:
+Seu programa deve gerar N linhas na saída, uma para cada par de valores lidos A e B na entrada, contendo o quociente (inteiro) da divisão de A por B, um espaço em branco e o resto da divisão inteira de A por B. Caso a operação não esteja definida, escreva “”.
+ Você pode escrever os resultados à medida que lê a entrada, não precisa ler a entrada toda antes.

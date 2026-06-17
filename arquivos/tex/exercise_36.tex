@@ -1,0 +1,73 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+
+\setcounter{problem}{4}
+
+\begin{document}
+
+\begin{problem}{Soma exata}{somar}{2}
+ 
+Dada uma lista de $N$ números inteiros, seu programa deve determinar se existem dois elementos em posições distintas da lista cuja soma seja exatamente igual a um determinado valor $X$.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém três linhas: a primeira contém um valor inteiro $N$, indicando a quantidade de números na lista; a segunda contém os $N$ números da lista, que são números inteiros $V_i$ separados por espaço em branco; e a terceira linha contém um valor inteiro $X$.
+
+Restrições: $1 \leq N \leq 1000$, $-10^6 \leq X \leq 10^6$, $-10^6 \leq V_i \leq 10^6$.
+
+
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha de saída, contendo uma única palavra, indicando se existem dois elementos em posições distinas da lista cuja soma seja exatamente igual a $X$. Se existirem, escreva ``SIM'', caso contrário, escreva ``NAO''.
+
+%\Notes
+%Nesta questão, seu programa deve usar a função \texttt{fatorial} dada %acima exatamente como está, não a modifique! Sua
+%tarefa é apenas criar o programa com a função \texttt{main}.
+
+\Example
+
+\begin{example}
+\exmp{
+10
+1 2 3 4 5 6 7 8 9 10
+11
+}{
+SIM
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+10
+1 2 3 4 5 6 7 8 9 10
+20
+}{
+NAO
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+3
+1 4 6
+8
+}{
+NAO
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

@@ -1,0 +1,83 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Geração Z}{geracao}{2}
+
+Estudiosos de comportamento social e tendências culturais estimam que neste ano de 2025 tem início a Geração Beta, sucessora da Geração Alfa. Se os indivíduos da Geração Alfa já estavam imersos em tecnologia, redes sociais e serviços de streaming desde crianças, os da Geração Beta já crescerão imersos em ambientes com Inteligência Artificial e Realidade Aumentada. 
+
+A classificação e a caracterização das gerações são geralmente baseadas em estudos de comportamento social e tendências culturais, além de mudanças econômicas e tecnológicas que marcam os períodos em que essas gerações cresceram, como as citadas acima. Como a divisão é feita pelo ano de nascimento, outras características acabam diferenciando as gerações.  Indivíduos da Geração Z, por exemplo, têm poucas ou nenhuma lembrança dos ataques terroristas de 11 de setembro, por serem muito novos ou terem nascido depois desse marco histórico.
+
+Faça um programa para ler o ano de nascimento de uma pessoa e identificar sua geração. Para isso, utilize os períodos definidos na tabela abaixo, que informa as datas mais comumente aceitas como limite das gerações.
+
+\begin{center}
+\begin{tabular}{ccc}
+    De & Até & Geração\\
+    \hline
+    1965 & 1980 & X \\
+    1981 & 1996 & Y \\
+    1997 & 2012 & Z \\
+    2013 & ... & Alfa
+\end{tabular}
+\end{center}
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém apenas um inteiro $N$, o ano de  nascimento de um indivíduo. Restrições: $1965 \leq N \leq 2024$.
+
+
+\OutputFile
+
+Seu programa deve escrever apenas uma letra, informando a geração do indivíduo. No caso de Geração Alfa, escreva apenas \texttt{A}.
+
+% \Notes
+% observações
+
+\Example
+
+\begin{example}
+\exmp{
+2006
+}{
+Z
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+1999
+}{
+Z
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+1990
+}{
+Y
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+2020
+}{
+A
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

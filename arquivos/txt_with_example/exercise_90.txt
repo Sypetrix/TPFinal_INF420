@@ -1,0 +1,35 @@
+Ponta 
+de flecha
+.8
+Na álgebra linear, uma matriz ponta de flecha é uma matriz quadrada que contém zeros em todas as entradas, exceto na primeira linha, primeira coluna e diagonal principal. Assim, ela tem o formato mostrado ao lado (considere que as entradas * são números ≠ 0).
+.15
+[ * * * * *;   * 0 0 0;   0 * 0 0;   0 0 * 0;   0 0 0 *;   ]
+Entrada:
+A primeira linha da entrada contém um número inteiro N, indicando a ordem da matriz. As N linhas seguintes contêm exatamente N números cada, indicando os valores das entradas da matriz. Restrições: 3 ≤ N ≤ 40 e todos os demais valores inteiros entre -1000 e 1000.
+Saída:
+Seu programa deve escrever “” ou “” na saída, informando se a matriz da entrada é ou não uma matriz ponta de flecha conforme definição acima.
+Exemplos:
+5
+1 2 3 4 5
+2 4 0 0 0
+3 0 6 0 0
+4 0 0 8 0
+5 0 0 0 1
+SIM
+4
+1 1 1 1
+1 1 0 0
+1 0 1 0
+1 0 0 0
+NAO
+4
+1 1 1 1
+1 1 0 0
+1 0 1 0
+1 1 0 1
+NAO
+3
+-1 5 7
+8 4 0
+2 0 -3
+SIM

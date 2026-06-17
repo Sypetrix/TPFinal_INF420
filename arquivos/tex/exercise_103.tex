@@ -1,0 +1,69 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+
+\setcounter{problem}{3}
+
+\begin{document}
+
+\begin{problem}{Número espelhado}{espelho}{2}
+
+Nesta questão você deve escrever um programa que lê um número e o
+escreve espelhado. Por exemplo, para a entrada 12345 deve ser
+escrito 54321.
+
+Existem vários maneiras de se fazer isto. Nesta questão, entretanto, o
+número espelhado deve ser \underline{escrito por uma função recursiva}.
+
+%\Notes
+%
+%Nesta questão, seu programa deve usar a função \texttt{main} dada acima exatamente como está, não a modifique! Sua tarefa é modificar a função \texttt{fatorial}.
+
+
+\InputFile
+
+A entrada contém um único número natural $N$. Restrições: $0 < N < 2000000000$.
+
+\OutputFile
+
+Seu programa deve gerar uma linha de saída contendo o número $N$ espelhado.
+
+\Example
+
+
+\begin{example}
+\exmp{
+12345
+}{
+54321
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+102030405
+}{
+504030201
+}%
+\end{example}
+
+
+\begin{example}
+\exmp{
+1000000
+}{
+0000001
+}%
+\end{example}
+
+\vspace{0.5cm}
+DICA: use \% e /
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

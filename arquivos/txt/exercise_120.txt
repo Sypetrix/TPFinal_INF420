@@ -1,0 +1,23 @@
+l33t
+O Leet (também chamado de l33t ou 1337) é uma forma de escrita criada na internet em que letras são substituídas por números e símbolos visualmente semelhantes.
+Por exemplo, o número 4 pode representar a letra `', 3 o `', 1 o `' ou `', e 0 o `'.
+Essa técnica surgiu nas primeiras comunidades online, especialmente entre hackers e entusiastas de tecnologia,
+para evitar filtros automáticos, criar uma linguagem interna de grupo e demonstrar conhecimento técnico (já que “elite” virou “leet” e depois “1337” (similar a  de cabeça para baixo).
+Com o tempo, passou a ser usada também em jogos online, apelidos e memes, muitas vezes de forma irônica ou estilizada.
+Hoje, o leet é mais um elemento cultural da internet do que uma necessidade prática, mas ainda aparece em nomes de usuário, desafios e exercícios de programação.
+Nesta questão, considere somente as seguintes substituições, que são as mais comuns:
+  * `' ⇒ 3
+  * `' ⇒ 4
+  * `' ⇒ 1
+  * `' ⇒ 0
+  * `' ⇒ 5
+  * `' ⇒ 7
+  * `' ⇒ 1
+  * `' ⇒ 8
+  * `' ⇒ 6
+  * `' ⇒ 2
+Entrada:
+A entrada começa com um linha contendo um número inteiro N, seguida por N palavras, uma em cada linha.
+Restrições: 1 ≤ N ≤ 10; as palavras contém apenas letras maiúsculas e nenhuma possui mais de 10 caracteres.
+Saída:
+Para cada palavra da entrada, seu programa deve escrever a correspondente após as substituições.

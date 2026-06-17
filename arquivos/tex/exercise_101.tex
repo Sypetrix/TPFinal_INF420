@@ -1,0 +1,79 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+
+\setcounter{problem}{4}
+
+\begin{document}
+
+\begin{problem}{Distintos}{distintos}{2}
+ 
+Dada uma lista de $N$ números inteiros, seu programa deve determinar quantos números distintos existem na lista.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém duas linhas: a primeira contém um valor inteiro $N$, indicando a quantidade de números na lista; a segunda contém os $N$ números da lista, que são números inteiros $V_i$ separados por espaço em branco.
+
+Restrições: $1 \leq N \leq 1000$, $-2^{31} \leq V_i \leq 2^{31}-1$ (ou seja, qualquer valor \texttt{int}).
+
+
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha de saída, informando a quantidade de números distintos da lista.
+
+%\Notes
+%Nesta questão, seu programa deve usar a função \texttt{fatorial} dada %acima exatamente como está, não a modifique! Sua
+%tarefa é apenas criar o programa com a função \texttt{main}.
+
+\Example
+
+\begin{example}
+\exmp{
+10
+1 2 3 4 5 6 7 8 9 10
+}{
+10
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+10
+5 1 0 -2 0 5 1 0 -2 3
+}{
+5
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+3
+0 0 0
+}{
+1
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+7
+0 1 1 1 0 1 0
+}{
+2
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

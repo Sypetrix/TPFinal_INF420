@@ -1,0 +1,158 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{subfigure}
+\setcounter{problem}{4}
+
+\begin{document}
+
+\begin{problem}{2048}{2048}{2}
+ 
+Há poucos anos um jogo se popularizou pela internet, o 2048. A ideia do jogo é bem simples. Utiliza-se sempre um tabuleiro $4\times 4$, onde cada célula poderá estar vazia ou conter uma peça com um valor inteiro, sempre uma potência de 2 entre 2 e 1024.
+
+O jogador pode então escolher entre quatro tipos de movimentos (para cima, para baixo, para a esquerda ou para a direita), desde que seja possível realizar tais movimentos. Ao realizar um movimento, todas as peças são movimentadas o máximo possível na direção escolhida. Além disso, se um movimento forçar duas peças de igual valor uma contra a outra, as duas peças se ``fundem'', tendo seus valores somados para obter o valor da peça resultante. Após a realização de um movimento, uma nova peça de valor 2 ou 4 surge aleatoriamente em uma das células vazias do tabuleiro. 
+
+As Figuras 1 e 2 ilustram um movimento para cima. A Figura 1 mostra a configuração inicial do tabuleiro, enquanto a Figura 2 ilustra a configuração do mesmo tabuleiro após o jogador apertar a tecla para cima. Repare que, além de levar todas as peças o máximo possível para a parte de cima do tabuleiro, o movimento fez com que as duas peças de valor 2 na segunda coluna se fundissem e formassem uma nova peça de valor 4. Repare também que, após o movimento, uma nova peça de valor 2 surgiu em uma das posições vazias do tabuleiro (neste caso, na posição logo abaixo da peça de valor 8).
+
+    \begin{figure}[!h]
+    	\centering
+    	\begin{minipage}[t]{.45\textwidth}
+    		\centering
+    		\includegraphics[scale=0.25]{images/exercise_70_0.png}
+    		\caption{Configuração inicial}
+    	\end{minipage}
+    	\begin{minipage}[t]{.45\textwidth}
+    		\centering
+    		\includegraphics[scale=0.25]{images/exercise_70_1.png}
+    		\caption{Configuração após um movimento para cima.}
+    	\end{minipage}
+    \end{figure}
+
+% \begin{figure}[h] 
+%   \subfigure[Picture 1]{% 
+%     \includegraphics[scale=0.25]{images/exercise_70_0.png} \label{fig:1} 
+%   } 
+%   \quad 
+%   \subfigure[Picture 2]{% 
+%     \includegraphics[scale=0.25]{images/exercise_70_1.png} \label{fig:2} 
+%   } 
+%   \caption{Main figure caption} 
+% \end{figure}
+
+% \begin{figure}[h]
+%   \begin{subfigure}[b]{0.5\textwidth}
+%     \includegraphics[scale=0.25]{images/exercise_70_0.png}
+%     \caption{Picture 1}
+%     \label{fig:1}
+%   \end{subfigure}
+%   %
+%   \begin{subfigure}[b]{0.5\textwidth}
+%     \includegraphics[scale=0.25]{images/exercise_70_0.png}
+%     \caption{Picture 2}
+%     \label{fig:2}
+%   \end{subfigure}
+% \end{figure}
+
+% \begin{minipage}{0.5\textwidth}
+% \begin{figure}
+%     \centering
+%     \includegraphics[scale=0.25]{images/exercise_70_0.png}
+%     \caption{Configuração inicial}
+%     \label{fig:my_label}
+% \end{figure}
+% \end{minipage}
+% \begin{minipage}{0.5\textwidth}
+% \begin{figure}
+%     \centering
+%     \includegraphics[scale=0.25]{images/exercise_70_1.png}
+%     \caption{Configuração após um movimento para cima.}
+%     \label{fig:my_label}
+% \end{figure}
+% \end{minipage}
+
+O objetivo do jogo é realizar diversos movimentos consecutivos até obter uma peça de valor 2048. O problema é que existem diversas configurações de tabuleiro para as quais não existe nenhum movimento possível. Ao alcançar uma dessas configurações, o jogo acaba (\textit{Game over!} - veja a Figura 3). É importante observar que mesmo que não exista nenhuma célula vazia, isto não configura necessariamente uma situação de \textit{Game over}, uma vez que ainda é possível haver movimentos quando há peças de igual valor adjacentes uma a outra (veja a Figura 4).
+
+    \begin{figure}[!h]
+    	\centering
+    	\begin{minipage}[t]{.45\textwidth}
+    		\centering
+    		\includegraphics[scale=0.25]{images/exercise_70_2.png}
+    		\caption{Situação de \textit{Game over!}}
+    	\end{minipage}
+    	\begin{minipage}[t]{.45\textwidth}
+    		\centering
+    		\includegraphics[scale=0.25]{images/exercise_70_3.png}
+    		\caption{Ainda há movimentos disponíveis}
+    	\end{minipage}
+    \end{figure}
+
+Faça um programa para analisar uma configuração de tabuleiro do jogo 2048 e determinar se existe ou não algum movimento possível. Ou seja, seu programa deve determinar se a configuração do tabuleiro indica uma situação de \textit{Game over!}.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\newpage
+\InputFile
+
+O programa terá apenas um caso de teste.
+
+O caso de teste é composto por quatro linhas com quatro valores inteiros cada, indicando a configuração do tabuleiro a ser analisado. Valores $0$ indicam uma célula vazia, enquanto os outros valores serão sempre potências de $2$ indicando o valor da peça contida em cada célula (entre $2$ e $1024$, inclusive).
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha de saída, contendo uma das frases a seguir:
+\begin{itemize}
+ \item ``\texttt{Keep playing!}'', caso ainda haja movimentos possíveis;
+ \item ``\texttt{Game over!}'', caso não haja mais movimentos possíveis.
+ \end{itemize}
+ 
+
+%\Notes
+%Nesta questão, seu programa deve usar a função \texttt{fatorial} dada %acima exatamente como está, não a modifique! Sua
+%tarefa é apenas criar o programa com a função \texttt{main}.
+
+\Example
+
+\begin{example}
+\exmp{
+0 2 0 0
+0 0 0 0
+0 0 2 4
+0 2 8 2
+}{
+Keep playing!
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+2 4 32 4
+4 16 128 16
+8 32 2 4
+16 2 4 32
+}{
+Game over!
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+2 4 32 4
+4 2 128 16
+2 4 16 2
+2 2 4 4
+}{
+Keep playing!
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

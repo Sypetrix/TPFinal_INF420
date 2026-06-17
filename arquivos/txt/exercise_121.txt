@@ -1,0 +1,8 @@
+Palavra por palavra
+Uma equipe está trabalhando na decoração de um evento e precisa imprimir vários cartazes com diferentes frases.
+Os cartazes são verticais, então cada palavra da frase deve aparecer em uma linha.
+Faça um programa para automatizar o trabalho da equipe.
+Entrada:
+A entrada contém apenas uma linha com a frase que deve ser processada. A frase possui no máximo 200 caracteres e contém apenas letras e espaços, sendo terminada por um ponto final. Os espaços aparecem apenas entre palavras e não há espaços seguidos.
+Saída:
+Escreva a sequência de palavras da frase, uma por linha.

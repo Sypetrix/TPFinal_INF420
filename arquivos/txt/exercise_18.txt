@@ -1,0 +1,10 @@
+Fatorial
+O fatorial de um número natural n, representado por n!, é o produto de todos os inteiros positivos menores ou iguais a n. Ou seja,
+    n!=1 × 2 × 3 ×…× (n-1) × n
+Além disso, por definição, 0! = 1.
+Faça um programa para, dado um número natural n, calcular seu fatorial n!.
+Entrada:
+A entrada contém um único número natural N. Restrições: 0 ≤ N ≤ 20.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, contendo o valor de N!.
+Preste atenção aos tipos das variáveis, pois 20! ≈ 2^61.

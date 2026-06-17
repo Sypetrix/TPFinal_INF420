@@ -1,0 +1,80 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Diagonais}{diagonais}{2}
+
+Em álgebra linear, as diagonais de uma matriz quadrada são os conjuntos de elementos da matriz que unem dois cantos opostos. Existem duas diagonais: a diagonal principal e a diagonal secundária. Veja o exemplo:
+
+\begin{center}
+\includegraphics[scale=0.5]{images/exercise_38_0.png}
+\end{center}
+
+Nesta matriz, os elementos da diagonal principal são os interceptados pela seta vermelha (1, 5 e 9) e os da diagonal secundária são os interceptados pela seta azul (3, 5 e 7).
+
+Faça um programa para ler uma matriz quadrada de tamanho $N \times N$ e escrever os elementos de suas duas diagonais.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A primeira linha contém um inteiro $N$, que indica o tamanho da matriz. Em seguida virão $N$ linhas com $N$ inteiros cada, indicando os elementos da matriz. Restrição: $1 \leq N \leq 1000$.
+
+\OutputFile
+
+Seu programa deve gerar $2N+1$ linhas de saída. As primeiras $N$ linhas devem conter os elementos da diagonal principal, um em cada linha. Em seguida, uma linha em branco, e novamente $N$ linhas, cada uma com um valor, desta vez contendo os elementos da diagonal secundária. Escreva os elementos sempre de cima para baixo.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+3
+1 2 3
+4 5 6
+7 8 9
+}{
+1
+5
+9\\
+
+3
+5
+7
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+4
+5 6 7 8
+4 5 6 7
+3 4 5 6
+2 3 4 5
+}{
+5
+5
+5
+5\\
+
+8
+6
+4
+2
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+% Este exemplo corresponde ao da imagem mostrada acima.
+\end{problem}
+
+\end{document}

@@ -1,0 +1,79 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Inscrição duplicada}{duplicada}{2}
+
+As inscrições para mestrado e doutorado em Ciência da Computação na UFV foram abertas nesta semana.
+O curso é \textit{multicampi}, podendo ser feito em Viçosa ou em Florestal.
+No ato da inscrição, os candidatos escolhem o \textit{campus} que desejam se vincular.
+
+Alguns candidatos acabam se inscrevendo nos dois \textit{campi} dando um trabalho duplicado para a comissão de seleção.
+
+Faça um programa para descobrir quantos candidatos se inscreveram nos dois \textit{campi}.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém três linhas:
+a primeira contém dois números inteiros, $N$ e $M$, representando a quantidade de inscrições em Viçosa e em Florestal respectivamente;
+a segunda linha contém $N$ números inteiros $V_i$, os ID dos candidatos inscritos em Viçosa;
+e a terceira linha contém $M$ números inteiros $F_i$, os ID dos candidatos inscritos em Florestal.
+
+Restrições: $1 \leq N, M \leq 200$ e $1 \leq V, F \leq 1000000$,
+e não há inscrições repetidos em um mesmo \textit{campus}.
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha de saída, contendo a quantidade de ID's que aparecem simultaneamente entre os inscritos em Viçosa e em Florestal.
+
+%\Notes
+
+\Example
+
+\begin{example}
+\exmp{
+5 5
+4 5 3 2 1
+9 4 7 1 8
+}{
+2
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+5 5
+89 26 37 42 11
+26 11 89 42 37
+}{
+5
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+3 5
+44 22 11
+20 60 85 10 2
+}{
+0
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+\small
+{\textit {No primeiro exemplo, os candidatos 4 e 1 aparecem nas duas listas;\\
+no segundo exemplo, todos os 5 aparecem nas duas listas; e, no último exemplo, nenhum.}}
+
+\end{problem}
+
+\end{document}

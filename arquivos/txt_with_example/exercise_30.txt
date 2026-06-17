@@ -1,0 +1,31 @@
+Urbano
+Você trabalha em uma empresa de desenvolvimento de aplicativos de transporte. Atualmente, o aplicativo mais popular é o Urbano, o concorrente de um famoso aplicativo que conecta passageiros e motoristas. Para popularizar ainda mais o Urbano, você precisa programar uma funcionalidade que mostra ao passageiro a distância média dos motoristas e quantos estão próximos dele.
+Para simplificar, consideramos que a cidade é uma grade perfeita, assim é possível usar a distância de Manhattan. A distância de Manhattan é uma medida de distância que leva em consideração apenas os movimentos horizontais e verticais entre dois pontos em uma grade ou plano cartesiano. Para explicar de forma simples, imagine que você está caminhando pelas ruas de Manhattan, em Nova York. As ruas e avenidas em Manhattan formam uma grade, então você só pode se mover para cima, para baixo, para a esquerda ou para a direita. Se você quiser ir de um ponto A para um ponto B, você precisará caminhar ao longo das ruas e avenidas até chegar lá. A distância de Manhattan é a distância total que você teria que percorrer seguindo apenas as ruas e avenidas (ou seja, não é uma linha reta como a distância euclidiana).
+Por exemplo, se você quiser medir a distância de Manhattan entre o ponto A (1,2) e o ponto B (4,7), você precisaria percorrer 3 unidades para a direita na linha horizontal, e 5 unidades para cima na linha vertical, totalizando 8 unidades de distância de Manhattan entre os dois pontos.
+Entrada:
+A entrada começa com uma linha contendo dois inteiros X_p e Y_p, a localização do passageiro. Em seguida uma linha contendo um inteiro N, o número de motoristas do Urbano livres. Por fim, mais N linhas, cada uma com dois inteiros, as coordenadas X_i e Y_i de cada motorista. Restrições:  1 ≤ N ≤ 100 e todas as coordenadas entre 0 e 100, inclusive.
+Saída:
+Seu programa deve imprimir uma linha com dois valores: a média das distâncias de Manhattan entre os motoristas e o passageiro (com uma casa decimal) e o número de motoristas que estão a uma distância de Manhattan menor que 10.
+Exemplos:
+15 20
+4
+1 26
+10 18
+20 15
+40 19
+15.8 1
+Neste exemplo, o primeiro motorista está a uma distância de Manhattan (15-1) + (26-20) = 20 do passageiro; o segundo está uma distância (15-10) + (20-18) = 7; o terceiro a uma distância 10 e o quarto a uma distância 26. A média é 15.75 e há apenas 1 motorista a uma distância menor que 10.
+4 8
+2
+4 8
+14 0
+9.0 1
+10 10
+6
+11 9
+9 11
+9 9
+11 11
+11 10
+5 15
+3.2 5

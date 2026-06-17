@@ -1,0 +1,8 @@
+Intercalando
+Faça um programa que receba duas listas de N valores cada e mostre a intercalação dos 2N valores das listas.
+Entrada:
+A entrada é formada por três linhas: a primeira contém um valor inteiro N, indicando a quantidade de números em cada lista; a segunda contém os N números da primeira lista, que são números inteiros A_i separados por espaço em branco; e a terceira linha contém os N números da segunda lista, que são números inteiros B_i separados por espaço em branco.
+Restrições: 1 ≤ N ≤ 1000, -10^6 ≤ A_i, B_i ≤ 10^6.
+Saída:
+Seu programa deve gerar apenas uma linha de saída contendo 2N valores inteiros, representando os elementos intercalados das listas, ou seja, A_1  B_1  A_2  B_2 …  A_n  B_n.
+Imprima um espaço em branco após cada elemento, inclusive após o último, e não se esqueça de encerrar a linha.

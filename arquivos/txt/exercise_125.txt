@@ -1,0 +1,11 @@
+Extrato bancário
+Preocupado com os gastos do mês, Manuel retirou um extrato da sua conta bancária e agora quer saber quanto entrou e quanto saiu da sua conta.
+O extrato mostra os valores de todas as movimentações, incluindo depósitos, transferências, pix, pagamentos de contas, entre outras.
+Todos os valores positivos são valores que entraram na sua conta e todos os negativos são valores que saíram da conta. Faça um programa para totalizar esses valores.
+Entrada:
+A entrada começa com uma linha contendo um inteiro N, o número de movimentações na conta.
+Em seguida há N linhas, cada uma com o valor real V de uma movimentação realizada.
+Restrições: 1 ≤ N ≤ 100 e -10000 ≤ V ≤ 10000.
+Saída:
+Seu programa deve gerar duas linhas na saída: a primeira com o valor total que entrou na conta e a segunda com o valor total que saiu da conta.
+Ambos devem ser formatados para duas casas decimais.

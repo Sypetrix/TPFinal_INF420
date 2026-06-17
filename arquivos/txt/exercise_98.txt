@@ -1,0 +1,7 @@
+Ordenação de capivaras
+Maria é bolsista de IC do curso de Zootecnia e precisa de sua ajuda. Durante sua pesquisa, coletou dados de várias capivaras da UFV e fez uma tabela com nome (que ela batizou), matrícula (que grampeou nas orelhas), e ainda peso e altura (que mediu após banhos na lagoa). Veja abaixo uma parte desta tabela.
+Ela precisa ordenar as capivaras pelo peso.
+Entrada:
+A entrada é iniciada por uma linha contendo o número C de capivaras da tabela de Maria. Em seguida existem C linhas, cada uma com 4 dados de uma capivara: N M P A, respectivamente o nome da capivara, sua matrícula, seu peso e sua altura (em cm). Restrições: N é um string contendo apenas letras minúsculas (no máximo 15) e os demais dados são números inteiros, com 1 ≤ C ≤ 100.
+Saída:
+Seu programa deve escrever C linhas na saída, listando os dados das capivaras por ordem de peso (não haverá empate). Os dados de cada capivara devem ser escritos no formato N;M;P;A, ou seja, separados por ponto-e-vírgula. Este é o formato CSV, que pode ser aberto por planilhas eletrônicas, como Excel, Calc e Numbers.

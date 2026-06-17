@@ -1,0 +1,64 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+
+\setcounter{problem}{4}
+
+\begin{document}
+
+\begin{problem}{Conta bits}{bits}{2}
+
+Faça uma função recursiva que conta o número de bits 1 da representação binária de um inteiro $n$. Por exempo, para $n = 14$ a função deve retornar $3$, pois 14 em binário é \texttt{1110}; para $n=2018$ a resposta é 7, pois sua representação em binário é \texttt{11111100010}.
+
+Faça um programa para ler uma lista de números inteiros e, usando a função recursiva descrita acima, informar quantos bits 1 cada um deles possui em binário.
+
+Lembre-se que a representação binária pode ser obtida pelos restos de sucessivas divisões por 2.
+
+\begin{center}
+\includegraphics[scale=0.3]{images/exercise_109_0}
+\end{center}
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém vários casos de teste. Cada caso de teste é uma linha contendo um número inteiro $n$. Restrição: $0 < n \leq 2^{31}-1$.
+
+O valor $0$ encerra a lista de casos de teste e não deve ser processado.
+
+\OutputFile
+
+Seu programa deve gerar uma linha de saída para cada caso de teste, contendo o número de bits 1 da representação binária de $n$.
+
+%\Notes
+%Nesta questão, seu programa deve usar a função \texttt{fatorial} dada %acima exatamente como está, não a modifique! Sua
+%tarefa é apenas criar o programa com a função \texttt{main}.
+
+\Example
+
+\begin{example}
+\exmp{
+14
+15
+2018
+1000000000
+0
+}{
+3
+4
+7
+13
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

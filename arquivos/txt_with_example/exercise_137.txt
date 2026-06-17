@@ -1,0 +1,27 @@
+Nomes dos países
+A Copa do Mundo 2026 começou ontem, com vitória do México sobre a África do Sul no estádio Azteca, na Cidade do México. Nesse estádio histórico, já foram disputadas duas finais de Copa do Mundo:
+o Brasil de Pelé foi campeão em 1970 e a Argentina de Maradona foi campeã em 1986.
+Ele não será sede da final desta Copa porque ela é disputada também no Canadá e nos Estados Unidos, e a final será no MetLife Stadium, em Nova Jersey, onde o Brasil estréia amanhã contra o Marrocos.
+À noite, em Guadalajara, Coréia do Sul venceu de virada a República Tcheca. Vale informar que há 10 anos a República Tcheca registrou o nome curto e informal Tchéquia. Embora não comum no Brasil,
+é o nome recomendado para uso no dia a dia, turismo e esportes. República Tcheca continua como nome formal, reservado para documentos oficiais e governamentais. Algo semelhante a Brasil e República Federativa do Brasil.
+Esta Copa é a primeira com 48 países, o que permitiu algumas seleções se classificarem pela primeira vez: Cabo Verde, Curaçao, Jordânia e Uzbequistão.
+Mesmo com tantas vagas, a Itália, tetracampeã mundial, conseguiu a proeza de não se classificar novamente, ao perder a repescagem nos pênaltis para a Bósnia-Herzegovina. A última vez que a Itália disputou uma Copa foi em 2014, no Brasil.
+Curiosamente, para a de 2022, ela foi eliminada na repescagem pela Macedônia do Norte, anteriormente chamada Antiga República Iugoslava da Macedônia, um país que nunca se classificou para a Copa e que foi parte da Iugoslávia, junto com a Bósnia, Croácia e outros.
+Nesta questão, você precisa apenas informar a quantidade de palavras do nome de um país. Por exemplo, Brasil tem 1, República Tcheca tem 2 e Coréia do Sul tem 3.
+As palavras são separadas apenas por espaços, não há hífens na entrada. Por exemplo, não precisa se preocupar com “Bósnia-Herzegovina” ou “Reino Unido da Grã-Bretanha e Irlanda do Norte”.
+Entrada:
+A entrada possui apenas uma linha, contendo o nome de um país.
+O nome contém apenas letras (maiúsculas ou minúsculas) e espaços em branco.
+Não há espaços antes ou depois do nome, nem dois espaços seguidos, apenas entre as palavras.
+Restrições: o nome tem no máximo 50 caracteres.
+Saída:
+Seu programa deve gerar uma linha na saída, informando o número de palavras do nome do país
+Exemplos:
+Brasil
+1
+Republica Tcheca
+2
+Tchequia
+1
+Antiga Republica Iugoslava da Macedonia
+5

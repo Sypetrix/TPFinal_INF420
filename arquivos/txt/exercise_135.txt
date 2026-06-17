@@ -1,0 +1,14 @@
+Maior lote da rua
+Talvez você já tenha notado que, na maioria das ruas, a numeração das casas varia de 12 em 12.
+Isso acontece por dois motivos:
+  * no Brasil, a numeração das casas segue a distância em metros desde o início da rua;
+assim, se uma casa tem 12 metros de frente e número 300, a casa seguinte terá número 312.
+  * por várias décadas, os lotes na maioria das cidades do Brasil foram criados com 12 m de frente.
+Entretanto, há casas construídas em meio lote e há outras em lotes maiores, então a numeração não é sempre de 12 em 12, já que o tamanho do lote pode variar.
+Faça um programa para calcular o tamanho do maior lote em uma rua, considerando como tamanho do lote a diferença entre números de casas consecutivas.
+Entrada:
+A entrada começa com uma linha contendo um número inteiro T, indicando o número de casas na rua.
+A linha seguinte contém T números inteiros N_i, em ordem crescente, indicado o número de cada casa.
+Restrições: 2 ≤ T ≤ 1000, 1 ≤ N_i ≤ 100000.
+Saída:
+Escreva o tamanho do maior lote da rua.

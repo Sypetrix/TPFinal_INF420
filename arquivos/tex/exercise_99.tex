@@ -1,0 +1,91 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{3}
+
+\begin{document}
+
+\begin{problem}{Diretor do CCE}{diretor}{2}
+ 
+Na próxima terça-feira, dia 10, será realizada uma consulta prévia à comunidade para escolha de diretor do CCE - Centro de Ciências Exatas da UFV. Podem participar  estudantes, professores e servidores técnico-administrativos vinculados ao centro, que deverão indicar sua escolha entre os cinco professores candidatos.%: Charles, Danielle, Elita, Regina e Tarcísio.
+
+Após a consulta, um Colégio Eleitoral Especial do CCE organiza uma lista tríplice contendo 3 nomes (geralmente os mais votados na consulta prévia). Posteriormente, a reitora nomeia um dos candidatos da lista tríplice (geralmente o primeiro da lista).
+
+Para acelerar a contagem de votos, a comissão de apuração está pensando em usar voto eletrônico. Nesta primeira versão, não será elaborada lista tríplice nem serão usados pesos nas diferentes categorias. Deverá apenas contar os votos de cada candidato e informar se algum deles atingiu a maioria (ou seja, se o número de votos de algum candidato foi maior que a metade dos votos). 
+
+Escreva um programa para esta versão de teste de apuração eletrônica.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada é composta por uma linha contendo vários caracteres indicando os votos. A lista é terminada pelo caractere `\texttt{X}'. Os demais caracteres são votos válidos, `\texttt{C}',`\texttt{D}',`\texttt{E}',`\texttt{R}' ou `\texttt{T}', representando em qual candidato (primeira letra do nome) cada participante votou. Restrição: o número de votos é no máximo 2000.
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha na saída, contendo ``\texttt{SIM}'', caso algum candidato tenha recebido mais da metade dos votos, ou ``\texttt{NAO}'' caso contrário.
+
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $20! \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+C C E X
+}{
+SIM
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+R E D E X
+}{
+NAO
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+C D C C D C D X
+}{
+SIM
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+R T R T R T X
+}{
+NAO
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+R E R D T R R X
+}{
+SIM
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+D T D E D R D T C X
+}{
+NAO
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

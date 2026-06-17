@@ -1,0 +1,86 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+
+\newlength{\exmpwidouf}
+\exmpwidinf=10cm
+\exmpwidouf=6cm
+
+
+\setcounter{problem}{2}
+
+\begin{document}
+
+\begin{problem}{Siglas}{siglas}{3}
+
+Um acrônimo, ou mais comumente conhecido como sigla, é uma abreviação formada pelos componentes iniciais de uma palavra ou de uma frase. Estes componentes podem ser letras individuais, como em UFV (\underline{\textbf{U}}niversidade \underline{\textbf{F}}ederal de \underline{\textbf{V}}içosa), ou partes das palavras, como em ANVISA (\underline{\textbf{A}}gência \underline{\textbf{N}}acional de \underline{\textbf{Vi}}gilância \underline{\textbf{Sa}}nitária).
+
+Na verdade, não existe um padrão muito rígido para a formação de siglas, e existem siglas que contém partes das palavras que não estão necessariamente no início delas, como em DPI (\underline{\textbf{D}}e\underline{\textbf{p}}artamento de \underline{\textbf{I}}nformática) ou em CCP (\underline{\textbf{C}}iência da \underline{\textbf{C}}om\underline{\textbf{p}}utação).
+
+Faça um programa que, dada uma ou mais palavras com algumas letras destacadas em maiúsculas, gere a sigla correspondente que contém todas as letras destacadas. Veja os exemplos mais adiante.
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém somente uma linha, com uma ou mais palavras. As palavras contêm somente caracteres simples maiúsculos e minúsculos, e são separadas por espaços. Restrições: a entrada contém no máximo 200 caracteres.
+
+
+\OutputFile
+
+Seu programa deve escrever a sigla correspondente às letras destacadas na entrada.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+Universidade Federal de Vicosa
+}{
+UFV
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+DePartamento de Informatica
+}{
+DPI
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+Ciencia da ComPutacao
+}{
+CCP
+}%
+\end{example}
+
+
+\begin{example}
+\exmp{
+Agencia Nacional de VIgilancia SAnitaria
+}{
+ANVISA
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+COronaVIrus Disease
+}{
+COVID
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

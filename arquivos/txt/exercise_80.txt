@@ -1,0 +1,10 @@
+Guerra dos Tronos
+Capivarus e Canideus travaram uma guerra durante 50 anos. O motivo da guerra era o tamanho do território de cada reino. Pelo bem da população dos dois reinos, os governantes de seus tronos resolveram fazer um tratado para finalizar a guerra. O tratado consiste em fazer um divisão justa, e certamente contínua, do território. Eles resolveram pedir sua ajuda para calcular o ponto de divisão do território. Depois de tantos anos de guerra, os reinos não podem lhe pagar uma viagem para ver previamente o território que será dividido. Ao invés disso, eles prepararam uma lista a_1, a_2, …, a_N de inteiros que indicam o tamanho de cada seção do território. A seção a_1 é vizinha da seção a_2 que por sua vez é vizinha da seção a_3; e assim por diante. Os reinos querem uma divisão em uma seção k de tal forma que a_1 + a_2 + … + a_k = a_k+1 + a_k+2 + … + a_N.
+Como exemplo, considere o território da figura abaixo, que contém 4 seções, de tamanhos 5, 3, 2 e 10, nesta ordem.
+A solução é dividir o território após a seção 3, conforme figura abaixo. Assim, Capivarus fica com 10 de território e Canideus também.
+Sua tarefa é, dada uma lista de inteiros positivos a_1, a_2, …, a_N, determinar a seção k tal que a soma dos comprimentos das seções a_1 até a_k seja igual à soma dos comprimentos das seções a_k+1 até a_N.
+Entrada:
+A entrada é composta por duas linhas. A primeira contém um valor inteiro N, que indica o número de seções do território. A segunda linha contém N valores inteiros  a_1, a_2, …, a_N indicando os comprimentos das seções. Restrições: 1 < N ≤ 10^5; 1 ≤ a_i ≤ 100, ∀ i=1… N.
+Saída:
+Seu programa deve imprimir uma única linha contendo um inteiro que indica a seção do território onde acontecerá a divisão.
+É garantido que sempre existe uma divisão que satisfaz as condições dos reinos.

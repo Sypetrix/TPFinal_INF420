@@ -1,0 +1,74 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Maior lote da rua}{rua}{2}
+
+Talvez você já tenha notado que, na maioria das ruas, a numeração das casas varia de 12 em 12.
+Isso acontece por dois motivos:
+
+\begin{itemize}
+\item no Brasil, a numeração das casas segue a distância em metros desde o início da rua;
+assim, se uma casa tem 12 metros de frente e número 300, a casa seguinte terá número 312.
+\item por várias décadas, os lotes na maioria das cidades do Brasil foram criados com 12 m de frente.
+\end{itemize}
+
+Entretanto, há casas construídas em meio lote e há outras em lotes maiores, então a numeração não é sempre de 12 em 12, já que o tamanho do lote pode variar.
+
+Faça um programa para calcular o tamanho do maior lote em uma rua, considerando como tamanho do lote a diferença entre números de casas consecutivas.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada começa com uma linha contendo um número inteiro $T$, indicando o número de casas na rua.
+A linha seguinte contém $T$ números inteiros $N_i$, em ordem crescente, indicado o número de cada casa.
+Restrições: $2 \leq T \leq 1000$, $1 \leq N_i \leq 100000$.
+
+\OutputFile
+
+Escreva o tamanho do maior lote da rua.
+
+%\Notes
+
+\Example
+
+\begin{example}
+\exmp{
+5
+20 32 44 68 70
+}{
+24
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+6
+10 20 50 60 70 80
+}{
+30
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+2
+100 115
+}{
+15
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

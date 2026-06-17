@@ -1,0 +1,19 @@
+Soma de frações
+Faça um programa para ler duas frações e escrever o resultado de sua soma. 
+Seu programa deve obrigatoriamente usar uma função com o seguinte protótipo:
+;
+Note que os quatro primeiros parâmetros representam numeradores e denominadores das frações passadas como argumento, e os dois últimos são referências ao numerador e ao denominador da fração resultante da soma.
+Entrada:
+A entrada contém duas frações, dadas no formato  A/B  C/D, sendo A, B, C, D números inteiros. Restrições: 0 ≤ A,C ≤ 1000, 1 ≤ B,D ≤ 1000.
+Saída:
+Seu programa deve gerar apenas uma linha na saída, no formato “”, sendo A, B, C, D os valores lidos na entrada e E e F respectivamente o numerador e denominador da fração resultante da soma.
+A fração resultante deve estar simplificada!
+Exemplos:
+1/2 1/3
+1/2+1/3=5/6
+1/10 1/10
+1/10+1/10=1/5
+0/5 100/300
+0/5+100/300=1/3
+5/4 6/8
+5/4+6/8=2/1

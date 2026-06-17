@@ -1,0 +1,12 @@
+Sequência de collatz
+A sequência de Collatz (conhecida como 3n+1) usa uma regra matemática simples a partir de número inteiro positivo n:
+  * Se n for par: divida por 2, isto é, n/2;
+  * Se n for ímpar: multiplique por 3 e some 1, isto é, 3n+1;
+  * Repita o processo com o novo número até que ele se torne 1.
+Exemplo: Se iniciar com n=6, temos a sequência 6 → 3 → 10 → 5 → 16 → 8 → 4 → 2 → 1.
+Sua tarefa aqui é descobrir a quantidade de passos para um dado valor inicial n chegar em 1.
+Por exemplo, para n=6, são necessários 8 passos.
+Entrada:
+A entrada contém um único número natural N. Restrições: 2 ≤ N ≤ 200.
+Saída:
+Seu programa deve informar o número de passos da sequência de Collatz para o valor N.

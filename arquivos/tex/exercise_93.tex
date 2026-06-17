@@ -1,0 +1,87 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+
+\newlength{\exmpwidouf}
+\exmpwidinf=10cm
+\exmpwidouf=6cm
+
+
+\setcounter{problem}{5}
+
+\begin{document}
+
+\begin{problem}{Simplificação de linhas}{linhas}{2}
+
+Em computação gráfica, o processo de simplificação de linhas consiste em reduzir o número de vértices utilizados para representar objetos bidimensionais. Este processo é muito utilizado para preservar visualização em operações de escala e zoom. Ao reduzirmos uma imagem vetorial, linhas e pontos começam a se compactar demasiadamente, prejudicando a clareza da imagem. Para evitar que isso aconteça, pode-se realizar uma simplificação.
+
+Em um dos métodos para simplificação de linhas, calcula-se a área efetiva de cada vértice, dada pela área do triângulo do vértice candidato e seus vizinhos (vértices extremos não possem área efetiva). Na figura abaixo, a região em vermelho representa a área efetiva do vértice $c$:\\[-21pt]
+
+\begin{center}
+\includegraphics[scale=0.5]{images/exercise_93_0}
+\end{center}
+\vspace{-15pt}
+
+Calculadas as áreas efetivas, escolhe-se para remoção o vértice de menor área efetiva.
+
+A área de um triângulo formado por três vértices $A$, $B$ e $C$ pode ser obtida pela seguinte expressão:\\[-18pt]
+
+\begin{equation}
+área = \left|\frac{A_x(B_y-C_y) + B_x(C_y-A_y) + C_x(A_y-B_y)}{2}\right|\notag
+\end{equation}
+
+Faça um programa que determina o vértice a ser removido de uma linha. Seu programa deverá imprimir o índice do vértice de menor área efetiva, bem como o valor dessa área.\\[-18pt]
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada começa com uma linha contendo um número inteiro $N$, que é o número de vértices da linha. A próxima linha contém $2N$ valores reais, indicando as coordenadas $(X_i,Y_i)$ de cada vértice, na ordem em que aparecem na linha. Ou seja, os dois primeiros valores correspondem às coordenadas $X$ e $Y$ do primeiro vértice, os dois valores seguintes são as coordenadas $X$ e $Y$ do segundo vértice, e assim por diante. Restrições: $3 \leq N \leq 200$.\\[-18pt]
+
+\OutputFile
+
+O programa deverá exibir o índice do vértice que deverá ser removido, isto é, o vértice de menor área efetiva, e o valor da área efetiva deste vértice, com duas casas decimais. Em caso de empate, escolhe entre os de menor área o de menor índice.\\[-18pt]
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+5
+0 2 0.75 1 2 0.5 3 1 4 2
+}{
+3 0.25
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+6
+1 2 0 2 1 4 5 6 1 2 5 1
+}{
+1 1.00
+}%
+\end{example}
+
+
+\begin{example}
+\exmp{
+3
+0 0 1 1 2 2
+}{
+1 0.00
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

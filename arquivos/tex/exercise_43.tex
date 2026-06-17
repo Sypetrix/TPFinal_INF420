@@ -1,0 +1,95 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Combinação}{combinacao}{2}
+ 
+Uma turma de faculdade tem $N$ alunos e precisa escolher $K$ para compor a comissão de organização da calourada. O número de diferentes comissões que
+podem ser formadas pode ser calculado pela fórmula do coeficiente binomial, que consiste no número de combinações de $N$ termos, $K$ a $K$:
+
+\begin{center}
+$\displaystyle \binom{N}{K} = \frac{N!}{K!(N-K)!}$
+\end{center}
+
+Como a fórmula requer o cálculo de fatoriais, foi criada a função abaixo:
+
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{Mulberry}\ttfamily,
+                stringstyle=\color{Maroon}\ttfamily,
+                commentstyle=\color{YellowGreen}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#},
+                basewidth = {.48em}
+}
+\begin{lstlisting}
+//Retorna o valor de x!
+long long int fatorial (int x) {
+   long long int fat = 1;
+   
+   for(int i=2; i<=x; i++)
+      fat *= i;
+      
+   return fat;
+}
+\end{lstlisting}
+
+Sua tarefa é fazer um programa que utiliza esta função para calcular o número de diferentes comissões.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém dois valores inteiros, $N$ e $K$, que são respectivamente o número de alunos da turma e o número de alunos na comissão. Restrição: $1 \leq K \leq N \leq 20$.
+
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha de saída, o número de
+diferentes comissões que podem ser formadas.
+
+\Notes
+Nesta questão, seu programa deve usar a função \texttt{fatorial} dada acima exatamente como está, não a modifique! Sua
+tarefa é apenas criar o programa com a função \texttt{main}.
+
+\Example
+
+\begin{example}
+\exmp{
+12 4
+}{
+495
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+7 7
+}{
+1
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+15 5
+}{
+3003
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

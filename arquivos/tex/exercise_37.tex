@@ -1,0 +1,78 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{4}
+
+\begin{document}
+
+\begin{problem}{Campo minado}{campo}{2}
+
+Campo Minado é um popular jogo de computador para um único jogador. Ele é jogado em um tabuleiro $M \times N$ onde são escondidas diversas bombas, e o objetivo do jogador é descobrir onde estão escondidas todas as bombas. Ao clicar em uma casa do tabuleiro, o jogo revela para o jogador se aquela casa contém ou não uma bomba. Caso o jogador clique em uma casa com uma bomba, ele perde o jogo. 
+
+Para facilitar, todas as casas já reveladas pelo jogador contêm um número, que indica quantas bombas existem nas oito (ou menos, para as casas na borda do tabuleiro) casas vizinhas a esta casa. Veja a imagem abaixo, onde as posições das bombas são indicadas por bandeiras. Casas vazias indicam que não há nenhuma bomba em suas casas vizinhas.
+
+\begin{center}
+\includegraphics[scale=0.4]{images/exercise_37_0.png}
+\end{center}
+
+Faça um programa que, dado o tamanho do tabuleiro e as posições das bombas, mostre a configuração final do jogo supondo que o jogador encontrou todas as bombas e revelou todas as demais casas do tabuleiro.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém diversas linhas. A primeira linha contém três inteiros $M$, $N$ e $B$, indicando respectivamente o número de linhas e colunas do tabuleiro, e o número de bombas escondidas. Em seguida virão $B$ linhas, cada uma com dois inteiros $Y_i$ e $X_i$, que indicam que a $i$-ésima bomba está escondida na casa que fica na linha $Y_i$ e na coluna $X_i$.
+
+Restrições:
+\begin{itemize}
+    \item $1 \leq M , N \leq 100$
+    \item $0\leq B \leq M \times N$
+    \item $1 \leq Y_i \leq M$
+    \item $1 \leq X_i \leq N$
+\end{itemize}
+
+\OutputFile
+
+Seu programa deve imprimir $M$ linhas com $N$ caracteres cada, cada caractere representando uma das casas do tabuleiro. Para casas com bombas, imprima um `\texttt{B}'. Para casas em que não há nenhuma bomba e também não há nenhuma bomba em suas casas vizinhas, imprima um `\texttt{-}'. Para as demais casas, imprima um número indicando o número de bombas escondidas nas casas vizinhas.
+
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+9 9 10
+1 7
+2 3
+2 8
+4 1
+4 2
+5 4
+6 6
+6 7
+6 9
+9 7
+}{
+-111-1B21
+-1B1-12B1
+2321--111
+BB211----
+222B22221
+--112BB2B
+----12221
+-----111-
+-----1B1-
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+Este exemplo corresponde ao da imagem mostrada acima.
+\end{problem}
+
+\end{document}

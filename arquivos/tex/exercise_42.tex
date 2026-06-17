@@ -1,0 +1,83 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+
+\setcounter{problem}{2}
+
+\begin{document}
+
+\begin{problem}{Ano Bissexto}{bissexto}{2}
+
+Faça um programa que, dado um certo ano, determine se ele é bissexto ou não.
+
+O ano bissexto ocorre a cada quatro anos, nos anos múltiplos de 4 (exceto anos múltiplos de 100, que não são bissextos, a não ser os múltiplos de 400, que são). Veja alguns exemplos:
+
+\vspace{-6pt}
+\begin{itemize}
+\item 2023 não é bissexto, pois não é múltiplo de 4
+\vspace{-6pt}
+\item 2020 foi bissexto e 2024 será também
+\vspace{-6pt}
+\item 2100 não será bissexto pois, apesar de múltiplo de 4, é também múltiplo de 100
+\vspace{-6pt}
+\item 2000 foi bissexto pois era múltiplo de 400, que sobrepõe a regra de não ser múltiplo de 100
+\end{itemize}
+\vspace{-6pt}
+
+Para a resolução do problema construa \underline{obrigatoriamente} uma função com o protótipo abaixo, que recebe um inteiro representando o ano e retorna um valor lógico, sendo verdadeiro se o ano passado por parâmetro for bissexto, ou falso caso contrário:
+
+\texttt{\textcolor{Mulberry}{bool} bissexto(\textcolor{Mulberry}{int} n)}
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém várias linhas, cada uma contendo um ano de 4 dígitos compreendido entre 1582 e 3999.
+A entrada termina \underline{com um ano negativo}, que não deve ser processado.
+
+\OutputFile
+
+Seu programa deve gerar uma linha de saída para cada ano informado na entrada, com a palavra ``\texttt{bissexto}'', caso o ano informado seja bissexto, ou a mensagem ``\texttt{nao bissexto}'', caso contrário.
+
+% \Notes
+% Nesta questão, seu programa deve usar a função \texttt{main} dada acima exatamente como está, não a modifique! Sua tarefa é apenas criar a função \texttt{eh\_primo}.
+
+\Example
+
+\begin{example}
+\exmp{
+1896
+1900
+1904
+2000
+2015
+2016
+2096
+2100
+2104
+-1
+}{
+bissexto
+nao bissexto
+bissexto
+bissexto
+nao bissexto
+bissexto
+bissexto
+nao bissexto
+bissexto
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

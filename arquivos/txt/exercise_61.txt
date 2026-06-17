@@ -1,0 +1,8 @@
+Senha segura
+Em certa empresa, uma senha é considerada segura se tiver letras maiúsculas, minúsculas, dígitos e um caractere especial (algum que não é letra nem dígito).
+Por exemplo, a senha  seria segura, mas  não, pois não contém caractere especial, nem , pois não contém letra maiúscula.
+Se a senha tiver caracteres de apenas um tipo, ela é considerada “fraca”. Se tiver caracteres de mais de um tipo, mas não de todos, é considerada “media”.
+Entrada:
+A entrada contém apenas uma linha, contendo uma senha. A senha pode conter letras (maiúsculas ou minúsculas), dígitos (de `0' a `9') e outros caracteres, mas não contém espaços. Restrições: a senha tem no máximo 30 caracteres.
+Saída:
+Seu programa deve gerar uma linha na saída, contendo uma das seguintes palavras, dependendo da segurança da senha: “”, “” ou “”

@@ -1,0 +1,66 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+
+\setcounter{problem}{4}
+
+\begin{document}
+
+\begin{problem}{Números espelhos}{espelho}{2}
+
+Dois números inteiros $A$ e $B$ são ditos espelhos se ao inverter-se a disposição dos algarismos de $A$ obtêm-se o valor de $B$. Por exemplo, 5273 e 3725 são espelhos.
+
+Elabore um programa para verificar se dois números inteiros de 4 dígitos são espelhos entre si. Para resolução, seu programa deve usar obrigatoriamente uma função com o seguinte
+protótipo:
+
+\texttt{\textcolor{Mulberry}{int} espelhar(\textcolor{Mulberry}{int} n)}
+
+A função recebe como parâmetro um número inteiro de 4 dígitos e retorna-o espelhado.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém vários casos de teste. Cada caso de teste é dado em uma linha contendo dois valores inteiros $A$ e $B$, separados por um espaço em branco. Restrições: $1000 \leq A, B \leq 9999$.
+
+A entrada termina com $A = 0$ e $B = 0$, que não deve ser processada.
+
+\OutputFile
+
+A saída consiste em várias linhas, uma para cada caso de teste da entrada. Na linha deverá aparecer a palavra ``\texttt{espelho}'', caso os valores entrados sejam espelho entre si, ou ``\texttt{nao espelho}'', caso contrário.
+
+% \Notes
+% Nesta questão, seu programa deve usar a função \texttt{main} dada acima exatamente como está, não a modifique! Sua tarefa é apenas criar a função \texttt{eh\_primo}.
+
+\Example
+
+\begin{example}
+\exmp{
+6946 4532
+5786 6875
+7544 3754
+5427 7245
+9746 6479
+0 0
+}{
+nao espelho
+espelho
+nao espelho
+espelho
+espelho
+}%
+\end{example}
+
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

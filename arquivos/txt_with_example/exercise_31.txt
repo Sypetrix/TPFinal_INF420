@@ -1,0 +1,24 @@
+Contar
+Dada uma lista de N números inteiros, seu programa deve determinar quantos destes números são maiores ou iguais a um determinado valor X.
+Entrada:
+A entrada contém três linhas: a primeira contém um valor inteiro N, indicando a quantidade de números na lista; a segunda contém os N números da lista, que são números inteiros V_i separados por espaço em branco; e a terceira linha contém um valor inteiro X.
+Restrições: 1 ≤ N ≤ 1000, -10^6 ≤ V_i ≤ 10^6, -10^6 ≤ X ≤ 10^6.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, informando a quantidade de números da lista que são maiores ou iguais a X.
+Exemplos:
+10
+1 2 3 4 5 6 7 8 9 10
+5
+6
+10
+1 2 3 4 5 6 7 8 9 10
+20
+0
+1
+2
+3
+0
+4
+1 4 6 4
+4
+3

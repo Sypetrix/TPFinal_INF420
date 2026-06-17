@@ -1,0 +1,75 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Quadrante}{quadrante}{2}
+ 
+Como etapa no desenvolvimento de um jogo de computador, você precisa escrever um programa que decida onde está um personagem. Mais especificamente, dadas suas coordenadas cartesianas, informar em qual quadrante ele está. O personagem pode ainda não estar em quadrante algum, por exemplo, se estiver sobre um dos eixos ou na origem.
+
+\begin{minipage}{.4\textwidth}
+A figura ao lado ilustra algumas das situações possíveis. Nesta figura, o ponto A está na origem, o ponto B sobre o Eixo Y e os pontos C e D respectivamente no $1^{\circ}$ e $2^{\circ}$ quadrantes.
+\end{minipage}\hfill\hspace{0.1\textwidth}
+\begin{minipage}{.5\textwidth}
+\includegraphics[scale=0.75]{images/exercise_12_0.png}
+\end{minipage}
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém dois números inteiros, $X$ e $Y$, indicando as coordenadas da localização do personagem. Restrições: $-10000 \leq X,Y \leq 10000$.
+
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha de saída, contendo uma das sequintes mensagens, dependendo da localização do personagem:
+
+\begin{itemize}
+    \vspace{-6pt}\item ``\texttt{QUADRANTE} $N$'', onde $N$ pode ser 1, 2, 3 ou 4
+    \vspace{-6pt}\item ``\texttt{EIXO X}''
+    \vspace{-6pt}\item ``\texttt{EIXO Y}''
+    \vspace{-6pt}\item ``\texttt{ORIGEM}''
+\end{itemize}
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $20! \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+3 4
+}{
+QUADRANTE 1
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+0 -4
+}{
+EIXO Y
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+-300 500
+}{
+QUADRANTE 2
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

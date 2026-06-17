@@ -1,0 +1,18 @@
+Engrenagens
+r0.3
+    < g r a p h i c s >
+O setor de teste de uma fábrica de engrenagens recebe diariamente centenas de amostras de engrenagens de vários tipos para verificação, sendo que, para cada tipo, existem vários testes a serem realizados. Um dos tipos de engrenagens testado é a engrenagem conjugada, em que duas engrenagens são fixadas uma a outra, com o objetivo de transferir torque/velocidade. Existem inúmeras combinações de tamanhos de engrenagens, e um requisito imposto pelo cliente é que, quando a engrenagem maior der uma volta completa, a menor tenha dado um número inteiro de voltas completas. A engrenagem conjugada ao lado segue este requisito, pois quando a maior (de 21 dentes) terminar uma volta, a menor (de 7 dentes) terá dado exatamente 3 voltas.
+Para automatizar os testes, a fábrica já tem uma máquina que conta a quantidade de dentes de cada engrenagem. Agora precisa de um programa que verifique se atendem ao requisito. Note que, para que isto aconteça, a quantidade de dentes da maior deve ser um múltiplo da quantidade de dentes da menor, ou seja, a divisão dessas quantidades deve ser exata. 
+Entrada:
+A entrada é composta por dois valores inteiros, D_1 e D_2, que são a quantidade de dentes respectivamente da menor e da maior engrenagem. Restrição: 0 ≤≤ D_1, D_2 ≤ 5000.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, contendo um valor inteiro, sendo `' para aceitar a engrenagem e `' para rejeitá-la.
+Exemplos:
+7 21
+1
+5 50
+1
+12 48
+1
+20 50
+0

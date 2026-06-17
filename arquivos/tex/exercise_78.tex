@@ -1,0 +1,126 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+
+\newlength{\exmpwidouf}
+\exmpwidinf=10cm
+\exmpwidouf=6cm
+
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{Recomendação Netflix}{netflix}{1}
+
+O programa de recomendação de filmes, séries e documentários da Netflix compara as preferências de diversos usuários para decidir quais títulos recomendar a um usuário. Neste problema, você deve escrever um programa para comparar as preferências de um usuário $U$ com as preferências de vários outros usuários e informar qual usuário mais se assemelha a $U$.
+
+Consideramos $N$ usuários e $T$ títulos. Cada usuário indica a preferência por cada um dos títulos. As preferências são valores inteiros de 0 e 9 que representam a nota do usuário para um título. A similaridade deve ser calculada como o número de preferências (notas) iguais entre $U$ e um outro usuário. Por exemplo, para $T = 2$, se um usuário fornece as notas 4 9 para os dois títulos e $U$ fornece as notas 4 8, a similaridade entre os dois é igual a 1. Se $U$ fornece as notas 3 8, a similaridade é igual a 0.
+
+% \Notes
+
+% Você pode criar uma função para o cálculo do fatorial.
+
+\InputFile
+
+A primeira linha contém dois inteiros, $N$ e $T$, respectivamente o número de usuários e o número de títulos (portanto, de notas). Em seguida há $N$ linhas com $T$ inteiros cada, informando as preferências de cada usuário por cada título. Por fim, há mais uma linha, com as $T$ preferências do usuário $U$. Restrição: $1 \leq N, T \leq 100$.
+
+\OutputFile
+
+Seu programa gera apenas uma linha de saída, com um valor entre $1$ e $N$, indicando o número do usuário que mais se assemelha a $U$. Caso haja empate entre mais de um usuário que mais se assemelha a $U$, deve ser escrito o menor número entre os empatados. Por exemplo, se os usuários que mais se assemelham a $U$ são os usuários 20 e 23, deve ser escrito 20.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+3 5
+7 5 0 9 9
+8 7 9 9 4
+6 0 3 0 0
+3 7 3 3 0
+}{
+3
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+7 6
+9 3 9 7 4 9
+9 6 6 2 4 3
+3 0 7 6 2 3
+1 3 5 3 9 0
+4 2 8 4 9 8
+9 0 1 8 8 3
+4 6 6 7 6 5
+3 8 4 4 0 9
+}{
+1
+}%
+\end{example}
+
+% \begin{example}
+% \exmp{
+% .br Brasil
+% 2
+% Brasil
+% Brazil
+% }{
+% OK
+% }%
+% \end{example}
+
+% \begin{example}
+% \exmp{
+% .de
+% 3
+% Alemanha
+% Germany
+% Deutschland
+% }{
+% OK
+% }%
+% \end{example}
+
+% \begin{example}
+% \exmp{
+% .tv
+% 1
+% Tuvalu
+% }{
+% OK
+% }%
+% \end{example}
+
+% \begin{example}
+% \exmp{
+% .tv
+% 1
+% Tuvalu
+% }{
+% OK
+% }%
+% \end{example}
+
+% \begin{example}
+% \exmp{
+% .za
+% 3
+% Africa do Sul
+% South Africa
+% Zuid-Afrika
+% }{
+% OK
+% }%
+% \end{example}
+
+% \textit{Problema baseado na questão ``A idade de dona Mônica'' da OBI2019 fase local.}
+
+\end{problem}
+
+\end{document}

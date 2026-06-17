@@ -1,0 +1,13 @@
+Temperatura em Viçosa
+A UFV recebe diversos estrangeiros para cursar disciplinas de graduação e pós-graduação. Muitos estranham as constantes mudanças bruscas de clima e de temperatura na cidade. Saem de casa com temperatura de 25^∘C e de repente uma chuva muda a temperatura para 15^∘C. Pior ainda para os americanos, que nem entendem essas temperaturas em ^∘C!
+Faça um programa para converter temperaturas de ^∘C (graus Celsius) para ^∘F (graus Fahrenheit) e vice-versa. Para facilitar seu trabalho, damos a seguir a fórmula de conversão de ^∘F para ^∘C:
+    ^∘C = 5/9(^∘F-32)
+Entrada:
+A entrada é composta por um valor real T e um caractere E, sendo T a temperatura e E a escala utilizada, que pode ser `' para Fahrenheit ou `' para Celsius. Restrição: -100 ≤ T ≤ 300.
+Saída:
+Seu programa deve gerar apenas uma linha na saída, contendo um valor real, com uma casa decimal, representando a temperatura convertida, seguida por um espaço e um caractere (`' ou `') representando essa escala. Se a escala da entrada for Fahrenheit a temperatura na saída deve ser a correspondente em Celsius, e vice-versa.
+Exemplos:
+100 F
+37.8 C
+100 C
+212.0 F

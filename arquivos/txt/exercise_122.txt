@@ -1,0 +1,23 @@
+Divisores
+O seguinte programa foi escrito para informar quantos divisores cada número no intervalo possui.
+,
+                stringstyle=,
+                commentstyle=,
+                morecomment=[l][]#,
+                basewidth = .48em,
+                showstringspaces=false
+#include <iostream>
+using namespace std;
+int main() 
+  int a, b;
+  cin >> a >> b;
+  for (int i=a ; i<=b ; i++)
+    cout << i << ": " << divisores(i) << endl;
+  return 0;
+O problema é que não existe a função divisores usada neste programa. Sua tarefa é completar o programa criando esta função. A função deve seguir o cabeçalho abaixo.
+Ela recebe um número inteiro e retorna quantos divisores ele tem.
+Entrada:
+A entrada contém dois valores inteiros, A e B.
+Restrição: 1 ≤ A ≤ B ≤ 1000000. O intervalo terá no máximo 20 valores.
+Saída:
+O programa escreve uma linha na saída para cada valor no intervalo de A a B, inclusive eles, informando quantos divisores cada valor tem, conforme mostrado nos exemplos.

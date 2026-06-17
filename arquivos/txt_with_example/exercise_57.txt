@@ -1,0 +1,39 @@
+Mediana
+Joãozinho acabou de aprender que mediana não é a mesma coisa que média. Mediana é o valor que separa a metade superior da metade inferior de um conjunto de dados. Em outras palavras, é o elemento “do meio”. Por exemplo, a mediana dos elementos 1, 1, 2, 3, 5, 7, 9 é o valor 3. Diferente da média, que
+nesse caso é 4. Quando o conjunto de dados tem tamanho par, a mediana pode ser tomada como a média dos elementos centrais. Por exemplo, a mediana dos elementos 1, 1, 2, 3, 5, 7 é dada por (2+3)/2 = 2,5.
+A dificuldade de Joãozinho em encontrar a mediana acontece quando os elementos não estão em ordem. Faça um programa para ajudá-lo.
+Entrada:
+Cada entrada contém apenas um caso de teste. A primeira linha contém um número N, indicando o número de elementos do conjunto. A segunda linha contém N números inteiros, que são os elementos do conjunto.  Restrições: 1 ≤ N ≤ 1000, 0 ≤ cada elemento ≤ 100000.
+Saída:
+Seu programa deve gerar 2 linhas na saída, a primeira contendo a média e a segunda contendo a mediana dos N elementos do conjunto. Estes valores devem ser escritos com 1 casa decimal e devem seguir o formato mostrado nos exemplos.
+Exemplos:
+7
+1 1 2 3 5 7 9
+Media: 4.0
+Mediana: 3.0
+7
+1 3 5 9 7 1 2
+Media: 4.0
+Mediana: 3.0
+6
+10 20 40 15 30 99
+Media: 35.7
+Mediana: 25.0
+8
+1 1 2 1 1 1 1 1
+Media: 1.1
+Mediana: 1.0
+Dica:
+language=C++,
+                basicstyle=,
+                keywordstyle=,
+                stringstyle=,
+                commentstyle=,
+                morecomment=[l][]#,
+                basewidth = .48em
+//Metodo bolha para ordenar um vetor
+int Bolha (int a[], int n) 
+    //Repita n-1 vezes
+        //Para i = 0 ... n-2
+            //Se a[i] > a[i+1]
+                //Trocar a[i] com a[i+1]

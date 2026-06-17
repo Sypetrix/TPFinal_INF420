@@ -1,0 +1,19 @@
+Contatos
+José comprou um smartphone e está com dificuldade em achar os telefones de seus contatos. O problema é que a lista de contatos está ordenada por sobrenome, algo comum em outros países. Mas ele quer seus contatos, naturalmente, ordenados pelo nome. Por exemplo, agora está assim:
+    Sobrenome     Nome 
+    Banner     Bruce 
+    Kent     Clark 
+    Parker     Peter
+    Wayne     Bruce
+Mas ele quer assim:
+    Nome     Sobrenome 
+    Bruce     Banner 
+    Bruce     Wayne 
+    Clark     Kent 
+    Peter     Parker
+(note que quando há nomes iguais, eles ficam em sequência e ordenados pelo sobrenome).
+Seus contatos podem até ter alguns poderes, mas eles não sabem programar, então ajude José.
+Entrada:
+A entrada começa com uma linha contendo um número inteiro N, o número de contatos de José. Em seguida há N linhas contendo os contatos de José no formato . Nome e sobrenome possuem até 15 caracteres e telefone até 10. José tem no máximo 100 contatos.
+Saída:
+Seu programa deve imprimir os contatos de José na ordem desejada, formatada conforme exemplo de saída.

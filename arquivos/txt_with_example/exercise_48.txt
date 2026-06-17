@@ -1,0 +1,18 @@
+Concurso
+Em certo concurso, vários candidatos fizeram uma prova de múltipla escolha. O edital do concurso previa que a vaga seria preenchida pelo candidato que obtivesse a maior nota. Mas o estagiário que redigiu o edital se esqueceu de incluir a regra de desempate! Agora que o concurso já foi realizado, os responsáveis precisam saber o tamanho do problema que tem em mãos... descobrir quantas pessoas empataram com a maior nota!
+Você deve fazer um programa para ler as notas dos candidatos e informar a maior nota e quantos candidatos obtiveram esta nota.
+Entrada:
+A entrada é composta por duas linhas. A primeira contém um valor inteiro N, que indica o número de candidatos que fizeram a prova. A segunda linha contém N valores inteiros, indicando a nota de cada
+candidato. Restrições: 1 ≤ N ≤ 1000 e a nota de cada candidato pode variar de 0 a 30.
+Saída:
+Seu programa deve imprimir dois valores separados por espaço em branco: a maior nota e quantos candidatos obtiveram esta nota.
+Exemplos:
+7
+20 7 9 13 2 12 23
+23 1
+10
+7 5 2 4 6 8 9 4 9 3
+9 2
+5
+5 5 5 5 5
+5 5

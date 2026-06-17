@@ -1,0 +1,75 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{wrapfig}
+\usepackage{olymp}
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{Palavra por palavra}{palavras}{2}
+
+\begingroup
+\setlength{\intextsep}{0pt}%
+%\setlength{\columnsep}{0pt}
+
+Uma equipe está trabalhando na decoração de um evento e precisa imprimir vários cartazes com diferentes frases.
+Os cartazes são verticais, então cada palavra da frase deve aparecer em uma linha.
+Faça um programa para automatizar o trabalho da equipe.
+
+% \Notes
+
+\InputFile
+
+A entrada contém apenas uma linha com a frase que deve ser processada. A frase possui no máximo $200$ caracteres e contém apenas letras e espaços, sendo terminada por um ponto final. Os espaços aparecem apenas entre palavras e não há espaços seguidos.
+
+\endgroup
+
+\OutputFile
+
+Escreva a sequência de palavras da frase, uma por linha.
+
+% \Notes
+
+\Example
+
+\begin{example}
+\exmp{
+Hello world.
+}{
+Hello
+world
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+Ciencia da Computacao.
+}{
+Ciencia
+da
+Computacao
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+To be or not to be.
+}{
+To
+be
+or
+not
+to
+be
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

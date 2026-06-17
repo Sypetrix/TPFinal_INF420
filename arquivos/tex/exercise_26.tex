@@ -1,0 +1,60 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{Aula extra de Cálculo I}{aula}{2}
+
+Professores de MAT140 - Cálculo I notaram que as notas na primeira prova foram muito variadas. Enquanto vários estudantes tiraram 85 ou mais, muitos tiraram menos da metade da nota. Os professores prepararam exercícios extras e aulas extras para os que não tiraram nota muito boa.
+
+Quem tirou menos de 50 pontos terá que assistir aulas extras. Quem tirou pelo menos 50 mas menos que 85 deve fazer exercícios extras. Quem tirou 85 ou mais está dispensado das aulas e exercícios extras.
+
+Dada a lista com as notas de cada estudante, determine o número de estudantes que devem assistir aulas extras e o número de estudantes que devem fazer exercícios extras.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A primeira linha da entrada contém um inteiro $N$, indicando o número de estudantes. A segunda linha contém $N$ números inteiros $X_i$, indicando as notas dos estudantes. Restrições: $3 \leq N \leq 1000$ e $0 \leq X_i \leq 100$.
+
+
+\OutputFile
+
+Seu programa deve produzir uma única linha, contendo dois inteiros: o número de estudantes que devem assistir aulas extras seguido do número de estudantes que devem fazer exercícios extras.
+
+% \Notes
+% Note que a mensagem escrita não tem acento e tem um ponto final.
+
+\Example
+
+\begin{example}
+\exmp{
+5
+85 49 50 84 50
+}{
+1 3
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+4
+48 49 30 47
+}{
+4 0
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+\textit{Problema da OBI 2017 - Olimpíada Brasileira de Informática (com outra história)}
+
+\end{problem}
+
+\end{document}

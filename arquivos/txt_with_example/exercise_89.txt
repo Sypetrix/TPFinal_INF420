@@ -1,0 +1,43 @@
+=10cm
+=6cm
+Ordenação de capivaras por IMC
+Márcia é bolsista de IC do curso de Zootecnia e precisa de sua ajuda. Durante sua pesquisa, coletou dados de várias capivaras da UFV e fez uma tabela com nome (que ela batizou), matrícula (que grampeou nas orelhas), e ainda peso e altura (que mediu após banhos na lagoa). Veja uma parte destes dados na tabela abaixo.
+Nome     Matrícula     Peso (Kg)     Altura (cm)
+huguinho     110     80     30
+zezinho     105     90     50
+luisinho     190     70     40
+A orientadora de Márcia quer estes dados ordenados por IMC (Índice de Massa Corporal).  O IMC é calculado da seguinte forma:
+    IMC = massa/altura^2
+sendo a massa dada em quilogramas e a altura em metros. Márcia já tem o peso das capivaras em quilogramas e a altura em centímetros, e usará estas medidas para calcular o IMC. 
+Como exemplo, veja o IMC das capivaras da tabela mostrada acima:
+  * Huguinho: IMC = 80/0,30^2 = 888,88
+  * Zezinho: IMC = 90/0,50^2 = 360
+  * Luisinho: IMC = 70/0,40^2 = 437,5
+Ela precisa de sua ajuda para ordenar as capivaras pelo IMC.
+Entrada:
+A entrada é iniciada por uma linha contendo o número C de capivaras da tabela de Márcia. Em seguida existem C linhas, cada uma com 4 dados de uma capivara: N M P A, respectivamente o nome da capivara, sua matrícula, seu peso em Kg e sua altura em cm. Restrições: N é um string contendo apenas letras minúsculas (no máximo 15) e os demais dados são números inteiros, com 1 ≤ C ≤ 100.
+Saída:
+Seu programa deve escrever C linhas na saída, listando os dados das capivaras por ordem de IMC (não haverá empate). Os dados de cada capivara devem ser escritos no formato N;M;P;A, ou seja, separados por ponto-e-vírgula. Este é o formato CSV, que pode ser aberto por planilhas eletrônicas, como Excel, Calc e Numbers.
+Exemplos:
+3
+huguinho 110 80 30
+zezinho 105 90 50 
+luisinho 190 70 40
+zezinho;105;90;50 
+luisinho;190;70;40
+huguinho;110;80;30
+7
+chaves 8 75 160
+florinda 14 70 165
+girafales 999 98 250
+barriga 1000 150 175
+nhonho 1001 145 174
+chiquinha 72 50 145
+clotilde 71 74 170
+girafales;999;98;250
+chiquinha;72;50;145
+clotilde;71;74;170
+florinda;14;70;165
+chaves;8;75;160
+nhonho;1001;145;174
+barriga;1000;150;175

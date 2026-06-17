@@ -1,0 +1,21 @@
+2048
+Há poucos anos um jogo se popularizou pela internet, o 2048. A ideia do jogo é bem simples. Utiliza-se sempre um tabuleiro 4× 4, onde cada célula poderá estar vazia ou conter uma peça com um valor inteiro, sempre uma potência de 2 entre 2 e 1024.
+O jogador pode então escolher entre quatro tipos de movimentos (para cima, para baixo, para a esquerda ou para a direita), desde que seja possível realizar tais movimentos. Ao realizar um movimento, todas as peças são movimentadas o máximo possível na direção escolhida. Além disso, se um movimento forçar duas peças de igual valor uma contra a outra, as duas peças se “fundem”, tendo seus valores somados para obter o valor da peça resultante. Após a realização de um movimento, uma nova peça de valor 2 ou 4 surge aleatoriamente em uma das células vazias do tabuleiro. 
+As Figuras 1 e 2 ilustram um movimento para cima. A Figura 1 mostra a configuração inicial do tabuleiro, enquanto a Figura 2 ilustra a configuração do mesmo tabuleiro após o jogador apertar a tecla para cima. Repare que, além de levar todas as peças o máximo possível para a parte de cima do tabuleiro, o movimento fez com que as duas peças de valor 2 na segunda coluna se fundissem e formassem uma nova peça de valor 4. Repare também que, após o movimento, uma nova peça de valor 2 surgiu em uma das posições vazias do tabuleiro (neste caso, na posição logo abaixo da peça de valor 8).
+    	[t].45
+    		Configuração inicial
+    	[t].45
+    		Configuração após um movimento para cima.
+O objetivo do jogo é realizar diversos movimentos consecutivos até obter uma peça de valor 2048. O problema é que existem diversas configurações de tabuleiro para as quais não existe nenhum movimento possível. Ao alcançar uma dessas configurações, o jogo acaba (Game over! - veja a Figura 3). É importante observar que mesmo que não exista nenhuma célula vazia, isto não configura necessariamente uma situação de Game over, uma vez que ainda é possível haver movimentos quando há peças de igual valor adjacentes uma a outra (veja a Figura 4).
+    	[t].45
+    		Situação de Game over!
+    	[t].45
+    		Ainda há movimentos disponíveis
+Faça um programa para analisar uma configuração de tabuleiro do jogo 2048 e determinar se existe ou não algum movimento possível. Ou seja, seu programa deve determinar se a configuração do tabuleiro indica uma situação de Game over!.
+Entrada:
+O programa terá apenas um caso de teste.
+O caso de teste é composto por quatro linhas com quatro valores inteiros cada, indicando a configuração do tabuleiro a ser analisado. Valores 0 indicam uma célula vazia, enquanto os outros valores serão sempre potências de 2 indicando o valor da peça contida em cada célula (entre 2 e 1024, inclusive).
+Saída:
+Seu programa deve gerar apenas uma linha de saída, contendo uma das frases a seguir:
+  * “”, caso ainda haja movimentos possíveis;
+  * “”, caso não haja mais movimentos possíveis.

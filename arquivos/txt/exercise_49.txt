@@ -1,0 +1,15 @@
+Coeficiente de Rendimento Acumulado
+Na UFV, o Coeficiente de Rendimento Acumulado é um índice que mede o desempenho acadêmico do estudante e é obtido pela média ponderada das notas obtidas nas disciplinas cursadas, considerando como peso o número de créditos das respectivas disciplinas. É calculado pela fórmula:
+    CRA = ∑(NF × C)/∑C
+em que ∑ é o somatório, NF é a nota final da disciplina e C é o número de créditos da disciplina.
+Por exemplo, um estudante que tenha cursado 4 disciplinas, com os resultados da tabela abaixo,
+    nota final      70     60     55     80 
+    créditos        4      6       4      2 
+terá seu CRA calculado da seguinte forma:
+    CRA = 70×4 + 60×6 + 55×4 + 80× 2/4+6+4+2 = 63,75
+Faça um programa para calcular o CRA, dadas as notas finais e créditos das disciplinas cursadas.
+Entrada:
+A entrada contém três linhas. A primeira contém um único número natural N, indicando o número de disciplinas cursadas pelo estudante. A segunda linha contém N valores inteiros NF_i, indicando a nota final obtida nas disciplinas. A terceira linha contém N valores inteiros C_i indicando o número de créditos das respectivas disciplinas.
+Restrições: 1 ≤ N ≤ 50, 0 ≤ NF_i ≤ 100, 1 ≤ C_i ≤ 10.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, contendo o valor do CRA com 1 casa decimal.

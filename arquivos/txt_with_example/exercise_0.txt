@@ -1,0 +1,17 @@
+Distância
+Googlemaps, ViaMichelin e outros sites do gênero calculam rotas entre duas localizações. ViaMichelin oferece opções de rota mais curta (em distância), mais rápida (em tempo), mais barata (incluindo pedágios) e em alguns países também a opção de rota mais “bonita”, além de informar consumo de combustível.
+Você deve fazer um programa que calcula a menor distância entre duas localizações, mas de forma mais simples: as localizações serão pontos no plano cartesiano, e a menor distância é a distância entre eles em linha reta. A figura abaixo mostra, à esquerda, um exemplo com dois pontos, P_1 e P_2, de coordenadas (2,1) e (6,4), respectivamente. A da direita mostra a distância entre eles, que vale 5.
+    < g r a p h i c s >
+Entrada:
+A entrada terá apenas um caso de teste.
+O caso de teste é composto por quatro valores reais, X_1, Y_1, X_2, Y_2, sendo (X_1,Y_1) as coordenadas cartesianas do primeiro ponto e (X_2,Y_2) as do segundo ponto.. Restrições: 0 < X_1,Y_1,X_2,Y_2 ≤ 1000.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, contendo um valor real, formatado com duas casas decimais, indicando a distância entre os dois pontos.
+Não se esqueça de quebrar a linha após a impressão do valor.
+Exemplos:
+2 1 6 4
+5.00
+10 20 70 100
+100.00
+1.1 30 13.6 25
+13.46

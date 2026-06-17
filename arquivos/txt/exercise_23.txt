@@ -1,0 +1,8 @@
+MDC
+O MDC, Máximo Divisor Comum, entre dois números inteiros A e B é o maior número inteiro positivo que é divisor de A e de B, ou seja, que tanto A quanto B são múltiplos dele.
+O MDC é útil, por exemplo, para simplificação de frações.
+Faça um programa para calcular MDC.
+Entrada:
+A entrada é composta por dois valores inteiros, A e B. Restrição: 1 ≤ A, B ≤ 10000.
+Saída:
+Seu programa deve gerar apenas uma linha na saída, contendo o MDC de A e B.

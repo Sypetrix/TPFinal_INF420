@@ -1,0 +1,122 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{wrapfig}
+\usepackage{olymp}
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{Divisores}{divisores}{2}
+
+\begingroup
+\setlength{\intextsep}{0pt}%
+%\setlength{\columnsep}{0pt}
+
+O seguinte programa foi escrito para informar quantos divisores cada número no intervalo possui.
+
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{Mulberry}\ttfamily,
+                stringstyle=\color{Maroon}\ttfamily,
+                commentstyle=\color{YellowGreen}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#},
+                basewidth = {.48em},
+                showstringspaces=false
+}
+{%\small
+\begin{lstlisting}
+#include <iostream>
+using namespace std;
+
+int main() {
+  int a, b;
+  cin >> a >> b;
+
+  for (int i=a ; i<=b ; i++)
+    cout << i << ": " << divisores(i) << endl;
+
+  return 0;
+}
+\end{lstlisting}
+}
+
+O problema é que não existe a função divisores usada neste programa. Sua tarefa é completar o programa criando esta função. A função deve seguir o cabeçalho abaixo.
+Ela recebe um número inteiro e retorna quantos divisores ele tem.
+
+\texttt{\textcolor{Mulberry}{int} divisores(\textcolor{Mulberry}{int} n)}
+
+% \Notes
+
+\InputFile
+
+A entrada contém dois valores inteiros, $A$ e $B$.
+
+Restrição: $1 \leq A \leq B \leq 1000000$. O intervalo terá no máximo $20$ valores.
+
+\endgroup
+
+\OutputFile
+
+O programa escreve uma linha na saída para cada valor no intervalo de $A$ a $B$, inclusive eles, informando quantos divisores cada valor tem, conforme mostrado nos exemplos.
+
+% \Notes
+
+\Example
+
+\begin{example}
+\exmp{
+1 10
+}{
+1: 1
+2: 2
+3: 2
+4: 3
+5: 2
+6: 4
+7: 2
+8: 4
+9: 3
+10: 4
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+20 30
+}{
+20: 6
+21: 4
+22: 4
+23: 2
+24: 8
+25: 3
+26: 4
+27: 4
+28: 6
+29: 2
+30: 8
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+1000 1005
+}{
+1000: 16
+1001: 8
+1002: 8
+1003: 4
+1004: 6
+1005: 8
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

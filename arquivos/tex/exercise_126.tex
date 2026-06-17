@@ -1,0 +1,73 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Capivarão lotado}{lotado}{2}
+
+Capivarão é o ônibus que transporta estudantes dentro do Campus da UFV, sendo usado principalmente para deslocamento até o Restaurante Universitário (RU 2), enquanto o RU principal está sendo reformado.
+
+Considere que, em semanas de feriado, quando há menos estudantes, ele aguarda no DCE enquanto há cadeiras vazias.
+Em particular, sendo $C$ sua capacidade de pessoas sentadas, ele parte quando o número de estudantes no ônibus é maior ou igual a $C$ (os excedentes vão em pé).
+De toda forma, para que os estudantes não aguardem tanto tempo, ele parte após $T$ minutos mesmo se houver cadeira vazia.
+
+Para automatizar o processo, foi instalado um sensor para contabilizar a entrada de estudantes. Sua tarefa é fazer um programa que, dada a quantidade que entra a cada minuto, determina o minuto que ele deve partir,
+isto é, quando a capacidade $C$ é atingida ou quanto passam $T$ minutos, o que acontecer primeiro.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém duas linhas: a primeira contém dois números inteiros $C$ e $T$, repectivamente a capacidade do ônibus e o limite de espera;
+a segunda linha contém vários números inteiros $Q$, informando sequencialmente quantos estudantes entraram no ônibus a cada minuto.
+Restrições: $10 \leq C \leq 50$, $1 \leq T \leq 30$, $0 \leq Q \leq 30$.
+
+\OutputFile
+
+Seu programa deve escrever o minuto que o Capivarão deve partir.
+
+%\Notes
+
+\Example
+
+\begin{example}
+\exmp{
+20 30
+10 5 4 10 1 2
+}{
+4
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+40 5
+4 4 4 4 4 4 4 4
+}{
+5
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+30 10
+0 1 2 3 4 5 6 7 8 9 10 11 12
+}{
+9
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+\small
+No primeiro exemplo, o ônibus parte após $4$ minutos, que é quando atinge $C=20$ passageiros (entram 10 no minuto 1, mais 5 no minuto 2, mais 4 no minuto 3 e mais 10 no minuto 4).\\
+No segundo, ele parte após $5$ minutos, por atingir o tempo limite de espera $T=5$.\\
+
+\end{problem}
+
+\end{document}

@@ -1,0 +1,8 @@
+Bola de boliche
+A Copa do Qatar 2022 foi realizada no final do ano passado, tendo a Al Rihla, da foto ao lado, como a bola oficial. Bolas de futebol são muito fáceis de transportar, já que elas saem das fábricas vazias e são enchidas somente pelas lojas ou pelos consumidores finais. Infelizmente o mesmo não pode ser dito das bolas de boliche. Como são completamente sólidas, elas só podem ser transportadas embaladas uma a uma, em caixas separadas.
+Certa fábrica de bolas de boliche trabalha somente através de encomendas e envia todas as bolas por SEDEX. Como as bolas têm tamanhos diferentes, a fábrica tem vários tamanhos diferentes de caixas para transportá-las.
+Escreva um programa que, dado o diâmetro de uma bola e as 3 dimensões de uma caixa (altura, largura e profundidade), diz se a bola de boliche cabe dentro da caixa ou não.
+Entrada:
+A primeira linha da entrada contém um inteiro D (1 ≤ D ≤ 10000) que indica o diâmetro da bola de boliche. A segunda linha da entrada contém 3 números inteiros separados por um espaço cada: a altura A (1 ≤ A ≤ 10000), seguida da largura L (1 ≤ L ≤ 10000) e da profundidade P (1 ≤ P ≤ 10000).
+Saída:
+Seu programa deve imprimir uma única linha, contendo a letra ‘’ caso a bola de boliche caiba dentro da caixa ou ‘’ caso contrário.

@@ -1,0 +1,81 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+
+\newlength{\exmpwidouf}
+\exmpwidinf=10cm
+\exmpwidouf=6cm
+
+
+\setcounter{problem}{3}
+
+\begin{document}
+
+\begin{problem}{Hilfe!}{hilfe}{2}
+
+Para auxiliar os estrangeiros que vêm estudar na UFV, a DRI – Diretoria de Relações Internacionais –  preparou alguns panfletos com o significado de várias palavras. Sua missão é facilitar a utilização desses panfletos colocando as palavras em ordem alfabética.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada começa com uma linha contendo um número inteiro $N$. A próxima linha contém uma palavra identificando o idioma. Em seguida existem $N$ linhas, cada uma com duas palavras: a primeira é uma palavra em português e a segunda a tradução no idioma indicado. Restrições: $1 \leq N \leq 35$, as palavras contém apenas letras minúsculas (sem espaços) e cada uma tem no máximo 20 letras.
+
+\OutputFile
+
+A saída deve começar com uma linha com o texto ``\texttt{portugues -> xxx}'', sendo \texttt{xxx} o idioma indicado na entrada. Em seguida, as $N$ palavras da entrada, em ordem alfabética, com suas respectivas traduções fornecidas na entrada, conforme formato dos exemplos.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+7
+alemao
+socorro hilfe
+sim ja
+nao nein
+bom gut
+obrigado danke
+entrada eingang
+saida ausgang
+}{
+portugues -> alemao
+bom - gut
+entrada - eingang
+nao - nein
+obrigado - danke
+saida - ausgang
+sim - ja
+socorro - hilfe
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+3
+bosnio
+sim yup
+entrada ulaz
+cerveja pivo
+}{
+portugues -> bosnio
+cerveja - pivo
+entrada - ulaz
+sim - yup
+}%
+\end{example}
+
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

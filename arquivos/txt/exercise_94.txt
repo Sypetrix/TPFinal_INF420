@@ -1,0 +1,13 @@
+Polinômio
+Polinômios são expressões algébricas formadas pela soma algébrica de monômios. Um monômio é expresso na forma ax^n, sendo x  uma variável, a um número real (o coeficiente) e n um número natural (o grau). O grau de um polinômio é maior grau dos seus monômios.
+Por exemplo, um polinômio de grau 3 e coeficientes 1 -2 0 4 é representado por:
+    1x^3 - 2x^2 + 0x^1 + 4x^0
+ou seja,
+    x^3 - 2x^2 + 4
+Para x=1, este polinômio vale 3. Para x=2, vale 4. E, para x=-2, vale -12.
+Faça um programa para calcular o valor de um polinômio para um dado valor de variável.
+Entrada:
+A entrada é composta por três linhas. A primeira contém um número N, o grau do polinômio. A segunda contém N+1 valores reais: A_N, A_N-1, …, A_1, A_0, os coeficientes dos monômios do polinômio. A terceira linha contém um valor real X, o valor da variável.
+Restrições: 2 ≤ N ≤ 10, -100.0 ≤ A_i ≤ 100.0, -10 ≤ X ≤ 10.
+Saída:
+Seu programa deve gerar uma linha de saída contendo o valor do polinômio para o valor da variável, formatado para 2 casas decimais.

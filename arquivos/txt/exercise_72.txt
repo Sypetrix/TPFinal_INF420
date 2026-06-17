@@ -1,0 +1,29 @@
+Copa do Mundo 2022
+No final do ano passado foi disputada a Copa do Mundo 2022, no Qatar.
+Esta foi a última copa com 32 seleções, divididas em 8 grupos, cada um com 4 seleções. Na próxima Copa serão 48 seleções.
+Um amigo seu quis aproveitar a Copa para tentar ganhar dinheiro desenvolvendo um aplicativo para smartphone que mostra a tabela atualizada para os usuários. Para isso, ele criou um sistema que se conecta diretamente ao site da FIFA e faz o download dos resultados dos jogos já realizados.
+Para testar o aplicativo, ele usou os dados da copa anterior, disputada na Rússia em 2018. Coincidentemente, assim como em 2022, a Suíça e a Sérvia também estavam no grupo do Brasil.
+O problema é que ele se complicou na hora de fazer este sistema interpretar os resultados e calcular o número de pontos de cada seleção. Por isso, ele pediu a sua ajuda para implementar essa funcionalidade no aplicativo para ter mais sucesso em 2026, na copa que será disputada no Canadá, Estados Unidos e México.
+Você deve fazer um programa que leia a lista de resultados dos jogos já realizados e calcule o número de pontos das quatro seleções que estão em um mesmo grupo.
+Entrada:
+A entrada é dividida em duas partes, separadas por uma linha em branco.
+A primeira parte são os dados lidos diretamente do site da FIFA. Esta parte começa com um inteiro N indicando o número de partidas já realizados. Cada uma das N linhas seguintes contém o resultado de uma partida, no seguinte formato:
+Onde:
+  *  e  são os nomes das seleções (sequências de caracteres sem espaços);
+  *  é o número de gols feitos pelo ;
+  *  é o número de gols feitos pelo ;
+Para armazenar estes dados, você deve obrigatoriamente utilizar um vetor “partida” como definido abaixo:
+,
+                stringstyle=,
+                commentstyle=,
+                morecomment=[l][]#,
+                basewidth = .48em
+struct TipoPartida 
+    char time1[31], time2[31];
+    int placar1, placar2;
+;
+TipoPartida partida[50];
+A segunda parte da entrada indica quais seleções estão no grupo para o qual o aplicativo está calculando a classificação. Portanto, esta parte é composta por exatamente 4 linhas, cada uma delas indicando o nome de uma seleção. Observe que é possível que uma ou mais destas seleções ainda não tenham realizado nenhuma partida.
+Restrições: N ≤ 50; 0 ≤ ,  ≤ 10; todos os nomes de seleções contêm no máximo 30 caracteres e não contêm espaços.
+Saída:
+Seu programa deve gerar 4 linhas de saída, cada uma contendo o nome de uma das seleções seguida pelo número de pontos conquistados por ela até o momento. A ordem de saída deve ser a mesma de entrada, ou seja, as seleções não devem ser ordenadas de acordo com a pontuação.

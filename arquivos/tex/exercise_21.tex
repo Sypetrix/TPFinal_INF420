@@ -1,0 +1,90 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{3}
+
+\begin{document}
+
+\begin{problem}{Consumo de combustível}{consumo}{2}
+
+\small
+Uma empresa de logística possui uma frota de caminhões que utiliza para transportar cargas por todo o Brasil. Um consultor contratado pela empresa mostrou ao gerente que alguns caminhões poderiam estar gastando mais combustível que o normal, elevando o custo da entrega e diminuindo o lucro.
+
+O gerente precisa aferir a média de consumo de combustível de cada veículo para identificar os veículos problemáticos. Foi então definido que todo motorista deve receber o caminhão com o tanque cheio e, durante a viagem, deve anotar a quilometragem percorrida em cada trecho e os possíveis abastecimentos realizados. Ao final de uma viagem, ao entregar o caminhão, o tanque deve necessariamente ser completado, não esquecendo de anotar a quantidade de combustível.
+
+Dessa forma, o calculo do consumo médio é simplificado, sendo este a distância total percorrida dividida pela quantidade total de combustível abastecido.
+
+Escreva um programa para ajudar a empresa a calcular o consumo médio de combustível de um caminhão em uma determinada viagem.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada é composta por várias linhas. Cada linha inicia com uma letra $L$ indicando o tipo da entrada e um valor real $V$.
+
+\begin{itemize}
+\vspace{-9pt}
+    \item Para $L$ = `\texttt{R}', $V$ representa o número de quilômetros rodados em um trecho;
+\vspace{-9pt}
+    \item Para $L$ = `\texttt{A}', $V$ representa a quantidade de combustível em litros abastecida.
+\end{itemize}
+
+\vspace{-9pt}
+A entrada se encerra com a letra `\texttt{X}', quando então deve-se calcular e imprimir a média de consumo. Restrições: $0 < V \leq 5000$ e a entrada não começa com `\texttt{X}'.
+
+\OutputFile
+
+Seu programa deve imprimir um única linha, contendo a média de consumo de combustível da viagem informada na entrada (nesta questão, em Km/l). A saída deve ser formatada para duas casas decimais.
+
+% \Notes
+% xxx
+
+\Example
+
+\begin{example}
+\exmp{
+R 100
+A 20
+R 300
+R 200
+A 160
+X
+}{
+3.33
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+R 200
+A 26.98
+R 36.15
+R 69.54
+R 152
+A 75.2
+X
+}{
+4.48
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+R 200
+A 20
+X
+}{
+10.00
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

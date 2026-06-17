@@ -1,0 +1,8 @@
+MMC
+O MMC, Mínimo Múltiplo Comum, entre dois números inteiros A e B é o menor número inteiro positivo que é múltiplo de A e de B, ou seja, que é divisível tanto por A quanto por B.
+O MMC é útil, por exemplo, para cálculos com frações.
+Faça um programa para calcular MMC.
+Entrada:
+A entrada é composta por dois valores inteiros, A e B. Restrição: 1 ≤ A, B ≤ 10000.
+Saída:
+Seu programa deve gerar apenas uma linha na saída, contendo o MMC de A e B.

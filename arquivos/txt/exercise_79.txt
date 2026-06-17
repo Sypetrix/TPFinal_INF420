@@ -1,0 +1,7 @@
+Dividindo a conta
+Depois de mais uma prova fácil os estudantes saíram para festejar numa lanchonete da cidade. A conta chegou e cada um pagou certo valor. Agora precisam saber quanto cada um tem de crédito (ou débito!) para ser considerado na próxima comemoração, considerando que a conta foi dividida igualmente entre todos.
+Entrada:
+A entrada é composta por duas linhas. A primeira contém um número inteiro N, a quantidade de estudantes que dividiram a conta. A segunda linha contém N valores inteiros, P_1, P_2, …, P_N, que indicam o valor pago por cada estudante.
+Restrições: 1 < N ≤ 50 e 0 ≤ P_i ≤ 100.
+Saída:
+A saída do seu programa deve conter uma linha informando o valor de crédito (ou débito) de cada estudante arredondado para 2 casas decimais. Esses valores devem estar separados por espaço em branco, com quebra de linha após o último.

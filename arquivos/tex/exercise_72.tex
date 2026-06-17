@@ -1,0 +1,143 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{wrapfig}
+\usepackage{olymp}
+
+\setcounter{problem}{3}
+
+\begin{document}
+
+\begin{problem}{Copa do Mundo 2022}{copa}{2}
+
+\begin{wrapfigure}{r}{0.25\textwidth}
+\includegraphics[width=0.9\linewidth]{images/exercise_72_0.png} 
+%\caption{Caption1}
+%\label{fig:subim1}
+\end{wrapfigure}
+
+No final do ano passado foi disputada a Copa do Mundo 2022, no Qatar.
+Esta foi a última copa com 32 seleções, divididas em 8 grupos, cada um com 4 seleções. Na próxima Copa serão 48 seleções.
+
+Um amigo seu quis aproveitar a Copa para tentar ganhar dinheiro desenvolvendo um aplicativo para \textit{smartphone} que mostra a tabela atualizada para os usuários. Para isso, ele criou um sistema que se conecta diretamente ao site da FIFA e faz o \textit{download} dos resultados dos jogos já realizados.
+Para testar o aplicativo, ele usou os dados da copa anterior, disputada na Rússia em 2018. Coincidentemente, assim como em 2022, a Suíça e a Sérvia também estavam no grupo do Brasil.
+
+O problema é que ele se complicou na hora de fazer este sistema interpretar os resultados e calcular o número de pontos de cada seleção. Por isso, ele pediu a sua ajuda para implementar essa funcionalidade no aplicativo para ter mais sucesso em 2026, na copa que será disputada no Canadá, Estados Unidos e México.
+
+Você deve fazer um programa que leia a lista de resultados dos jogos já realizados e calcule o número de pontos das quatro seleções que estão em um mesmo grupo.
+
+% \Notes
+
+% Uma seleção ganha 3 pontos para cada vitória e 1 ponto para cada empate. Derrotas não alteram sua pontuação.
+
+\InputFile
+
+A entrada é dividida em duas partes, separadas por uma linha em branco.
+
+A primeira parte são os dados lidos diretamente do site da FIFA. Esta parte começa com um inteiro $N$ indicando o número de partidas já realizados. Cada uma das $N$ linhas seguintes contém o resultado de uma partida, no seguinte formato:
+
+\begin{center}
+\texttt{time1 placar1 x placar2 time2}
+\end{center}
+
+Onde:
+\begin{itemize}
+    \item \texttt{time1} e \texttt{time2} são os nomes das seleções (sequências de caracteres sem espaços);
+    \item \texttt{placar1} é o número de gols feitos pelo \texttt{time1};
+    \item \texttt{placar2} é o número de gols feitos pelo \texttt{time2};
+\end{itemize}
+
+
+\Notes
+
+Para armazenar estes dados, você deve obrigatoriamente utilizar um vetor ``partida'' como definido abaixo:
+
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{Mulberry}\ttfamily,
+                stringstyle=\color{Maroon}\ttfamily,
+                commentstyle=\color{YellowGreen}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#},
+                basewidth = {.48em}
+}
+\begin{lstlisting}
+struct TipoPartida {
+    char time1[31], time2[31];
+    int placar1, placar2;
+};
+
+TipoPartida partida[50];
+\end{lstlisting}
+
+A segunda parte da entrada indica quais seleções estão no grupo para o qual o aplicativo está calculando a classificação. Portanto, esta parte é composta por exatamente 4 linhas, cada uma delas indicando o nome de uma seleção. Observe que é possível que uma ou mais destas seleções ainda não tenham realizado nenhuma partida.
+
+Restrições: $N \leq 50$; $0 \leq$ \texttt{placar1}, \texttt{placar2} $\leq 10$; todos os nomes de seleções contêm no máximo 30 caracteres e não contêm espaços.
+
+\OutputFile
+
+Seu programa deve gerar 4 linhas de saída, cada uma contendo o nome de uma das seleções seguida pelo número de pontos conquistados por ela até o momento. A ordem de saída deve ser a mesma de entrada, ou seja, as seleções não devem ser ordenadas de acordo com a pontuação.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+3
+Russia 5 x 0 ArabiaSaudita
+Portugal 3 x 3 Espanha
+Egito 0 x 1 Uruguai\\
+
+Russia
+ArabiaSaudita
+Uruguai
+Egito
+}{
+Russia 3
+ArabiaSaudita 0
+Uruguai 3
+Egito 0
+}%
+\end{example}
+
+
+\begin{example}
+\exmp{
+8
+Russia 5 x 0 ArabiaSaudita
+Egito 0 x 1 Uruguai
+CostaRica 2 x 1 Servia
+Argentina 1 x 1 Islandia
+Brasil 0 x 0 Suica
+Brasil 3 x 1 CostaRica
+Servia 1 x 0 Suica
+Servia 0 x 2 Brasil\\
+
+Brasil
+Suica
+CostaRica
+Servia
+}{
+Brasil 7
+Suica 1
+CostaRica 3
+Servia 3
+}%
+\end{example}
+
+\textbf{Dica}: para não ter que digitar a entrada toda vez que for testar seu programa, crie um arquivo contendo cada entrada e execute seu programa fazendo redirecionamento de entrada:
+
+\texttt{./a.out < entrada1.txt}
+
+Assim, toda leitura feita da entrada padrão (\texttt{scanf} e \texttt{cin}) lerá dados do arquivo \texttt{entrada1.txt}. Você não precisará digitar a entrada novamente e ela não 
+aparecerá na tela, apenas o resultado do programa.
+%sairá na tela, só o resultado do programa.
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

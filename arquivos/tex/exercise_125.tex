@@ -1,0 +1,78 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Extrato bancário}{extrato}{2}
+
+Preocupado com os gastos do mês, Manuel retirou um extrato da sua conta bancária e agora quer saber quanto entrou e quanto saiu da sua conta.
+O extrato mostra os valores de todas as movimentações, incluindo depósitos, transferências, pix, pagamentos de contas, entre outras.
+Todos os valores positivos são valores que entraram na sua conta e todos os negativos são valores que saíram da conta. Faça um programa para totalizar esses valores.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada começa com uma linha contendo um inteiro $N$, o número de movimentações na conta.
+Em seguida há $N$ linhas, cada uma com o valor real $V$ de uma movimentação realizada.
+Restrições: $1 \leq N \leq 100$ e $-10000 \leq V \leq 10000$.
+
+\OutputFile
+
+Seu programa deve gerar duas linhas na saída: a primeira com o valor total que entrou na conta e a segunda com o valor total que saiu da conta.
+Ambos devem ser formatados para duas casas decimais.
+
+%\Notes
+
+\Example
+
+\begin{example}
+\exmp{
+5
+100.00
+100.00
+-50.00
+100.00
+-50.00
+}{
+Entrou: 300.00
+Saiu: 100.00
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+3
+-100.00
+-200.00
+-300.00
+}{
+Entrou: 0.00
+Saiu: 600.00
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+4
+1.50
+2.50
+3.50
+-5.00
+}{
+Entrou: 7.50
+Saiu: 5.00
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

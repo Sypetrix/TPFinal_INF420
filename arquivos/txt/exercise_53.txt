@@ -1,0 +1,7 @@
+Movimentos da torre
+Você começou a participar de um projeto que está desenvolvendo um tutorial de xadrez.
+Sua primeira tarefa é mostrar os possíveis movimentos de uma torre. No xadrez, uma torre pode ser movida ortogonalmente no tabuleiro, ou seja, para casas que estejam na mesma linha ou na mesma coluna.
+Entrada:
+A entrada contém dois números L e C, que indicam a linha e a coluna da posição atual da torre. As linhas são numeradas de cima para baixo e as colunas da esquerda para direita. Restrições, 1 ≤ L, C ≤ 8.
+Saída:
+Seu programa deve produzir uma saída como a mostrada abaixo, onde `' indica a posição atual da torre, `' (minúsculo) indica uma casa para onde ela pode se mover e `' uma casa para onde ela não pode se mover.

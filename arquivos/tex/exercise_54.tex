@@ -1,0 +1,64 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Conversor de horas}{convhoras}{2}
+
+Faça um programa que leia um valor inteiro representando o tempo em segundos de um determinado evento e informe-o expresso no formato horas:minutos:segundos.
+
+Para resolver o problema implemente obrigatoriamente uma função única que receba a duração total do evento em segundos e retorne por referência a quantidade de horas,
+minutos e segundos em que esse valor total é decomposto, de acordo com o seguinte protótipo:
+
+\texttt{\textcolor{YellowGreen}{\textbackslash\textbackslash Converte seg segundos em h horas m minutos s segundos}}\\
+\texttt{\textcolor{Mulberry}{void} convhoras(\textcolor{Mulberry}{int} seg, \textcolor{Mulberry}{int \&}h, \textcolor{Mulberry}{int \&}m, \textcolor{Mulberry}{int \&}s)};
+
+
+
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada consiste em um único valor inteiro $N$, representando uma quantidade total de segundos. Restrição: $0 \leq N \leq 86400$ (a quantidade de segundos em um dia).
+
+\OutputFile
+
+Seu programa deve gerar uma única linha contendo o valor convertido para horas, minutos e segundos, no formato ``\texttt{hh:mm:ss}'', ou seja, os valores devem ser separados por ``\texttt{:}'' e cada um deve ter dois dígitos (assim, valores de 0 a 9 devem ser impressos com um zero à esquerda).
+
+
+% \Notes
+% Nesta questão, seu programa deve usar a função \texttt{main} dada acima exatamente como está, não a modifique! Sua tarefa é apenas criar a função \texttt{eh\_primo}.
+
+\Example
+
+\begin{example}
+\exmp{
+556
+}{
+00:09:16
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+6666
+}{
+01:51:06
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

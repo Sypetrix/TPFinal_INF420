@@ -1,0 +1,72 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Sequência de collatz}{collatz}{2}
+
+A sequência de Collatz (conhecida como $3n+1$) usa uma regra matemática simples a partir de número inteiro positivo $n$:
+
+\begin{itemize}
+\item Se $n$ for par: divida por $2$, isto é, $n/2$;
+\item Se $n$ for ímpar: multiplique por $3$ e some $1$, isto é, $3n+1$;
+\item Repita o processo com o novo número até que ele se torne $1$.
+\end{itemize}
+
+Exemplo: Se iniciar com $n=6$, temos a sequência $6 \rightarrow 3 \rightarrow 10 \rightarrow 5 \rightarrow 16 \rightarrow 8 \rightarrow 4 \rightarrow 2 \rightarrow 1$.
+
+Sua tarefa aqui é descobrir a quantidade de passos para um dado valor inicial $n$ chegar em $1$.
+Por exemplo, para $n=6$, são necessários 8 passos.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém um único número natural $N$. Restrições: $2 \leq N \leq 200$.
+
+\OutputFile
+
+Seu programa deve informar o número de passos da sequência de Collatz para o valor $N$.
+
+%\Notes
+
+\Example
+
+\begin{example}
+\exmp{
+6
+}{
+8
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+4
+}{
+2
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+27
+}{
+111
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+\Notes
+Curiosidade: a conjectura de Collatz, proposta pelo matemático Lothar Collatz em 1937, é um dos mais famosos problemas não resolvidos da Matemática.
+Ela pergunta se a sequência de Collatz eventualmente chega em $1$ para qualquer número natural $n$. Já foi mostrado que vale para todo $n < 2.36 \times 10^{31}$, mas até hoje não se sabe se é verdadeira para qualquer $n$.
+
+\end{problem}
+
+\end{document}

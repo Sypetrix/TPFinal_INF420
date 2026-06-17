@@ -1,0 +1,81 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{wrapfig}
+\usepackage{olymp}
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{Função para maior de 3}{maiorf}{2}
+
+\begingroup
+\setlength{\intextsep}{0pt}%
+%\setlength{\columnsep}{0pt}
+
+Faça uma função para determinar e retornar o maior valor entre três números inteiros.
+
+A função deve seguir o cabeçalho abaixo:
+
+\texttt{\textcolor{Mulberry}{int} maior(\textcolor{Mulberry}{int}, \textcolor{Mulberry}{int}, \textcolor{Mulberry}{int})}
+
+Faça um programa que lê três valores inteiros, usa a função acima para encontrar o maior valor e então escreve o valor retornado pela função.
+
+% \Notes
+
+\InputFile
+
+A entrada contém três valores inteiros, $A$, $B$ e $C$.
+
+Restrições: $-2^{31} \leq A,B,C < 2^{31}$.
+
+\endgroup
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha na saída, contendo o maior valor entre $A$, $B$ e $C$.
+
+% \Notes
+
+\Example
+
+\begin{example}
+\exmp{
+9 3 10
+}{
+10
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+4 -6 0
+}{
+4
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+-236 -73 -248
+}{
+-73
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+9 10 10
+}{
+10
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

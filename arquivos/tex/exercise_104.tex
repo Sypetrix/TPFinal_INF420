@@ -1,0 +1,84 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{4}
+
+\begin{document}
+
+\begin{problem}{Fibonacci}{fibonacci}{2}
+ 
+A sequência de \textbf{Fibonacci} é uma sequência de números naturais cujos dois primeiros elementos são 0 e 1, e todos os elementos subsequentes são calculados pela soma dos dois anteriores.
+
+Matematicamente, representando por $F(n)$ o $n$-ésimo termo da série, começando de 0, temos que:
+
+\begin{itemize}
+\vspace{-2pt}
+    \item $F(0) = 0$
+\vspace{-2pt}
+    \item $F(1) = 1$
+\vspace{-2pt}
+    \item $F(n) = F(n-1) + F(n-2)$, para todo $N \geq 2$.
+\end{itemize}
+
+Assim, os 10 primeiros termos da sequência de Fibonacci são os apresentados a seguir:
+
+\begin{center}
+\begin{tabular}{l|cccccccccc}
+    $n$    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
+    \hline
+    $F(n)$ & 0 & 1 & 1 & 2 & 3 & 5 & 8 & 13 & 21 & 34 
+\end{tabular}
+\end{center}
+
+Faça um programa para, dado um número natural $n$, calcular $F(n)$.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém um único número natural $N$. Restrições: $0 \leq N \leq 90$.
+
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha de saída, contendo o valor de $F(N)$.
+
+\Notes
+Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+8
+}{
+21
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+15
+}{
+610
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+80
+}{
+23416728348467685
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

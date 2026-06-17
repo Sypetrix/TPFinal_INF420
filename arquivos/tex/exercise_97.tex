@@ -1,0 +1,86 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+
+\newlength{\exmpwidouf}
+\exmpwidinf=10cm
+\exmpwidouf=6cm
+
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Idade da Camila}{idade}{2}
+
+Cibele, Camila e Celeste são três irmãs inseparáveis. Estão sempre juntas e adoram fazer esportes, ler, cozinhar, jogar no computador... Agora estão aprendendo a programar computadores para desenvolverem seus próprios jogos.
+
+Mas nada disso interessa para esta tarefa: estamos interessados apenas nas suas idades. Sabemos que Cibele nasceu antes de Camila e Celeste nasceu depois de Camila.
+
+Dados três números inteiros indicando as idades das irmãs, escreva um programa para determinar a idade de Camila.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada é composta por três linhas, cada linha contendo um número inteiro $N$, a idade de uma das irmãs.
+Restrições: $5 \leq N \leq 100$
+
+\OutputFile
+
+Seu programa deve produzir uma única linha, contendo um único número inteiro, a idade de Camila.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+6
+9
+7
+}{
+7
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+34
+36
+38
+}{
+36
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+22
+25
+22
+}{
+22
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+91
+91
+91
+}{
+91
+}%
+\end{example}
+
+\textit{Questão da OBI2021, fase local.}
+
+\end{problem}
+
+\end{document}

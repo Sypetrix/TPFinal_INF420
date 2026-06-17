@@ -16,16 +16,21 @@ import argparse
 import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from . import config, data_utils
+from . import config, data_utils, ingest
 
 
 def run(max_features: int = 5000, ngram_max: int = 2, min_df: int = 2) -> None:
+    # Etapa 1: garante que data/raw/questoes.csv exista (gera de arquivos/ se faltar).
+    ingest.ensure_dataset()
+
     df = data_utils.load_raw()
     data_utils.check_columns(df, [config.TEXT_COL, config.LABEL_COL])
 
-    # Remove linhas sem enunciado ou sem rótulo e padroniza o rótulo.
-    df = df.dropna(subset=[config.TEXT_COL, config.LABEL_COL]).reset_index(drop=True)
-    df[config.LABEL_COL] = df[config.LABEL_COL].astype(str).str.strip().str.lower()
+    # Remove apenas linhas sem enunciado; as sem rótulo (questões sem avaliação)
+    # são mantidas para o recomendador, mas padronizamos o rótulo quando existe.
+    df = df.dropna(subset=[config.TEXT_COL]).reset_index(drop=True)
+    rotulo = df[config.LABEL_COL].astype("string").str.strip().str.lower()
+    df[config.LABEL_COL] = rotulo.where(rotulo.notna() & (rotulo != "nan"))
 
     print("Limpando enunciados...")
     df["texto_limpo"] = df[config.TEXT_COL].astype(str).map(data_utils.clean_text)

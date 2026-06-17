@@ -1,0 +1,96 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{2}
+
+\begin{document}
+
+\begin{problem}{Coeficiente de Rendimento Acumulado}{cra}{2}
+ 
+Na UFV, o Coeficiente de Rendimento Acumulado é um índice que mede o desempenho acadêmico do estudante e é obtido pela média ponderada das notas obtidas nas disciplinas cursadas, considerando como peso o número de créditos das respectivas disciplinas. É calculado pela fórmula:
+
+\vspace{-6pt}
+\begin{equation}
+    CRA = \frac{\sum{(NF \times C})}{\sum{C}}\notag
+\end{equation}
+
+\vspace{-6pt}
+em que $\sum{}$ é o somatório, NF é a nota final da disciplina e C é o número de créditos da disciplina.
+
+Por exemplo, um estudante que tenha cursado 4 disciplinas, com os resultados da tabela abaixo,
+
+\begin{center}
+\begin{tabular}{|l|cccc|}
+    \hline
+    nota final  & 70 & 60 & 55 & 80 \\
+    \hline
+    créditos    & 4  & 6  &  4 &  2 \\
+    \hline
+\end{tabular}
+\end{center}
+
+terá seu CRA calculado da seguinte forma:
+
+\begin{equation}
+    CRA = \frac{70\times4 + 60\times6 + 55\times4 + 80\times 2}{4+6+4+2} = 63,75\notag
+\end{equation}
+
+Faça um programa para calcular o CRA, dadas as notas finais e créditos das disciplinas cursadas.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém três linhas. A primeira contém um único número natural $N$, indicando o número de disciplinas cursadas pelo estudante. A segunda linha contém $N$ valores inteiros $NF_i$, indicando a nota final obtida nas disciplinas. A terceira linha contém $N$ valores inteiros $C_i$ indicando o número de créditos das respectivas disciplinas.
+
+Restrições: $1 \leq N \leq 50$, $0 \leq NF_i \leq 100$, $1 \leq C_i \leq 10$.
+
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha de saída, contendo o valor do CRA com 1 casa decimal.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+4
+70 60 55 80
+4 6 4 2
+}{
+63.8
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+1
+59
+2
+}{
+59.0
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+6
+100 100 60 60 60 39
+6 5 4 3 2 1
+}{
+80.0
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

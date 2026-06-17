@@ -1,0 +1,20 @@
+Conta bits
+Faça uma função recursiva que conta o número de bits 1 da representação binária de um inteiro n. Por exempo, para n = 14 a função deve retornar 3, pois 14 em binário é ; para n=2018 a resposta é 7, pois sua representação em binário é .
+Faça um programa para ler uma lista de números inteiros e, usando a função recursiva descrita acima, informar quantos bits 1 cada um deles possui em binário.
+Lembre-se que a representação binária pode ser obtida pelos restos de sucessivas divisões por 2.
+    < g r a p h i c s >
+Entrada:
+A entrada contém vários casos de teste. Cada caso de teste é uma linha contendo um número inteiro n. Restrição: 0 < n ≤ 2^31-1.
+O valor 0 encerra a lista de casos de teste e não deve ser processado.
+Saída:
+Seu programa deve gerar uma linha de saída para cada caso de teste, contendo o número de bits 1 da representação binária de n.
+Exemplos:
+14
+15
+2018
+1000000000
+0
+3
+4
+7
+13

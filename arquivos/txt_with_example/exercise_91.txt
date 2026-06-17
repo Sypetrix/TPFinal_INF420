@@ -1,0 +1,27 @@
+Números de Catalan
+Os números de Catalan formam uma sequência de números naturais que
+aparecem em vários problemas de contagem, geralmente envolvendo objetos
+definidos recursivamente. Os primeiros números da série, para n = 0, 1, 2, 3, … são 1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796, 58786, …
+O n-ésimo número da série é denotado por C_n e pode ser calculado de diversas formas. Uma delas é a seguinte:
+    C_n = 4n-2/n+1C_n-1
+com C_0=1.
+A sequência foi descoberta por Euler quando contava o número de maneiras que um polígono podia ser dividido em triângulos. O nome é uma homenagem ao matemático Eugène Catalan, que descobriu a conexão da sequência com
+expressões entre parênteses.
+Implemente uma função recursiva para calcular o n-ésimo termo da série.
+Entrada:
+A entrada contém vários casos de teste. Cada caso de teste é uma linha contendo um número inteiro n. Restrição: 0 ≤ n ≤ 15.
+ O valor -1 encerra a lista de casos de teste e não deve ser processado.
+Saída:
+Seu programa deve gerar uma linha de saída para cada caso de teste, contendo o valor de C_n.
+Exemplos:
+1
+0
+3
+5
+10
+-1
+1
+1
+5
+42
+16796

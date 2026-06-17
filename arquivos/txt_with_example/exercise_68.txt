@@ -1,0 +1,35 @@
+Siglas [2]
+Um acrônimo, ou mais comumente conhecido como sigla, é uma abreviação formada pelos componentes iniciais de uma palavra ou de uma frase. Estes componentes podem ser letras individuais, como em UFV (Universidade Federal
+de Viçosa), ou partes iniciais das palavras, como em ANVISA (Agência Nacional de Vigilância Sanitária).
+Na verdade, não existe um padrão muito rígido para a formação de siglas, e existem siglas que contém partes das palavras que não estão necessariamente no início delas, como em DPI (Departamento de Informática) ou em CCP (Ciência da Computação).
+Algumas siglas parecem até não fazer sentido, como SAPIENS (Sistema de Apoio
+ao Ensino), mas após uma análise é possível perceber que todas as letras
+utilizadas na sigla estão presentes na frase original, e na ordem utilizada (Sistema
+de Apoio ao Ensino). Mas existem ainda outras que realmente não fazem sentido, já que não é possível encontrar todas as letras da sigla na frase original, na
+mesma ordem. Vários exemplos podem ser encontrados na lista de códigos dos
+aeroportos, como BSB (Brasília - DF) e VIX (Vitória – ES).
+Faça um programa que, dada uma ou mais palavras e uma sigla correspondente,
+determine se aquela sigla faz sentido ou não. Para que uma sigla faça sentido, é
+necessário que todas as letras dela estejam presentes na frase original, na
+mesma ordem.
+Entrada:
+A entrada contém duas linhas. A primeira linha contém uma única palavra, indicando a sigla utilizada, e a segunda contém uma ou mais palavras, indicando a frase original. Todas as letras da entrada são letras maiúsculas, e as palavras da frase são separadas por espaços. Cada linha da entrada terá no máximo 200
+caracteres.
+Saída:
+Seu programa deve escrever somente “” ou “”, indicando se a sigla dada faz sentido ou não para aquela frase.
+Exemplos:
+DPI
+DEPARTAMENTO DE INFORMATICA
+SIM
+SAPIENS
+SISTEMA DE APOIO AO ENSINO
+SIM
+BSB
+BRASILIA DF
+NAO
+VIX
+VITORIA ES
+NAO
+BBB
+BENSON MUNICIPAL AIRPORT MN
+NAO

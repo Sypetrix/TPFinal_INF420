@@ -1,0 +1,32 @@
+Consumo de combustível
+Uma empresa de logística possui uma frota de caminhões que utiliza para transportar cargas por todo o Brasil. Um consultor contratado pela empresa mostrou ao gerente que alguns caminhões poderiam estar gastando mais combustível que o normal, elevando o custo da entrega e diminuindo o lucro.
+O gerente precisa aferir a média de consumo de combustível de cada veículo para identificar os veículos problemáticos. Foi então definido que todo motorista deve receber o caminhão com o tanque cheio e, durante a viagem, deve anotar a quilometragem percorrida em cada trecho e os possíveis abastecimentos realizados. Ao final de uma viagem, ao entregar o caminhão, o tanque deve necessariamente ser completado, não esquecendo de anotar a quantidade de combustível.
+Dessa forma, o calculo do consumo médio é simplificado, sendo este a distância total percorrida dividida pela quantidade total de combustível abastecido.
+Escreva um programa para ajudar a empresa a calcular o consumo médio de combustível de um caminhão em uma determinada viagem.
+Entrada:
+A entrada é composta por várias linhas. Cada linha inicia com uma letra L indicando o tipo da entrada e um valor real V.
+  * Para L = `', V representa o número de quilômetros rodados em um trecho;
+  * Para L = `', V representa a quantidade de combustível em litros abastecida.
+A entrada se encerra com a letra `', quando então deve-se calcular e imprimir a média de consumo. Restrições: 0 < V ≤ 5000 e a entrada não começa com `'.
+Saída:
+Seu programa deve imprimir um única linha, contendo a média de consumo de combustível da viagem informada na entrada (nesta questão, em Km/l). A saída deve ser formatada para duas casas decimais.
+Exemplos:
+R 100
+A 20
+R 300
+R 200
+A 160
+X
+3.33
+R 200
+A 26.98
+R 36.15
+R 69.54
+R 152
+A 75.2
+X
+4.48
+R 200
+A 20
+X
+10.00

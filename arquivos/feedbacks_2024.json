@@ -1,0 +1,1850 @@
+[
+    {
+        "student_id": 23,
+        "question_id": 31,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:11:22.841897-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 31,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:14:00.387685-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 31,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:14:33.521056-03:00"
+    },
+    {
+        "student_id": 34,
+        "question_id": 31,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:15:38.339972-03:00"
+    },
+    {
+        "student_id": 25,
+        "question_id": 31,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:18:04.771266-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 34,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:18:21.592287-03:00"
+    },
+    {
+        "student_id": 7,
+        "question_id": 31,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:22:38.509112-03:00"
+    },
+    {
+        "student_id": 23,
+        "question_id": 34,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:22:47.873397-03:00"
+    },
+    {
+        "student_id": 10,
+        "question_id": 31,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:24:46.658555-03:00"
+    },
+    {
+        "student_id": 34,
+        "question_id": 34,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:25:58.099806-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 34,
+        "difficultylevel": 3,
+        "created_at": "2024-07-12 10:27:19.070403-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 31,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:27:22.451344-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 31,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:27:26.595632-03:00"
+    },
+    {
+        "student_id": 7,
+        "question_id": 34,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:29:59.019563-03:00"
+    },
+    {
+        "student_id": 23,
+        "question_id": 35,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:34:33.230707-03:00"
+    },
+    {
+        "student_id": 34,
+        "question_id": 35,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:34:35.244576-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 35,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:35:32.541918-03:00"
+    },
+    {
+        "student_id": 12,
+        "question_id": 31,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:35:45.184792-03:00"
+    },
+    {
+        "student_id": 7,
+        "question_id": 35,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:37:00.270447-03:00"
+    },
+    {
+        "student_id": 21,
+        "question_id": 31,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:42:20.567368-03:00"
+    },
+    {
+        "student_id": 21,
+        "question_id": 34,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:42:25.634262-03:00"
+    },
+    {
+        "student_id": 21,
+        "question_id": 35,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:42:30.137633-03:00"
+    },
+    {
+        "student_id": 21,
+        "question_id": 32,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:42:34.681205-03:00"
+    },
+    {
+        "student_id": 21,
+        "question_id": 33,
+        "difficultylevel": 3,
+        "created_at": "2024-07-12 10:42:35.336215-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 32,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:43:54.755235-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 33,
+        "difficultylevel": 3,
+        "created_at": "2024-07-12 10:43:56.321493-03:00"
+    },
+    {
+        "student_id": 13,
+        "question_id": 31,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:44:52.644932-03:00"
+    },
+    {
+        "student_id": 13,
+        "question_id": 34,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:45:02.908753-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 34,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:46:34.397667-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 35,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:46:38.140477-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 32,
+        "difficultylevel": 4,
+        "created_at": "2024-07-12 10:46:40.180476-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 33,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:46:43.011394-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 31,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:47:26.585473-03:00"
+    },
+    {
+        "student_id": 33,
+        "question_id": 31,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:47:27.090675-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 34,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:47:27.235215-03:00"
+    },
+    {
+        "student_id": 34,
+        "question_id": 32,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:47:28.680142-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 35,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:47:30.757234-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 32,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:47:33.508604-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 33,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:47:35.404685-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 35,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 10:47:38.038237-03:00"
+    },
+    {
+        "student_id": 33,
+        "question_id": 34,
+        "difficultylevel": 4,
+        "created_at": "2024-07-12 10:47:38.092310-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 32,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:47:38.751639-03:00"
+    },
+    {
+        "student_id": 33,
+        "question_id": 35,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:47:40.603613-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 33,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:47:41.677564-03:00"
+    },
+    {
+        "student_id": 33,
+        "question_id": 32,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:47:48.229907-03:00"
+    },
+    {
+        "student_id": 33,
+        "question_id": 33,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:47:53.320372-03:00"
+    },
+    {
+        "student_id": 25,
+        "question_id": 34,
+        "difficultylevel": 3,
+        "created_at": "2024-07-12 10:52:15.668378-03:00"
+    },
+    {
+        "student_id": 13,
+        "question_id": 35,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:58:37.400614-03:00"
+    },
+    {
+        "student_id": 13,
+        "question_id": 33,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:58:44.968489-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 34,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:59:50.352201-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 35,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 10:59:55.859065-03:00"
+    },
+    {
+        "student_id": 34,
+        "question_id": 33,
+        "difficultylevel": 3,
+        "created_at": "2024-07-12 11:02:20.849383-03:00"
+    },
+    {
+        "student_id": 23,
+        "question_id": 33,
+        "difficultylevel": 3,
+        "created_at": "2024-07-12 11:04:14.489581-03:00"
+    },
+    {
+        "student_id": 7,
+        "question_id": 32,
+        "difficultylevel": 5,
+        "created_at": "2024-07-12 11:04:45.925295-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 32,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 11:14:45.003327-03:00"
+    },
+    {
+        "student_id": 23,
+        "question_id": 32,
+        "difficultylevel": 4,
+        "created_at": "2024-07-12 11:16:05.988948-03:00"
+    },
+    {
+        "student_id": 10,
+        "question_id": 34,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 11:18:53.347565-03:00"
+    },
+    {
+        "student_id": 10,
+        "question_id": 35,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 11:18:59.094827-03:00"
+    },
+    {
+        "student_id": 10,
+        "question_id": 32,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 11:19:02.295796-03:00"
+    },
+    {
+        "student_id": 10,
+        "question_id": 33,
+        "difficultylevel": 3,
+        "created_at": "2024-07-12 11:19:05.183094-03:00"
+    },
+    {
+        "student_id": 6,
+        "question_id": 33,
+        "difficultylevel": 3,
+        "created_at": "2024-07-12 11:28:27.358231-03:00"
+    },
+    {
+        "student_id": 6,
+        "question_id": 32,
+        "difficultylevel": 1,
+        "created_at": "2024-07-12 11:28:36.774124-03:00"
+    },
+    {
+        "student_id": 6,
+        "question_id": 35,
+        "difficultylevel": 3,
+        "created_at": "2024-07-12 11:28:45.911942-03:00"
+    },
+    {
+        "student_id": 6,
+        "question_id": 34,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 11:28:51.300365-03:00"
+    },
+    {
+        "student_id": 6,
+        "question_id": 31,
+        "difficultylevel": 2,
+        "created_at": "2024-07-12 11:29:01.981344-03:00"
+    },
+    {
+        "student_id": 25,
+        "question_id": 35,
+        "difficultylevel": 3,
+        "created_at": "2024-07-12 11:48:15.181707-03:00"
+    },
+    {
+        "student_id": 25,
+        "question_id": 32,
+        "difficultylevel": 3,
+        "created_at": "2024-07-12 11:48:17.680218-03:00"
+    },
+    {
+        "student_id": 31,
+        "question_id": 38,
+        "difficultylevel": 1,
+        "created_at": "2024-07-19 10:19:20.531476-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 38,
+        "difficultylevel": 2,
+        "created_at": "2024-07-19 10:24:56.742088-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 39,
+        "difficultylevel": 2,
+        "created_at": "2024-07-19 10:24:57.224126-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 38,
+        "difficultylevel": 2,
+        "created_at": "2024-07-19 10:36:32.007253-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 39,
+        "difficultylevel": 3,
+        "created_at": "2024-07-19 10:36:38.782925-03:00"
+    },
+    {
+        "student_id": 10,
+        "question_id": 38,
+        "difficultylevel": 2,
+        "created_at": "2024-07-19 10:39:45.004734-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 41,
+        "difficultylevel": 3,
+        "created_at": "2024-07-19 10:40:17.138485-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 38,
+        "difficultylevel": 2,
+        "created_at": "2024-07-19 10:43:20.779162-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 39,
+        "difficultylevel": 1,
+        "created_at": "2024-07-19 10:43:24.027265-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 41,
+        "difficultylevel": 1,
+        "created_at": "2024-07-19 10:43:24.900070-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 81,
+        "difficultylevel": 2,
+        "created_at": "2024-07-19 10:43:26.491063-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 41,
+        "difficultylevel": 2,
+        "created_at": "2024-07-19 10:45:03.167177-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 81,
+        "difficultylevel": 2,
+        "created_at": "2024-07-19 10:48:45.480173-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 38,
+        "difficultylevel": 2,
+        "created_at": "2024-07-19 10:51:36.298448-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 39,
+        "difficultylevel": 2,
+        "created_at": "2024-07-19 10:51:37.263876-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 41,
+        "difficultylevel": 3,
+        "created_at": "2024-07-19 10:51:40.706169-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 81,
+        "difficultylevel": 2,
+        "created_at": "2024-07-19 10:51:41.661241-03:00"
+    },
+    {
+        "student_id": 11,
+        "question_id": 41,
+        "difficultylevel": 3,
+        "created_at": "2024-07-19 10:56:35.772940-03:00"
+    },
+    {
+        "student_id": 10,
+        "question_id": 41,
+        "difficultylevel": 1,
+        "created_at": "2024-07-19 10:57:04.474722-03:00"
+    },
+    {
+        "student_id": 10,
+        "question_id": 39,
+        "difficultylevel": 3,
+        "created_at": "2024-07-19 10:57:23.894515-03:00"
+    },
+    {
+        "student_id": 13,
+        "question_id": 38,
+        "difficultylevel": 1,
+        "created_at": "2024-07-19 11:11:42.020315-03:00"
+    },
+    {
+        "student_id": 13,
+        "question_id": 39,
+        "difficultylevel": 1,
+        "created_at": "2024-07-19 11:11:44.277660-03:00"
+    },
+    {
+        "student_id": 13,
+        "question_id": 81,
+        "difficultylevel": 1,
+        "created_at": "2024-07-19 11:11:49.733389-03:00"
+    },
+    {
+        "student_id": 13,
+        "question_id": 41,
+        "difficultylevel": 2,
+        "created_at": "2024-07-19 11:11:50.923828-03:00"
+    },
+    {
+        "student_id": 8,
+        "question_id": 38,
+        "difficultylevel": 5,
+        "created_at": "2024-07-19 11:22:10.087362-03:00"
+    },
+    {
+        "student_id": 8,
+        "question_id": 39,
+        "difficultylevel": 4,
+        "created_at": "2024-07-19 11:22:11.580862-03:00"
+    },
+    {
+        "student_id": 8,
+        "question_id": 41,
+        "difficultylevel": 4,
+        "created_at": "2024-07-19 11:22:13.507134-03:00"
+    },
+    {
+        "student_id": 8,
+        "question_id": 81,
+        "difficultylevel": 4,
+        "created_at": "2024-07-19 11:22:17.324536-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 37,
+        "difficultylevel": 4,
+        "created_at": "2024-07-19 11:25:11.562002-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 37,
+        "difficultylevel": 5,
+        "created_at": "2024-07-19 11:25:21.404259-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 37,
+        "difficultylevel": 5,
+        "created_at": "2024-07-19 11:25:35.934540-03:00"
+    },
+    {
+        "student_id": 27,
+        "question_id": 37,
+        "difficultylevel": 4,
+        "created_at": "2024-07-19 11:27:11.401464-03:00"
+    },
+    {
+        "student_id": 27,
+        "question_id": 81,
+        "difficultylevel": 3,
+        "created_at": "2024-07-19 11:27:15.572240-03:00"
+    },
+    {
+        "student_id": 27,
+        "question_id": 41,
+        "difficultylevel": 2,
+        "created_at": "2024-07-19 11:27:18.867621-03:00"
+    },
+    {
+        "student_id": 27,
+        "question_id": 38,
+        "difficultylevel": 1,
+        "created_at": "2024-07-19 11:27:43.287707-03:00"
+    },
+    {
+        "student_id": 27,
+        "question_id": 39,
+        "difficultylevel": 1,
+        "created_at": "2024-07-19 11:27:44.106756-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 38,
+        "difficultylevel": 1,
+        "created_at": "2024-07-19 11:31:50.858665-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 39,
+        "difficultylevel": 2,
+        "created_at": "2024-07-19 11:31:56.462650-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 41,
+        "difficultylevel": 3,
+        "created_at": "2024-07-19 11:32:01.475467-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 81,
+        "difficultylevel": 3,
+        "created_at": "2024-07-19 11:36:49.039874-03:00"
+    },
+    {
+        "student_id": 32,
+        "question_id": 38,
+        "difficultylevel": 2,
+        "created_at": "2024-07-19 11:53:51.003704-03:00"
+    },
+    {
+        "student_id": 32,
+        "question_id": 39,
+        "difficultylevel": 1,
+        "created_at": "2024-07-19 11:54:03.584889-03:00"
+    },
+    {
+        "student_id": 32,
+        "question_id": 41,
+        "difficultylevel": 3,
+        "created_at": "2024-07-19 11:54:14.448752-03:00"
+    },
+    {
+        "student_id": 32,
+        "question_id": 81,
+        "difficultylevel": 2,
+        "created_at": "2024-07-19 11:54:23.856539-03:00"
+    },
+    {
+        "student_id": 32,
+        "question_id": 37,
+        "difficultylevel": 5,
+        "created_at": "2024-07-19 11:54:25.943855-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 85,
+        "difficultylevel": 1,
+        "created_at": "2024-07-26 10:10:39.165740-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 85,
+        "difficultylevel": 1,
+        "created_at": "2024-07-26 10:15:00.662913-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 48,
+        "difficultylevel": 2,
+        "created_at": "2024-07-26 10:17:08.153715-03:00"
+    },
+    {
+        "student_id": 49,
+        "question_id": 85,
+        "difficultylevel": 1,
+        "created_at": "2024-07-26 10:19:02.264504-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 85,
+        "difficultylevel": 1,
+        "created_at": "2024-07-26 10:27:40.529135-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 48,
+        "difficultylevel": 1,
+        "created_at": "2024-07-26 10:27:45.898299-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 86,
+        "difficultylevel": 3,
+        "created_at": "2024-07-26 10:33:15.702959-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 48,
+        "difficultylevel": 1,
+        "created_at": "2024-07-26 10:39:05.122803-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 87,
+        "difficultylevel": 3,
+        "created_at": "2024-07-26 10:44:14.652521-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 85,
+        "difficultylevel": 1,
+        "created_at": "2024-07-26 10:49:47.117888-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 48,
+        "difficultylevel": 2,
+        "created_at": "2024-07-26 10:49:50.935893-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 86,
+        "difficultylevel": 3,
+        "created_at": "2024-07-26 10:50:02.857278-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 86,
+        "difficultylevel": 3,
+        "created_at": "2024-07-26 10:55:20.182419-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 86,
+        "difficultylevel": 3,
+        "created_at": "2024-07-26 10:56:52.253886-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 87,
+        "difficultylevel": 2,
+        "created_at": "2024-07-26 10:56:54.476922-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 87,
+        "difficultylevel": 5,
+        "created_at": "2024-07-26 11:01:58.362344-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 86,
+        "difficultylevel": 1,
+        "created_at": "2024-07-26 11:02:07.514614-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 48,
+        "difficultylevel": 1,
+        "created_at": "2024-07-26 11:02:08.014643-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 85,
+        "difficultylevel": 1,
+        "created_at": "2024-07-26 11:02:08.510378-03:00"
+    },
+    {
+        "student_id": 13,
+        "question_id": 85,
+        "difficultylevel": 1,
+        "created_at": "2024-07-26 11:10:56.251023-03:00"
+    },
+    {
+        "student_id": 13,
+        "question_id": 48,
+        "difficultylevel": 1,
+        "created_at": "2024-07-26 11:10:59.922412-03:00"
+    },
+    {
+        "student_id": 13,
+        "question_id": 87,
+        "difficultylevel": 3,
+        "created_at": "2024-07-26 11:11:05.412579-03:00"
+    },
+    {
+        "student_id": 13,
+        "question_id": 86,
+        "difficultylevel": 1,
+        "created_at": "2024-07-26 11:11:10.309018-03:00"
+    },
+    {
+        "student_id": 42,
+        "question_id": 87,
+        "difficultylevel": 4,
+        "created_at": "2024-07-26 11:12:41.560186-03:00"
+    },
+    {
+        "student_id": 42,
+        "question_id": 86,
+        "difficultylevel": 2,
+        "created_at": "2024-07-26 11:12:50.226916-03:00"
+    },
+    {
+        "student_id": 11,
+        "question_id": 85,
+        "difficultylevel": 2,
+        "created_at": "2024-07-26 11:14:27.302147-03:00"
+    },
+    {
+        "student_id": 11,
+        "question_id": 86,
+        "difficultylevel": 4,
+        "created_at": "2024-07-26 11:14:43.360496-03:00"
+    },
+    {
+        "student_id": 7,
+        "question_id": 85,
+        "difficultylevel": 1,
+        "created_at": "2024-07-26 11:16:21.554630-03:00"
+    },
+    {
+        "student_id": 7,
+        "question_id": 87,
+        "difficultylevel": 5,
+        "created_at": "2024-07-26 11:17:02.425294-03:00"
+    },
+    {
+        "student_id": 7,
+        "question_id": 86,
+        "difficultylevel": 3,
+        "created_at": "2024-07-26 11:17:05.644630-03:00"
+    },
+    {
+        "student_id": 7,
+        "question_id": 48,
+        "difficultylevel": 1,
+        "created_at": "2024-07-26 11:17:10.332721-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 87,
+        "difficultylevel": 4,
+        "created_at": "2024-07-26 11:27:01.557660-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 87,
+        "difficultylevel": 3,
+        "created_at": "2024-07-26 11:28:21.741075-03:00"
+    },
+    {
+        "student_id": 3,
+        "question_id": 86,
+        "difficultylevel": 4,
+        "created_at": "2024-07-26 11:33:02.552654-03:00"
+    },
+    {
+        "student_id": 3,
+        "question_id": 85,
+        "difficultylevel": 2,
+        "created_at": "2024-07-26 11:33:07.647219-03:00"
+    },
+    {
+        "student_id": 3,
+        "question_id": 87,
+        "difficultylevel": 5,
+        "created_at": "2024-07-26 11:34:19.770132-03:00"
+    },
+    {
+        "student_id": 8,
+        "question_id": 85,
+        "difficultylevel": 2,
+        "created_at": "2024-07-26 11:46:02.763632-03:00"
+    },
+    {
+        "student_id": 8,
+        "question_id": 48,
+        "difficultylevel": 2,
+        "created_at": "2024-07-26 11:46:03.425964-03:00"
+    },
+    {
+        "student_id": 8,
+        "question_id": 86,
+        "difficultylevel": 3,
+        "created_at": "2024-07-26 11:46:04.322022-03:00"
+    },
+    {
+        "student_id": 8,
+        "question_id": 87,
+        "difficultylevel": 4,
+        "created_at": "2024-07-26 11:46:07.786769-03:00"
+    },
+    {
+        "student_id": 31,
+        "question_id": 43,
+        "difficultylevel": 1,
+        "created_at": "2024-08-02 10:12:18.194232-03:00"
+    },
+    {
+        "student_id": 12,
+        "question_id": 43,
+        "difficultylevel": 1,
+        "created_at": "2024-08-02 10:12:29.194849-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 43,
+        "difficultylevel": 1,
+        "created_at": "2024-08-02 10:13:02.005159-03:00"
+    },
+    {
+        "student_id": 26,
+        "question_id": 43,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 10:15:34.515544-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 47,
+        "difficultylevel": 1,
+        "created_at": "2024-08-02 10:18:37.667042-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 43,
+        "difficultylevel": 1,
+        "created_at": "2024-08-02 10:22:14.784801-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 47,
+        "difficultylevel": 1,
+        "created_at": "2024-08-02 10:22:15.440094-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 43,
+        "difficultylevel": 1,
+        "created_at": "2024-08-02 10:24:57.196560-03:00"
+    },
+    {
+        "student_id": 31,
+        "question_id": 47,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 10:25:35.751798-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 42,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 10:27:20.508991-03:00"
+    },
+    {
+        "student_id": 31,
+        "question_id": 42,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 10:40:31.712483-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 47,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 10:45:44.540583-03:00"
+    },
+    {
+        "student_id": 31,
+        "question_id": 44,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 10:54:57.735522-03:00"
+    },
+    {
+        "student_id": 26,
+        "question_id": 47,
+        "difficultylevel": 3,
+        "created_at": "2024-08-02 10:56:10.317071-03:00"
+    },
+    {
+        "student_id": 26,
+        "question_id": 42,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 10:56:14.492085-03:00"
+    },
+    {
+        "student_id": 26,
+        "question_id": 44,
+        "difficultylevel": 4,
+        "created_at": "2024-08-02 10:56:19.068171-03:00"
+    },
+    {
+        "student_id": 11,
+        "question_id": 46,
+        "difficultylevel": 4,
+        "created_at": "2024-08-02 10:58:59.791749-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 45,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 11:06:14.052125-03:00"
+    },
+    {
+        "student_id": 47,
+        "question_id": 43,
+        "difficultylevel": 3,
+        "created_at": "2024-08-02 11:11:20.365731-03:00"
+    },
+    {
+        "student_id": 9,
+        "question_id": 43,
+        "difficultylevel": 1,
+        "created_at": "2024-08-02 11:12:14.544747-03:00"
+    },
+    {
+        "student_id": 9,
+        "question_id": 47,
+        "difficultylevel": 3,
+        "created_at": "2024-08-02 11:12:25.955961-03:00"
+    },
+    {
+        "student_id": 9,
+        "question_id": 42,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 11:12:31.917599-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 46,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 11:20:25.773902-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 44,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 11:20:29.960855-03:00"
+    },
+    {
+        "student_id": 24,
+        "question_id": 46,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 11:21:03.108881-03:00"
+    },
+    {
+        "student_id": 24,
+        "question_id": 45,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 11:21:03.951031-03:00"
+    },
+    {
+        "student_id": 24,
+        "question_id": 44,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 11:21:15.951416-03:00"
+    },
+    {
+        "student_id": 24,
+        "question_id": 42,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 11:21:18.546707-03:00"
+    },
+    {
+        "student_id": 24,
+        "question_id": 47,
+        "difficultylevel": 3,
+        "created_at": "2024-08-02 11:21:29.437090-03:00"
+    },
+    {
+        "student_id": 24,
+        "question_id": 43,
+        "difficultylevel": 1,
+        "created_at": "2024-08-02 11:21:34.247485-03:00"
+    },
+    {
+        "student_id": 41,
+        "question_id": 43,
+        "difficultylevel": 3,
+        "created_at": "2024-08-02 11:22:15.170069-03:00"
+    },
+    {
+        "student_id": 41,
+        "question_id": 47,
+        "difficultylevel": 1,
+        "created_at": "2024-08-02 11:22:27.527444-03:00"
+    },
+    {
+        "student_id": 41,
+        "question_id": 42,
+        "difficultylevel": 1,
+        "created_at": "2024-08-02 11:22:35.685356-03:00"
+    },
+    {
+        "student_id": 41,
+        "question_id": 44,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 11:22:54.188125-03:00"
+    },
+    {
+        "student_id": 23,
+        "question_id": 45,
+        "difficultylevel": 5,
+        "created_at": "2024-08-02 11:23:17.307315-03:00"
+    },
+    {
+        "student_id": 23,
+        "question_id": 43,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 11:23:21.772707-03:00"
+    },
+    {
+        "student_id": 23,
+        "question_id": 47,
+        "difficultylevel": 1,
+        "created_at": "2024-08-02 11:23:33.296913-03:00"
+    },
+    {
+        "student_id": 23,
+        "question_id": 42,
+        "difficultylevel": 3,
+        "created_at": "2024-08-02 11:23:36.857484-03:00"
+    },
+    {
+        "student_id": 23,
+        "question_id": 44,
+        "difficultylevel": 4,
+        "created_at": "2024-08-02 11:23:40.263745-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 44,
+        "difficultylevel": 3,
+        "created_at": "2024-08-02 11:37:08.445026-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 42,
+        "difficultylevel": 3,
+        "created_at": "2024-08-02 11:42:34.342066-03:00"
+    },
+    {
+        "student_id": 25,
+        "question_id": 42,
+        "difficultylevel": 4,
+        "created_at": "2024-08-02 11:45:57.294740-03:00"
+    },
+    {
+        "student_id": 25,
+        "question_id": 47,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 11:45:58.586413-03:00"
+    },
+    {
+        "student_id": 25,
+        "question_id": 43,
+        "difficultylevel": 1,
+        "created_at": "2024-08-02 11:45:59.284018-03:00"
+    },
+    {
+        "student_id": 25,
+        "question_id": 44,
+        "difficultylevel": 3,
+        "created_at": "2024-08-02 11:46:02.330908-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 43,
+        "difficultylevel": 1,
+        "created_at": "2024-08-02 11:46:31.119744-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 47,
+        "difficultylevel": 1,
+        "created_at": "2024-08-02 11:46:44.420838-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 42,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 11:46:50.928447-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 44,
+        "difficultylevel": 3,
+        "created_at": "2024-08-02 11:46:53.140060-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 45,
+        "difficultylevel": 3,
+        "created_at": "2024-08-02 11:46:55.077566-03:00"
+    },
+    {
+        "student_id": 9,
+        "question_id": 44,
+        "difficultylevel": 2,
+        "created_at": "2024-08-02 11:51:37.806670-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 54,
+        "difficultylevel": 2,
+        "created_at": "2024-08-09 10:28:49.372413-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 54,
+        "difficultylevel": 5,
+        "created_at": "2024-08-09 10:40:27.171595-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 55,
+        "difficultylevel": 5,
+        "created_at": "2024-08-09 10:40:29.584403-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 55,
+        "difficultylevel": 2,
+        "created_at": "2024-08-09 10:45:29.176015-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 56,
+        "difficultylevel": 2,
+        "created_at": "2024-08-09 11:08:07.078787-03:00"
+    },
+    {
+        "student_id": 47,
+        "question_id": 54,
+        "difficultylevel": 4,
+        "created_at": "2024-08-09 11:11:29.479264-03:00"
+    },
+    {
+        "student_id": 47,
+        "question_id": 55,
+        "difficultylevel": 4,
+        "created_at": "2024-08-09 11:11:37.369827-03:00"
+    },
+    {
+        "student_id": 47,
+        "question_id": 56,
+        "difficultylevel": 5,
+        "created_at": "2024-08-09 11:11:49.597716-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 54,
+        "difficultylevel": 2,
+        "created_at": "2024-08-09 11:19:59.306010-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 55,
+        "difficultylevel": 2,
+        "created_at": "2024-08-09 11:20:07.144942-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 56,
+        "difficultylevel": 2,
+        "created_at": "2024-08-09 11:20:12.193805-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 57,
+        "difficultylevel": 3,
+        "created_at": "2024-08-09 11:20:22.320896-03:00"
+    },
+    {
+        "student_id": 47,
+        "question_id": 57,
+        "difficultylevel": 5,
+        "created_at": "2024-08-09 11:25:59.223248-03:00"
+    },
+    {
+        "student_id": 47,
+        "question_id": 59,
+        "difficultylevel": 5,
+        "created_at": "2024-08-09 11:26:00.454444-03:00"
+    },
+    {
+        "student_id": 47,
+        "question_id": 58,
+        "difficultylevel": 5,
+        "created_at": "2024-08-09 11:26:01.745925-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 56,
+        "difficultylevel": 5,
+        "created_at": "2024-08-09 11:39:54.717921-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 59,
+        "difficultylevel": 4,
+        "created_at": "2024-08-09 11:46:38.788360-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 58,
+        "difficultylevel": 4,
+        "created_at": "2024-08-09 11:46:42.972353-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 58,
+        "difficultylevel": 4,
+        "created_at": "2024-08-09 11:50:59.004583-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 59,
+        "difficultylevel": 3,
+        "created_at": "2024-08-09 11:51:01.075524-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 57,
+        "difficultylevel": 2,
+        "created_at": "2024-08-09 11:51:04.204177-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 56,
+        "difficultylevel": 1,
+        "created_at": "2024-08-09 11:51:06.267911-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 55,
+        "difficultylevel": 1,
+        "created_at": "2024-08-09 11:51:09.348970-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 54,
+        "difficultylevel": 1,
+        "created_at": "2024-08-09 11:51:10.771679-03:00"
+    },
+    {
+        "student_id": 41,
+        "question_id": 63,
+        "difficultylevel": 2,
+        "created_at": "2024-08-16 10:24:18.898291-03:00"
+    },
+    {
+        "student_id": 17,
+        "question_id": 63,
+        "difficultylevel": 2,
+        "created_at": "2024-08-16 10:28:25.564517-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 63,
+        "difficultylevel": 2,
+        "created_at": "2024-08-16 10:43:09.172085-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 63,
+        "difficultylevel": 3,
+        "created_at": "2024-08-16 10:45:55.329271-03:00"
+    },
+    {
+        "student_id": 26,
+        "question_id": 63,
+        "difficultylevel": 1,
+        "created_at": "2024-08-16 10:52:14.180658-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 61,
+        "difficultylevel": 2,
+        "created_at": "2024-08-16 11:08:33.782427-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 61,
+        "difficultylevel": 3,
+        "created_at": "2024-08-16 11:12:05.384877-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 62,
+        "difficultylevel": 1,
+        "created_at": "2024-08-16 11:16:12.173570-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 60,
+        "difficultylevel": 2,
+        "created_at": "2024-08-16 11:25:23.694867-03:00"
+    },
+    {
+        "student_id": 41,
+        "question_id": 62,
+        "difficultylevel": 1,
+        "created_at": "2024-08-16 11:38:30.323380-03:00"
+    },
+    {
+        "student_id": 41,
+        "question_id": 61,
+        "difficultylevel": 3,
+        "created_at": "2024-08-16 11:39:06.650457-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 62,
+        "difficultylevel": 3,
+        "created_at": "2024-08-16 11:48:53.167215-03:00"
+    },
+    {
+        "student_id": 29,
+        "question_id": 60,
+        "difficultylevel": 3,
+        "created_at": "2024-08-16 11:48:54.427907-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 73,
+        "difficultylevel": 3,
+        "created_at": "2024-08-23 10:28:15.745027-03:00"
+    },
+    {
+        "student_id": 23,
+        "question_id": 73,
+        "difficultylevel": 2,
+        "created_at": "2024-08-23 10:36:12.305166-03:00"
+    },
+    {
+        "student_id": 36,
+        "question_id": 73,
+        "difficultylevel": 1,
+        "created_at": "2024-08-23 10:39:06.626086-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 73,
+        "difficultylevel": 2,
+        "created_at": "2024-08-23 10:46:45.172061-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 71,
+        "difficultylevel": 2,
+        "created_at": "2024-08-23 10:46:47.330948-03:00"
+    },
+    {
+        "student_id": 47,
+        "question_id": 73,
+        "difficultylevel": 5,
+        "created_at": "2024-08-23 10:47:38.965444-03:00"
+    },
+    {
+        "student_id": 47,
+        "question_id": 71,
+        "difficultylevel": 5,
+        "created_at": "2024-08-23 10:47:39.721179-03:00"
+    },
+    {
+        "student_id": 47,
+        "question_id": 74,
+        "difficultylevel": 5,
+        "created_at": "2024-08-23 10:47:40.584130-03:00"
+    },
+    {
+        "student_id": 47,
+        "question_id": 65,
+        "difficultylevel": 5,
+        "created_at": "2024-08-23 10:47:41.217036-03:00"
+    },
+    {
+        "student_id": 47,
+        "question_id": 68,
+        "difficultylevel": 5,
+        "created_at": "2024-08-23 10:47:43.641626-03:00"
+    },
+    {
+        "student_id": 47,
+        "question_id": 67,
+        "difficultylevel": 5,
+        "created_at": "2024-08-23 10:47:48.690088-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 73,
+        "difficultylevel": 2,
+        "created_at": "2024-08-23 10:49:09.227023-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 71,
+        "difficultylevel": 3,
+        "created_at": "2024-08-23 10:49:13.706973-03:00"
+    },
+    {
+        "student_id": 26,
+        "question_id": 73,
+        "difficultylevel": 3,
+        "created_at": "2024-08-23 10:55:29.275882-03:00"
+    },
+    {
+        "student_id": 11,
+        "question_id": 73,
+        "difficultylevel": 3,
+        "created_at": "2024-08-23 10:55:43.857316-03:00"
+    },
+    {
+        "student_id": 26,
+        "question_id": 71,
+        "difficultylevel": 4,
+        "created_at": "2024-08-23 10:59:50.478886-03:00"
+    },
+    {
+        "student_id": 25,
+        "question_id": 73,
+        "difficultylevel": 3,
+        "created_at": "2024-08-23 11:03:48.534762-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 74,
+        "difficultylevel": 2,
+        "created_at": "2024-08-23 11:08:24.736497-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 71,
+        "difficultylevel": 3,
+        "created_at": "2024-08-23 11:09:24.917850-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 74,
+        "difficultylevel": 3,
+        "created_at": "2024-08-23 11:09:25.953626-03:00"
+    },
+    {
+        "student_id": 39,
+        "question_id": 73,
+        "difficultylevel": 3,
+        "created_at": "2024-08-23 11:12:51.709255-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 74,
+        "difficultylevel": 1,
+        "created_at": "2024-08-23 11:13:03.138883-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 65,
+        "difficultylevel": 3,
+        "created_at": "2024-08-23 11:13:04.902404-03:00"
+    },
+    {
+        "student_id": 3,
+        "question_id": 73,
+        "difficultylevel": 5,
+        "created_at": "2024-08-23 11:13:17.446429-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 65,
+        "difficultylevel": 2,
+        "created_at": "2024-08-23 11:14:03.832376-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 73,
+        "difficultylevel": 5,
+        "created_at": "2024-08-23 11:19:07.218799-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 68,
+        "difficultylevel": 3,
+        "created_at": "2024-08-23 11:22:10.853745-03:00"
+    },
+    {
+        "student_id": 46,
+        "question_id": 73,
+        "difficultylevel": 4,
+        "created_at": "2024-08-23 11:28:44.715900-03:00"
+    },
+    {
+        "student_id": 46,
+        "question_id": 71,
+        "difficultylevel": 5,
+        "created_at": "2024-08-23 11:28:45.918824-03:00"
+    },
+    {
+        "student_id": 3,
+        "question_id": 71,
+        "difficultylevel": 5,
+        "created_at": "2024-08-23 11:34:23.780262-03:00"
+    },
+    {
+        "student_id": 25,
+        "question_id": 71,
+        "difficultylevel": 4,
+        "created_at": "2024-08-23 11:34:34.659989-03:00"
+    },
+    {
+        "student_id": 36,
+        "question_id": 74,
+        "difficultylevel": 4,
+        "created_at": "2024-08-23 11:42:00.152746-03:00"
+    },
+    {
+        "student_id": 36,
+        "question_id": 71,
+        "difficultylevel": 2,
+        "created_at": "2024-08-23 11:42:02.476623-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 67,
+        "difficultylevel": 4,
+        "created_at": "2024-08-23 11:43:57.024191-03:00"
+    },
+    {
+        "student_id": 1,
+        "question_id": 68,
+        "difficultylevel": 4,
+        "created_at": "2024-08-23 11:47:35.047266-03:00"
+    },
+    {
+        "student_id": 23,
+        "question_id": 71,
+        "difficultylevel": 3,
+        "created_at": "2024-08-23 11:49:54.010183-03:00"
+    },
+    {
+        "student_id": 23,
+        "question_id": 65,
+        "difficultylevel": 3,
+        "created_at": "2024-08-23 11:49:58.043911-03:00"
+    },
+    {
+        "student_id": 23,
+        "question_id": 74,
+        "difficultylevel": 2,
+        "created_at": "2024-08-23 11:51:23.236042-03:00"
+    },
+    {
+        "student_id": 31,
+        "question_id": 73,
+        "difficultylevel": 4,
+        "created_at": "2024-08-23 11:51:32.973550-03:00"
+    },
+    {
+        "student_id": 31,
+        "question_id": 71,
+        "difficultylevel": 2,
+        "created_at": "2024-08-23 11:51:34.048960-03:00"
+    },
+    {
+        "student_id": 43,
+        "question_id": 65,
+        "difficultylevel": 3,
+        "created_at": "2024-08-23 11:55:21.478087-03:00"
+    },
+    {
+        "student_id": 35,
+        "question_id": 69,
+        "difficultylevel": 1,
+        "created_at": "2024-08-30 10:11:32.543115-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 69,
+        "difficultylevel": 4,
+        "created_at": "2024-08-30 10:33:45.605727-03:00"
+    },
+    {
+        "student_id": 11,
+        "question_id": 76,
+        "difficultylevel": 2,
+        "created_at": "2024-08-30 10:44:11.597260-03:00"
+    },
+    {
+        "student_id": 11,
+        "question_id": 69,
+        "difficultylevel": 4,
+        "created_at": "2024-08-30 10:44:40.559543-03:00"
+    },
+    {
+        "student_id": 11,
+        "question_id": 79,
+        "difficultylevel": 3,
+        "created_at": "2024-08-30 10:44:50.543938-03:00"
+    },
+    {
+        "student_id": 11,
+        "question_id": 111,
+        "difficultylevel": 5,
+        "created_at": "2024-08-30 10:45:06.072960-03:00"
+    },
+    {
+        "student_id": 11,
+        "question_id": 52,
+        "difficultylevel": 5,
+        "created_at": "2024-08-30 10:45:09.944261-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 79,
+        "difficultylevel": 1,
+        "created_at": "2024-08-30 11:10:51.166148-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 76,
+        "difficultylevel": 3,
+        "created_at": "2024-08-30 11:10:52.040208-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 111,
+        "difficultylevel": 2,
+        "created_at": "2024-08-30 11:26:43.855740-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 76,
+        "difficultylevel": 5,
+        "created_at": "2024-08-30 11:45:19.508706-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 69,
+        "difficultylevel": 3,
+        "created_at": "2024-08-30 11:45:24.178242-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 79,
+        "difficultylevel": 2,
+        "created_at": "2024-08-30 11:45:25.368738-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 111,
+        "difficultylevel": 5,
+        "created_at": "2024-08-30 11:45:30.722445-03:00"
+    },
+    {
+        "student_id": 15,
+        "question_id": 52,
+        "difficultylevel": 4,
+        "created_at": "2024-08-30 11:45:34.050210-03:00"
+    },
+    {
+        "student_id": 13,
+        "question_id": 69,
+        "difficultylevel": 1,
+        "created_at": "2024-08-30 11:50:43.179170-03:00"
+    },
+    {
+        "student_id": 13,
+        "question_id": 79,
+        "difficultylevel": 2,
+        "created_at": "2024-08-30 11:50:44.960960-03:00"
+    },
+    {
+        "student_id": 13,
+        "question_id": 76,
+        "difficultylevel": 4,
+        "created_at": "2024-08-30 11:50:49.890860-03:00"
+    },
+    {
+        "student_id": 9,
+        "question_id": 69,
+        "difficultylevel": 2,
+        "created_at": "2024-08-30 11:50:51.233889-03:00"
+    },
+    {
+        "student_id": 9,
+        "question_id": 79,
+        "difficultylevel": 2,
+        "created_at": "2024-08-30 11:50:59.593748-03:00"
+    },
+    {
+        "student_id": 13,
+        "question_id": 111,
+        "difficultylevel": 2,
+        "created_at": "2024-08-30 11:51:00.513902-03:00"
+    },
+    {
+        "student_id": 9,
+        "question_id": 111,
+        "difficultylevel": 3,
+        "created_at": "2024-08-30 11:51:08.613272-03:00"
+    },
+    {
+        "student_id": 28,
+        "question_id": 52,
+        "difficultylevel": 4,
+        "created_at": "2024-08-30 11:52:26.538959-03:00"
+    },
+    {
+        "student_id": 33,
+        "question_id": 69,
+        "difficultylevel": 2,
+        "created_at": "2024-08-30 11:52:42.951715-03:00"
+    },
+    {
+        "student_id": 33,
+        "question_id": 79,
+        "difficultylevel": 2,
+        "created_at": "2024-08-30 11:52:49.939104-03:00"
+    },
+    {
+        "student_id": 33,
+        "question_id": 111,
+        "difficultylevel": 3,
+        "created_at": "2024-08-30 11:53:13.934035-03:00"
+    },
+    {
+        "student_id": 33,
+        "question_id": 52,
+        "difficultylevel": 2,
+        "created_at": "2024-08-30 11:53:15.871098-03:00"
+    }
+]

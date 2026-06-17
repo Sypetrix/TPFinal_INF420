@@ -1,0 +1,26 @@
+Produtividade na pandemia
+Ao final de cada dia, certa fábrica calcula a produção média de seus operários, que é a razão entre o total de itens produzidos e o número de operários da empresa. O processo é todo automatizado: um software recebe o número de itens produzidos por cada operário e calcula a produção média. Por exemplo, supondo um total de 5 operários, que produziram respectivamente 10, 15, 13, 18 e 8 produtos, a produtividade média neste dia foi (10+15+13+18+8)/5 = 12.8.
+Durante a pandemia de COVID-19, nem todos os operários estão na fábrica todo dia. Uns não vão porque estão infectados, outros por terem tido contato próximo com alguma pessoa infectada. E, mesmo quando todos estão em condições de trabalho, nem todos trabalham, para cumprir as regras de distanciamento.
+O software que calcula a produção média não está preparado para isso, ele sempre considera o total de operários. Um operário que não trabalhou em determinado dia certamente produziu 0 itens nesse dia, mas não deveria ser contado na produção média dos que efetivamente trabalharam. Assim, se no exemplo anterior os operários 2 e 5 não tivessem trabalhado no dia, a produção seria de 10, 0, 13, 18 e 0 produtos. O software da empresa calcula uma produção média de (10+0+13+18+0)/5 = 9.2, mas o cálculo deveria ser (10+13+18)/3 = 13.7.
+Faça um programa que calcula corretamente a produção média dos que trabalharam no dia.
+Entrada:
+A entrada é composta por três linhas. A primeira contém um valor inteiro N, que indica o número de operários da empresa. A segunda linha contém N valores inteiros, indicando a produção de cada operário no dia. A terceira linha contém N valores 1 ou 0, que indicam respectivamente se o operário trabalhou ou não no dia. Restrições: 1 ≤ N ≤ 1000 e a produção de cada operário pode variar de 0 a 1000.
+Saída:
+Seu programa deve imprimir a produção média dos operários presentes, formatada para 1 casa decimal, ou a mensagem “”, caso nenhum operário tenha trabalhado no dia.
+Exemplos:
+5
+10 0 13 18 0
+1 0 1 1 0
+13.7
+5
+0 0 0 18 0
+1 0 1 1 0
+6.0
+5
+0 0 0 0 0
+0 0 0 0 0
+Fechado
+3
+0 0 0
+0 1 0
+0.0

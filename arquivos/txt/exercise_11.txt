@@ -1,0 +1,6 @@
+Notas
+Os professores de INF110 pretendem analisar o desempenho geral da turma com base na média das notas obtidas na próxima prova prática. Ajude-os fazendo um programa para calcular esta média.
+Entrada:
+A entrada contém duas linhas: a primeira linha contém somente um número inteiro N, que indica o total de alunos que fizeram a prova; a segunda linha contém N valores reais, cada um deles indicando a nota de um dos alunos. Restrições: todas as notas são valores reais entre 0 e 100 e há no máximo 1000 alunos.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, contendo um valor real de duas casas decimais, representando a média das notas dos alunos.

@@ -1,0 +1,76 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{wrapfig}
+\usepackage{olymp}
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{IMC}{imc}{2}
+
+\begingroup
+\setlength{\intextsep}{0pt}%
+% \setlength{\columnsep}{0pt}
+
+
+Escreva um programa que calcula o IMC (Índice de Massa Corporal) de uma pessoa.
+
+O IMC é calculado da seguinte forma:
+
+$$\text{IMC} = \frac{\text{massa}}{\text{altura}^2}$$
+
+sendo a massa dada em quilogramas e a altura em metros.
+
+Por exemplo, uma pessoa com $1.80$m de altura e $75$Kg tem um IMC de valor $75/(1.80)^2 = 23.15$.
+
+% \Notes
+
+\InputFile
+
+A entrada contém apenas uma linha, com dois valores inteiros, a altura $A$ em cm e a massa $M$ em Kg.
+
+Restrições: $100 \leq A \leq 220$, $30 \leq M \leq 200$.
+
+\endgroup
+
+\OutputFile
+
+Escreva o valor do IMC com 2 casas decimais.
+
+% \Notes
+
+\Example
+
+\begin{example}
+\exmp{
+180 75
+}{
+23.15
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+180 80
+}{
+24.69
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+160 100
+}{
+39.06
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

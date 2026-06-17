@@ -1,0 +1,25 @@
+Produto escalar
+Em álgebra linear, o produto escalar de dois vetores 𝐀 e 𝐁 (denotado por 𝐀·𝐁 ) é uma função que fornece um número real como resultado. Matematicamente, o produto escalar é definido como uma função ℝ^n ×ℝ^n →ℝ da seguinte forma:
+    𝐀·𝐁 = ∑_i=1^n a_ib_i
+sendo N o números de elementos dos vetores e a_i e b_i seus elementos.
+Por exemplo, se 𝐀 = [1,2,3,4] e 𝐁 = [5,6,7,8], temos que n=4  e que:
+    𝐀·𝐁 = (1 × 5) + (2 × 6) + (3 × 7) + (4 × 8) = 70
+Neste problema você deverá fazer um programa para calcular o produto escalar entre dois vetores de números inteiros. Assim, o resultado obtido também será sempre um número inteiro.
+Entrada:
+A entrada contém três linhas: a primeira contém um número inteiro N, indicando a quantidade de elementos dos vetores; a segunda contém os N elementos do vetor 𝐀; e a terceira os N elementos do vetor 𝐁.
+Restrições: 1 ≤ N ≤ 1000, -100 ≤ a_i, b_i ≤ 100.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, contendo o resultado do produto escalar 𝐀·𝐁 .
+Exemplos:
+4
+1 2 3 4
+5 6 7 8
+70
+3
+1 3 -5
+4 -2 1
+-7
+9
+0 1 2 3 4 5 6 7 8
+0 1 2 3 4 5 6 7 8
+204

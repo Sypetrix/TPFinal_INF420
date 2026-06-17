@@ -1,0 +1,33 @@
+Ordenar
+O seguinte programa foi escrito para ler três números inteiros e escrevê-los em ordem crescente. Após ler os valores, uma função  é chamada e em seguida os valores são impressos.
+language=C++,
+                basicstyle=,
+                keywordstyle=,
+                stringstyle=,
+                commentstyle=,
+                morecomment=[l][]#,
+                basewidth = .48em,
+                showstringspaces=false
+#include <iostream>
+using namespace std;
+int main()
+    int a, b, c;
+    cin >> a >> b >> c;
+    ordenar(a, b, c);
+    cout << a << " " << b << " " << c << endl;
+    return 0;
+O problema é que não existe a função  usada neste programa. Sua tarefa é completar o programa criando esta função. A função deve seguir o protótipo abaixo. Ela recebe os três números e deve retorná-los por referência em ordem crescente, de modo que o programa funcione.
+Entrada:
+A entrada contém três valores inteiros, A, B e C. Restrição: 1 ≤ A, B, C ≤ 10^6.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, contendo os três valores em ordem crescente.
+Nesta questão, seu programa deve usar a função  dada acima exatamente como está, não a modifique! Sua tarefa é apenas criar a função .
+Exemplos:
+20 30 40
+20 30 40
+84 56 89
+56 84 89
+9 8 7
+7 8 9
+50 9  50
+9 50 50

@@ -1,0 +1,8 @@
+Caixa de ovos
+Bob está cansado dos tamanhos usados nas caixas de ovos. Uma caixa com 1 dúzia de ovos é geralmente de tamanho 2 × 6. Por que não 3 × 4? E uma caixa de 30 ovos, por que sempre 5 × 6? Não seria legal também ter os tamanhos 3 × 10 e 2 × 15?
+Faça um programa para ajudar Bob a encontrar os tamanhos possíveis para caixas com diversas quantidades de ovos.
+Entrada:
+A entrada contém apenas um inteiro N, o número de ovos na caixa. Restrições: 1 ≤ N ≤ 10000.
+Saída:
+Seu programa deve escrever todas as possíveis configurações de caixa para exatamente N ovos. Cada configuração deve ser escrita em uma linha no formado “”, sendo  o número de linhas da caixa e  o número de colunas ( é a letra xis minúscula).
+As configurações devem ser escritas em ordem crescente de número de linhas e não devem ser escritas configurações espelhadas. Por exemplo, para 30 ovos escreva “” e não “”.

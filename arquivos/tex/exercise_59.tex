@@ -1,0 +1,86 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+
+\setcounter{problem}{4}
+
+\begin{document}
+
+\begin{problem}{Matriz triangular}{triangular}{2}
+
+Em álgebra linear, uma matriz triangular superior é aquela em que todos os elementos abaixo da diagonal principal são nulos (iguais a zero). Em outras palavras, se $A$ é uma matriz triangular superior, então $a_{ij}=0, \forall i>j$.
+
+Veja um exemplo abaixo:
+
+$$
+\begin{pmatrix}
+7 & 2 & 3\\
+0 & 0 & 0\\
+0 & 0 & 9\\
+\end{pmatrix}
+$$
+
+Faça um programa para ler uma matriz quadrada de ordem $N$ e informar se ela é ou não uma matriz triangular superior.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+Cada entrada contém apenas um caso de teste. A primeira linha contém um número $N$, indicando a ordem da matriz. Em seguida virão $N$ linhas contendo $N$ inteiros cada, indicando os elementos da matriz.  Restrição $1 \leq N \leq 1000$.
+
+\OutputFile
+
+Seu programa deve gerar uma única linha de saída. Se a matriz for triangular superior, escreva ``\texttt{SIM}''. Caso contrário, escreva ``\texttt{NAO}''.
+
+%  \Notes
+% Você pode escrever os resultados à medida que lê a entrada, não precisa ler a entrada toda antes.
+
+\Example
+
+\begin{example}
+\exmp{
+3
+1 2 3
+0 5 6
+0 0 9
+}{
+SIM
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+4
+5 0 0 0
+4 5 0 0
+3 4 2 0
+2 9 7 5
+}{
+NAO
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+4
+1 0 0 0
+0 2 0 0
+0 0 3 0
+0 0 0 4
+}{
+SIM
+}%
+\end{example}
+
+\vspace{12pt}
+Dica: faça uma função booleana que recebe uma matriz e sua ordem.
+
+\end{problem}
+
+\end{document}

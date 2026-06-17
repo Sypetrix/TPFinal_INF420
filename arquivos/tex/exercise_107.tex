@@ -1,0 +1,101 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+
+\setcounter{problem}{3}
+
+\begin{document}
+
+\begin{problem}{Ordenar}{ordenar}{2}
+ 
+O seguinte programa foi escrito para ler três números inteiros e escrevê-los em ordem crescente. Após ler os valores, uma função \texttt{ordenar} é chamada e em seguida os valores são impressos.
+
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{Mulberry}\ttfamily,
+                stringstyle=\color{Maroon}\ttfamily,
+                commentstyle=\color{YellowGreen}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#},
+                basewidth = {.48em},
+                showstringspaces=false
+}
+{\small
+\begin{lstlisting}
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int a, b, c;
+    cin >> a >> b >> c;
+    ordenar(a, b, c);
+    cout << a << " " << b << " " << c << endl;
+    return 0;
+}
+\end{lstlisting}
+}
+
+O problema é que não existe a função \texttt{ordenar} usada neste programa. Sua tarefa é completar o programa criando esta função. A função deve seguir o protótipo abaixo. Ela recebe os três números e deve retorná-los por referência em ordem crescente, de modo que o programa funcione.
+
+\texttt{\textcolor{Mulberry}{void} ordenar(\textcolor{Mulberry}{int \&}, \textcolor{Mulberry}{int \&}, \textcolor{Mulberry}{int \&});}
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém três valores inteiros, $A$, $B$ e $C$. Restrição: $1 \leq A, B, C \leq 10^6$.
+
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha de saída, contendo os três valores em ordem crescente.
+
+\Notes
+Nesta questão, seu programa deve usar a função \texttt{main} dada acima exatamente como está, não a modifique! Sua tarefa é apenas criar a função \texttt{ordenar}.
+
+\Example
+
+\begin{example}
+\exmp{
+20 30 40
+}{
+20 30 40
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+84 56 89
+}{
+56 84 89
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+9 8 7
+}{
+7 8 9
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+50 9  50
+}{
+9 50 50
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

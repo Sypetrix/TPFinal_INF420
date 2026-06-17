@@ -1,0 +1,18 @@
+V ou F
+Um professor aplicou uma prova apenas com questões do tipo V ou F, em que os estudantes precisam informar, para cada questão, se a informação dada é Verdadeira ou Falsa.
+Para facilitar a correção, o professor colocou apenas questões em que a resposta correta é V. Então, para saber quantas questões o estudante acertou, basta verificar quantas foram marcadas com V.
+A prova valeu 100 pontos e a nota é a proporção de questões respondidas corretamente.
+Entrada:
+A entrada começa com um inteiro N, o número de questões da prova. Na linha seguinte, há N caracteres `' ou `', as respostas do estudante. Restrições: 1 ≤ N ≤ 100.
+Saída:
+Seu programa deve escrever uma linha informando a nota do estudante com uma casa decimal.
+Exemplos:
+5
+VFFFV
+40.0
+7
+FFFFVVV
+42.9
+4
+FFFF
+0.0

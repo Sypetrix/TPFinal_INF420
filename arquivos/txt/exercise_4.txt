@@ -1,0 +1,10 @@
+Lata
+A Funarbe está interessada em oferecer novos tamanhos de latas do doce de leite Viçosa.  
+Faça um programa que, dadas as dimensões de uma lata cilíndrica, calcule seu volume.
+Entrada:
+A entrada terá apenas um caso de teste.
+O caso de teste é composto por dois valores reais, R e A, respectivamente o raio e a altura da lata em centímetros. Restrições: 0 < R,A ≤ 100.
+Neste problema, considere π = 3.1415.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, contendo o volume da lata em cm^3, com precisão de 2 casas decimais.
+Não se esqueça de quebrar a linha após a impressão do valor.

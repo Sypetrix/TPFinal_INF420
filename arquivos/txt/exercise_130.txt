@@ -1,0 +1,11 @@
+Diagonais e suas somas
+Em álgebra linear, as diagonais de uma matriz quadrada são os conjuntos de elementos da matriz que unem dois cantos opostos.
+Existem duas diagonais: a diagonal principal e a diagonal secundária.
+Veja o exemplo:
+Nesta matriz, os elementos da diagonal principal são os interceptados pela seta vermelha (1, 5 e 9) e os da diagonal secundária são os interceptados pela seta azul (3, 5 e 7).
+Faça um programa para ler uma matriz quadrada de tamanho N × N e escrever os elementos de suas duas diagonais, bem como a soma deles.
+Entrada:
+A primeira linha contém um inteiro N, que indica o tamanho da matriz. Em seguida virão N linhas com N inteiros cada, indicando os elementos da matriz. Restrição: 1 ≤ N ≤ 1000.
+Saída:
+Seu programa deve gerar duas linhas de saída. A primeira linha deve conter os elementos da diagonal principal e a soma desses elementos. A segunda linha deve conter os elementos da diagonal secundária e a soma desses elementos.
+Escreva os elementos sempre de cima para baixo.

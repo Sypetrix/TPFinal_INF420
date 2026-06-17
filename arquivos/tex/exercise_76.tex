@@ -1,0 +1,80 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Contatos}{contatos}{1}
+ 
+José comprou um \textit{smartphone} e está com dificuldade em achar os telefones de seus contatos. O problema é que a lista de contatos está ordenada por sobrenome, algo comum em outros países. Mas ele quer seus contatos, naturalmente, ordenados pelo nome. Por exemplo, agora está assim:
+
+\begin{center}
+\begin{tabular}{l|l}
+    Sobrenome & Nome \\
+    \hline
+    Banner & Bruce \\
+    Kent & Clark \\
+    Parker & Peter\\
+    Wayne & Bruce
+\end{tabular}
+\end{center}
+
+Mas ele quer assim:
+
+\begin{center}
+\begin{tabular}{l|l}
+    Nome & Sobrenome \\
+    \hline
+    Bruce & Banner \\
+    Bruce & Wayne \\
+    Clark & Kent \\
+    Peter & Parker\\
+\end{tabular}
+\end{center}
+
+(note que quando há nomes iguais, eles ficam em sequência e ordenados pelo sobrenome).
+
+Seus contatos podem até ter alguns poderes, mas eles não sabem programar, então ajude José.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada começa com uma linha contendo um número inteiro $N$, o número de contatos de José. Em seguida há $N$ linhas contendo os contatos de José no formato \texttt{sobrenome - nome - telefone}. Nome e sobrenome possuem até 15 caracteres e telefone até 10. José tem no máximo 100 contatos.
+
+\OutputFile
+
+Seu programa deve imprimir os contatos de José na ordem desejada, formatada conforme exemplo de saída.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+4
+Banner - Bruce - 999000000
+Kent - Clark - 9876543210
+Parker - Peter - 88008800
+Wayne - Bruce - 8907866666
+}{
+Bruce Banner - 999000000
+Bruce Wayne - 8907866666
+Clark Kent - 9876543210
+Peter Parker - 88008800
+}%
+\end{example}
+
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

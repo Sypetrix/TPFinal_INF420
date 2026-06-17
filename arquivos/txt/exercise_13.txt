@@ -1,0 +1,6 @@
+Risada automática
+Cansado de ter que comentar piadas e vídeos enviados em grupos de família e escola, Joaquim passou a responder apenas , com diferente números de k's dependendo de quão engraçado (ou sem graça) for o que tiverem postado. Mas ele também já se cansou de digitar tantos k's e pediu sua ajuda para automatizar suas risadas. 
+Entrada:
+A entrada contém um único número natural N. Restrições: 0 < N ≤ 30.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, contendo uma sequência de N 's.

@@ -79,9 +79,25 @@ def check_columns(df: pd.DataFrame, columns: list[str]) -> None:
 def split_train_test(df: pd.DataFrame):
     """Divide treino/teste de forma estratificada e reprodutível.
 
-    Usado por todas as etapas para que os conjuntos sejam idênticos.
+    Considera apenas linhas rotuladas (questões sem avaliação de aluno ficam de
+    fora das etapas supervisionadas). Usado por todas as etapas para que os
+    conjuntos sejam idênticos.
     """
-    estratificar = df[config.LABEL_COL] if config.LABEL_COL in df.columns else None
+    if config.LABEL_COL in df.columns:
+        df = df.dropna(subset=[config.LABEL_COL])
+        estratificar = df[config.LABEL_COL]
+        # A estratificação exige >=2 exemplos por classe. Se algum nível for raro
+        # (ex.: 'muito_dificil' com 1 questão), divide sem estratificar.
+        contagem = estratificar.value_counts()
+        if (contagem < 2).any():
+            raros = contagem[contagem < 2].index.tolist()
+            print(
+                f"[aviso] divisão sem estratificação: classes com <2 exemplos "
+                f"({raros}). Considere reunir/ajustar esses níveis."
+            )
+            estratificar = None
+    else:
+        estratificar = None
     return train_test_split(
         df,
         test_size=config.TEST_SIZE,

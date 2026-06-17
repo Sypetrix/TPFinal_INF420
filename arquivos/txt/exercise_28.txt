@@ -1,0 +1,7 @@
+Número perfeito
+Um número perfeito é um número natural cuja soma de seus divisores, exceto ele mesmo, é igual ao próprio número. Por exemplo, 6 é um número perfeito, pois 1+2+3=6.
+Faça um programa que, dado um número natural N, determine se ele é ou não um número perfeito.
+Entrada:
+A entrada contém apenas um número natural N. Restrição: 1 ≤ N ≤ 10000.
+Saída:
+Seu programa deve gerar apenas uma linha na saída, contendo a palavra “” caso N seja um número perfeito ou a palavra “” caso contrário.

@@ -1,0 +1,68 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{2}
+
+\begin{document}
+
+\begin{problem}{V ou F}{vouf}{3}
+
+Um professor aplicou uma prova apenas com questões do tipo V ou F, em que os estudantes precisam informar, para cada questão, se a informação dada é Verdadeira ou Falsa.
+
+Para facilitar a correção, o professor colocou apenas questões em que a resposta correta é V. Então, para saber quantas questões o estudante acertou, basta verificar quantas foram marcadas com V.
+
+A prova valeu 100 pontos e a nota é a proporção de questões respondidas corretamente.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada começa com um inteiro $N$, o número de questões da prova. Na linha seguinte, há $N$ caracteres `\texttt{V}' ou `\texttt{F}', as respostas do estudante. Restrições: $1 \leq N \leq 100$.
+
+
+\OutputFile
+
+Seu programa deve escrever uma linha informando a nota do estudante com uma casa decimal.
+
+% \Notes
+% observações
+
+\Example
+
+\begin{example}
+\exmp{
+5
+VFFFV
+}{
+40.0
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+7
+FFFFVVV
+}{
+42.9
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+4
+FFFF
+}{
+0.0
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

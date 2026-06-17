@@ -1,0 +1,28 @@
+=10cm
+=6cm
+Idade da vovó Mônica
+Vovó Mônica é avó de vários netos. Ela notou que, neste ano, a soma das idades dos seus netos é igual à idade dela. Neste problema, dada a idade de vovó Mônica e as idades de seus netos, exceto um, seu programa deve computar e imprimir a idade do neto mais velho.
+Pos exemplo, se sabemos que vovó Mônica tem 52 anos e 3 netos, e as idades conhecidas de dois de seus netos são 14 e 18 anos, então a idade do outro neto, que não era conhecida, tem que ser 20 anos, pois a soma das três idades tem que ser 52. Portanto, a idade do neto mais velho é 20. Em mais um exemplo, se vovó Mônica tem 47 anos e 4 netos, e as idades de três deles são 12, 10 e 14 anos, então o outro neto tem que ter 11 anos e, portanto, a idade do neto mais velho é 14.
+Entrada:
+A primeira linha da entrada contém um inteiro M representando a idade de vovó Mônica. A segunda linha contém um inteiro N representando o número de netos de vovó Mônica. a terceira linha contém N-1 inteiros, representando as idades conhecidas de seus netos.
+Restrições: 40 ≤ M ≤ 110, 1 < N ≤ 10.
+Saída:
+Seu programa deve imprimir uma linha, contendo um número inteiro, representando a idade do neto mais velho de vovó Mônica.
+Exemplos:
+52
+3
+14 18
+20
+47
+4
+12 10 14
+14
+40
+4
+10 10 10 
+10
+40
+2
+19
+21
+Problema baseado na questão “A idade de dona Mônica” da OBI2019 fase local.

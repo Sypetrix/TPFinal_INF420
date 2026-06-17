@@ -1,0 +1,34 @@
+Imposto de Renda
+Em poucos dias termina o prazo para declaração anual do Imposto de Renda. O valor do imposto devido depende do total de vencimentos do ano passado. A seguinte tabela progressiva (a mesma há anos...) deve ser novamente usada para o cálculo do imposto a pagar.
+Base de cálculo anual em RAlíquota 
+Até 22.847,76    -    -
+De 22.847,77 até 33.919,80    7,5    1.713,58
+De 33.919,81 até 45.012,60    15,0    4.257,57
+De 45.012,61 até 55.976,16    22,5    7.633,51
+Acima de 55.976,16    27,5    10.432,32
+A tabela indica que quem recebeu até R 22.847,76 não deve pagar imposto.
+Quem recebeu acima disso e até R33.919,80 deve pagar 7,5
+R30.000,00 deve pagar R641,01 de imposto, conforme cálculo a seguir:
+  * Aplicando a alíquota: 7,5
+  * Deduzindo a parcela: R 2.250,00 – R1.713,58 = R 536,42
+O mesmo cálculo é feito nas demais faixas, aplicando a alíquota e deduzindo a parcela correspondente. Veja outro exemplo, para quem recebeu R50.000,00:
+  * Aplicando a alíquota: 22,5
+  * Deduzindo a parcela: R 11.250,00 – R7.633,51 = R 3.616,49
+Faça um programa para calcular o imposto de renda devido. Seu programa deve obrigatoriamente usar uma função com o protótipo abaixo, que recebe o valor do total de vencimentos  e retorna o valor do imposto a pagar:
+Entrada:
+A entrada contém vários casos de teste. Cada caso de teste é dado em uma linha contendo um valor real V, que representa o total de vencimentos. Restrições: 0 ≤ V ≤ 100.000.000.
+A entrada termina com V = 0, que não deve ser processada.
+Saída:
+A saída consiste em várias linhas, uma para cada caso de teste da entrada, contendo o valor do imposto a pagar, com duas casas decimais, seguindo o formato mostrado no exemplo a seguir.
+Exemplos:
+30000
+50000
+12345
+65432
+30000.50
+0
+R536.42
+R 3616.49
+R0.00
+R 7561.48
+R536.46

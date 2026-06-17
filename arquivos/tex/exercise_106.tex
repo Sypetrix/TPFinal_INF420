@@ -1,0 +1,122 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{tikz}
+
+\setcounter{problem}{3}
+
+\begin{document}
+
+\begin{problem}{Montes}{montes}{2}
+ 
+Na próxima semana será realizada em Montes Claros a VII Maratona Mineira de Programação e três equipes de alunos da UFV vão participar, inclusive alunos desta turma de INF110. Para passar o tempo nas mais de 9 horas de viagem, resolveram anotar a altura do relevo da estrada em intervalos regulares. A ideia é que, quando voltarem, possam determinar o número de montes e de picos encontrados ao longo da viagem. 
+
+Considere, como exemplo, que anotaram os seguintes valores:
+
+7 5 8 7 3 0 0 0 4 8 10 8 6 3 0 0 4 10 14 11 12 8 7 0 0
+
+Um desenho mostrando o relevo representado por essas anotações é mostrado na figura abaixo. Note que existem 3 montes (coloridos de cinza) e 4 picos (pontos destacados).
+
+\includegraphics[scale=0.5]{images/exercise_106_0}
+% \begin{tikzpicture}[scale=0.4, transform shape]
+% \draw[gray, thick] (0,7) -- (1,5) -- (2,8) -- (3,7) -- (4,3) -- (5,0) -- (6,0) -- (7,0) -- (8,4) -- (9,8) -- (10,10) -- (11,8) -- (12,6) -- (13,3) -- (14,0) -- (15,0) -- (16,4) -- (17,10) -- (18,14) -- (19,11) -- (20,12) -- (21,8) -- (22,7) -- (23,0) -- (24,0)
+% \end{tikzpicture}
+
+Os montes são separados por pontos ou regiões de planície (altura 0). E os picos são pontos de máximo local, ou seja, de altura maior que as alturas anotadas imediatamente antes e depois.
+
+ A primeira e a última altura anotadas nunca são considerados picos, pois não se sabe o que vem antes ou depois (veja que no exemplo dado acima o primeiro ponto não foi considerado pico).
+
+\begin{minipage}{.7\textwidth}
+\Notes
+Não existem alturas iguais consecutivas, exceto nas planícies, que podem conter um ou mais zeros consecutivos. Assim, não existirá, por exemplo, o caso 0 3 5 5 2 0, ilustrado ao lado.
+\end{minipage}\hspace{30pt}
+\begin{minipage}{.2\textwidth}
+\includegraphics[scale=0.4]{images/exercise_106_1}
+% \begin{tikzpicture}[scale=0.4, transform shape]
+% \draw[gray, thick] (0,0) -- (1,3) -- (2,5) -- (3,5) -- (4,2) -- (5,0)
+% \end{tikzpicture}
+\end{minipage}
+
+\InputFile
+
+A entrada é composta por duas linhas. A primeira contém um valor inteiro $N$, que indica o número de anotações tomadas ao longo da viagem. A segunda linha contém $N$ valores inteiros, $A_i$, indicando a altura anotada na $N$-ésima anotação. Restrições: $1 \leq N \leq 10000$; $0 \leq A_i \leq 1000$.
+
+\OutputFile
+
+Seu programa deve imprimir dois valores inteiros separados por espaço em branco: o número de montes e o número de picos.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{examplewide}
+\exmp{
+24
+7 5 8 7 3 0 0 0 4 8 10 8 6 3 0 0 4 10 14 11 12 8 7 0 0
+}{
+3 4
+}%
+\end{examplewide}
+
+\begin{examplewide}
+\exmp{
+8
+1 0 1 0 1 0 1 0
+}{
+4 3
+}%
+\end{examplewide}
+
+\begin{examplewide}
+\exmp{
+1
+5
+}{
+1 0
+}%
+\end{examplewide}
+
+\begin{examplewide}
+\exmp{
+2
+0 8
+}{
+1 0
+}%
+\end{examplewide}
+
+\begin{examplewide}
+\exmp{
+1
+0
+}{
+0 0
+}%
+\end{examplewide}
+
+\begin{examplewide}
+\exmp{
+13
+0 1 2 3 2 1 0 1 2 3 2 1 0
+}{
+2 2
+}%
+\end{examplewide}
+
+
+\begin{examplewide}
+\exmp{
+4
+10 7 5 2
+}{
+1 0
+}%
+\end{examplewide}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

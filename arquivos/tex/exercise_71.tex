@@ -1,0 +1,154 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{wrapfig}
+\usepackage{olymp}
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{Área do triângulo}{area}{2}
+
+Um triângulo é uma figura geométrica formado por três lados. Pode ser definido também como a união de três pontos não-colineares por três segmentos de reta. Por exemplo, na figura da esquerda temos um triângulo de lados com tamanhos $3$, $4$ e $5$, e na da direita temos um triângulo formado pelos pontos $P = (2,1) $, $Q = (1,4)$ e $R = (6,2)$, que são unidos pelos segmentos $a$, $b$ e $c$. 
+
+\includegraphics[scale=0.8]{images/exercise_71_0.png}\hspace{2cm}
+\includegraphics[scale=0.8]{images/exercise_71_1.png}
+
+A área do triângulo pode ser calculada pela fórmula $área = (base \times altura) / 2$. A área do triângulo da esquerda é então ($3\times4)/2=6$. Usar essa fórmula no triângulo da direita é mais complicado, porque teríamos que definir uma base e calcular a altura antes de usar a fórmula.
+
+Outra fórmula interessante usa apenas o tamanho dos segmentos que formam o triângulo:
+
+$área = \sqrt{s(s-a)(s-b)(s-c)}$,
+sendo $s$ o valor do semiperímetro: $s = (a+b+c)/2$.
+
+Para o triângulo da esquerda temos $s = (3+4+5)/2 = 6$ e área $\sqrt{6(6-3)(6-4)(6-5)}=6$. No da direita temos $a = \sqrt{10}$, $b = \sqrt{29}$ e $c=\sqrt{17}$, que resulta num semiperímetro $s \approx 6,33527$ e área $6.5$. Faça um programa que usa esta fórmula para calcular a área de um triângulo.
+
+%\Notes
+%
+%Uma seleção ganha 3 pontos para cada vitória e 1 ponto para cada empate. Derrotas não alteram sua pontuação.
+
+% \begin{center}
+% \texttt{time1 placar1 x placar2 time2}
+% \end{center}
+
+% Onde:
+% \begin{itemize}
+%     \item \texttt{time1} e \texttt{time2} são os nomes das seleções (sequências de caracteres sem espaços);
+%     \item \texttt{placar1} é o número de gols feitos pelo \texttt{time1};
+%     \item \texttt{placar2} é o número de gols feitos pelo \texttt{time2};
+% \end{itemize}
+
+
+% \Notes
+
+Use a seguinte estrutura para armazenar as coordenadas de um ponto:
+
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{Mulberry}\ttfamily,
+                stringstyle=\color{Maroon}\ttfamily,
+                commentstyle=\color{YellowGreen}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#},
+                basewidth = {.48em}
+}
+\begin{lstlisting}
+struct Ponto {
+    int x,y;
+};
+
+\end{lstlisting}
+
+e uma função com o cabeçalho abaixo para calcular a área:
+
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{Mulberry}\ttfamily,
+                stringstyle=\color{Maroon}\ttfamily,
+                commentstyle=\color{YellowGreen}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#},
+                basewidth = {.48em}
+}
+\begin{lstlisting}
+double area (Ponto P, Ponto Q, Ponto R);
+\end{lstlisting}
+
+Você pode também criar uma função calcular o tamanho dos seguimentos:
+
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{Mulberry}\ttfamily,
+                stringstyle=\color{Maroon}\ttfamily,
+                commentstyle=\color{YellowGreen}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#},
+                basewidth = {.48em}
+}
+\begin{lstlisting}
+double distancia (Ponto A, Ponto B);
+\end{lstlisting}
+
+\InputFile
+
+A entrada contém três linhas, cada uma delas com dois valores inteiros, representando as coordenadas cartesianas dos três pontos. Restrições: os valores são inteiros entre $-100$ e $100$.
+
+\OutputFile
+
+Seu programa deve gerar uma linha na saída contendo a área do triângulo formado pelos três pontos da entrada com 2 casas decimais.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+
+\begin{example}
+\exmp{
+0 0
+3 0
+0 4
+}{
+6.00
+}%
+\end{example}
+
+
+\begin{example}
+\exmp{
+2 1
+1 4
+6 2
+}{
+6.50
+}%
+\end{example}
+
+
+\begin{example}
+\exmp{
+-6 0
+0 0
+0 8
+}{
+24.00
+}%
+\end{example}
+
+
+\begin{example}
+\exmp{
+-10 11
+21 37
+33 -54
+}{
+1566.50
+}%
+\end{example}
+
+\textbf{Obs.}: os dois primeiros exemplos são os triângulos mostrados nas figuras.
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

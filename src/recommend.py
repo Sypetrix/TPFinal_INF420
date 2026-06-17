@@ -23,7 +23,13 @@ from sklearn.metrics.pairwise import cosine_similarity
 from . import config
 
 # Progressão sugerida de nível (para recomendar o "próximo passo").
-PROXIMO_NIVEL = {"facil": "medio", "medio": "dificil", "dificil": "dificil"}
+PROXIMO_NIVEL = {
+    "muito_facil": "facil",
+    "facil": "medio",
+    "medio": "dificil",
+    "dificil": "muito_dificil",
+    "muito_dificil": "muito_dificil",
+}
 
 
 def _norm_nivel(nivel: str) -> str:

@@ -1,0 +1,8 @@
+Variante
+Preocupados com novas variantes do novo coronavírus, mais contagiosas, um grupo de pesquisadores está fazendo estudos para simular o crescimento do número de infectados quando não são tomadas medidas de prevenção, como distanciamento social e isolamento de pessoas infectadas.
+Suponha, por exemplo, que cada pessoa infectada seja capaz de infectar outras 2 por semana. Para simplificar, não vamos considerar recuperação, ou seja, cada infectado continua infectando novas pessoas nessa mesma taxa indefinidamente. Assim, partindo de apenas 1 pessoa infectada, em 1 semana serão 3 pessoas (ela e mais duas); em 2 semanas já serão 9; em 3 semanas 27, e assim por diante. É possível que rapidamente a população infectada chegue a 1.000.000.000 de pessoas!
+Faça um programa para, sabendo o tamanho da população inicial de pessoas infectadas por uma nova variante e a transmissibilidade da variante, que indica quantas pessoas cada uma consegue infectar por semana, calcule em quanto tempo a população ultrapassa 1.000.000.000 de infectados.
+Entrada:
+A entrada é composta por dois inteiros, P_0 e G, que representam respectivamente a população inicial de pessoas infectadas (1, no exemplo acima) e a taxa de transmissibilidade, ou seja, quantas novas pessoas são infectadas por pessoa infectada a cada semana (2, no exemplo acima). Restrições: 1 ≤ P_0, G ≤ 1000.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, contendo um único inteiro que indica quantas semanas serão necessárias para a população atingir no mínimo 1.000.000.000 de infectados.

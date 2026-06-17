@@ -1,0 +1,13 @@
+Meia volta volver!
+O sargento chega e os soldados logo se colocam em fila. Mas a fila não fica bem formada! Uns estão virados pra um lado e outros pra outro. Veja um exemplo com 8 soldados, em que uns estão virados pra direita () e outros pra esquerda ().
+Insatisfeito com a falta de coordenação dos soldados o sargento ordena que, ao seu sinal, todos que estão frente a frente deem meia volta. No exemplo acima os soldados na 1^a e 2^a posição e os da 7^a e 8^a posição (o da esquerda está virado pra direita e o da direita pra esquerda). O problema é que isso gera outros conflitos... veja o que acontece quando o sargento dá o sinal:
+Agora os soldados nas posições 2 e 3 estão de frente um pro outro. O mesmo acontece com os das posições 6 e 7. O sargento dá outro sinal e esses soldados dão meia-volta, chegando a:
+Mais um sinal é dado e chegam a:
+Ainda mais um:
+Embora não estejam todos virados para o mesmo lado o sargento se dá por satisfeito, afinal não há nenhum soldado frente a frente (olhando um pro outro).
+Sua tarefa neste problema é escrever o formato da fila a cada sinal do sargento, até que não haja soldados frente a frente.
+Entrada:
+A entrada contém duas linhas. A primeira contém um número inteiro N, o número de soldados. A segunda contém N caracteres `' ou `', indicando a direção inicial de cada soldado. Restrições: 2 ≤ N ≤ 100.
+Saída:
+Seu programa deve gerar uma ou mais linhas na saída. A primeira é a formação inicial dos soldados, ou seja, é igual à formação fornecida na entrada. A última é a formação final dos soldados, quando nenhum mais está de frente pro outro. As demais linhas indicam as formações intermediárias, a cada sinal do sargento.
+Note que todos as linhas possuem N caracteres. Note ainda que pode haver caso em que a saída contém somente uma linha. Isso acontecerá caso a formação inicial não tenha soldado de frente pra outro, ou seja, já é uma formação final.

@@ -1,0 +1,80 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{wrapfig}
+\usepackage{olymp}
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{Strings numéricas}{stringnum}{2}
+
+\begingroup
+\setlength{\intextsep}{0pt}%
+%\setlength{\columnsep}{0pt}
+
+Para calcular as despesas na realização de um evento, um grupo de estudantes preparou uma planilha para anotar os valores recebidos e gastos. Infelizmente alguém anotou outros dados na planilha e agora precisam separar os valores.
+
+Faça um programa para escrever ler os dados e escrever apenas os que representam números inteiros (isto é, que contêm apenas dígitos).
+
+% \Notes
+
+\InputFile
+
+A entrada começa com um linha contendo um número inteiro $N$, seguida por $N$ strings, uma em cada linha.
+
+Restrições: $1 \leq N \leq 100$; as strings contém apenas letras e dígitos, sem espaço em branco, e nenhuma possui mais de $10$ caracteres.
+
+\endgroup
+
+\OutputFile
+
+Escreva, na ordem em que aparecem, todas as strings da entrada que são números inteiros.
+
+% \Notes
+
+\Example
+
+\begin{example}
+\exmp{
+2
+1234
+PAGO
+}{
+1234
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+5
+100
+Dia10
+Credito
+8
+7mais5
+}{
+100
+8
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+3
+um
+dois
+3
+}{
+3
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

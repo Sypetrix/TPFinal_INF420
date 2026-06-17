@@ -1,0 +1,83 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+
+\setcounter{problem}{2}
+
+\begin{document}
+
+\begin{problem}{Tabela}{tabela}{2}
+ 
+Como parte do estágio, seu colega precisou fazer um programa para
+uma empresa que deveria imprimir as vendas de cada funcionário em cada dia. Supondo a seguinte tabela de vendas dos $3$ funcionários em $4$ dias, o programa de seu colega escreve os dados conforme mostrado abaixo.
+
+\includegraphics[scale=0.525]{images/exercise_41_0}
+
+Mas a empresa não gostou do formato, ela quer o relatório por funcionário, como mostrado abaixo.
+
+\includegraphics[scale=0.525]{images/exercise_41_1}
+
+Faça um programa para converter a tabela de seu colega para o formato desejado pela empresa.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A primeira linha contém dois inteiros,
+$D$ e $F$, que são o número de dias e de funcionários que constam no relatório. Em seguida existem $D$ linhas, uma para cada dia. Cada uma delas contém $F$ inteiros,
+indicando o total de vendas de cada funcionário naquele dia.
+
+Restrições: $2 \leq D \leq 30$, 
+e $2 \leq F \leq 20$.
+
+\OutputFile
+
+Seu programa deve gerar $F$ linhas na saída, uma para cada funcionário. Cada linha deve conter $D$ inteiros, um para cada dia. Os valores representam as vendas do funcionário no dia correspondente.
+
+\textbf{Atenção}: em cada linha os valores devem ser separados por espaço em branco, mas não deve haver espaço após o último; e deve haver quebra de linha ao final de todas elas, inclusive da última.
+
+%\Notes
+%Nesta questão, seu programa deve usar a função \texttt{fatorial} dada %acima exatamente como está, não a modifique! Sua
+%tarefa é apenas criar o programa com a função \texttt{main}.
+
+\Example
+
+\begin{example}
+\exmp{
+4 3
+10 5 7
+20 8 11
+14 7 12
+13 18 15
+}{
+10 20 14 13
+5 8 7 18
+7 11 12 15
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+5 2
+10 20
+30 40
+50 60
+70 80
+90 100
+}{
+10 30 50 70 90
+20 40 60 80 100
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

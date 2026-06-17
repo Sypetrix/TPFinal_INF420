@@ -1,0 +1,72 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{3}
+
+\begin{document}
+
+\begin{problem}{Palíndromo}{palin}{2}
+ 
+Palíndromo é uma palavra ou frase que permanece a mesma quando lida de trás pra frente. Ou seja, é a mesma quando lida tanto da esquerda para direita quanto da direita para esquerda.
+
+Exemplos: ARARA, OSSO, ACAIACA, RADAR.
+
+Existem frases palíndromas, como ``Roma me tem amor'' e a famosa ``Socorram-me, subi no ônibus em Marrocos!''. Neste exercício você não deve se preocupar com frases, apenas com palavras.
+
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém apenas uma linha com a palavra a ser testada. Restrições: a palavra contém no máximo 30 letras, todas elas maiúsculas.
+
+\OutputFile
+
+Seu programa deve gerar uma linha de saída para cada caso de teste, contendo a palavra ``\texttt{PALINDROMO}'' ou ``\texttt{NAO}'', em maiúsculas e sem acentos, indicando se a palavra da entrada é palíndroma ou não.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+ARARA
+}{
+PALINDROMO
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+PALINDROMO
+}{
+NAO
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+BANANA
+}{
+NAO
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+ABCDEFFEDCBA
+}{
+PALINDROMO
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

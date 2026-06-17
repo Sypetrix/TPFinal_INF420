@@ -1,0 +1,38 @@
+Montes
+Na próxima semana será realizada em Montes Claros a VII Maratona Mineira de Programação e três equipes de alunos da UFV vão participar, inclusive alunos desta turma de INF110. Para passar o tempo nas mais de 9 horas de viagem, resolveram anotar a altura do relevo da estrada em intervalos regulares. A ideia é que, quando voltarem, possam determinar o número de montes e de picos encontrados ao longo da viagem. 
+Considere, como exemplo, que anotaram os seguintes valores:
+7 5 8 7 3 0 0 0 4 8 10 8 6 3 0 0 4 10 14 11 12 8 7 0 0
+Um desenho mostrando o relevo representado por essas anotações é mostrado na figura abaixo. Note que existem 3 montes (coloridos de cinza) e 4 picos (pontos destacados).
+    < g r a p h i c s >
+Os montes são separados por pontos ou regiões de planície (altura 0). E os picos são pontos de máximo local, ou seja, de altura maior que as alturas anotadas imediatamente antes e depois.
+ A primeira e a última altura anotadas nunca são considerados picos, pois não se sabe o que vem antes ou depois (veja que no exemplo dado acima o primeiro ponto não foi considerado pico).
+.7
+Não existem alturas iguais consecutivas, exceto nas planícies, que podem conter um ou mais zeros consecutivos. Assim, não existirá, por exemplo, o caso 0 3 5 5 2 0, ilustrado ao lado.
+.2
+    < g r a p h i c s >
+Entrada:
+A entrada é composta por duas linhas. A primeira contém um valor inteiro N, que indica o número de anotações tomadas ao longo da viagem. A segunda linha contém N valores inteiros, A_i, indicando a altura anotada na N-ésima anotação. Restrições: 1 ≤ N ≤ 10000; 0 ≤ A_i ≤ 1000.
+Saída:
+Seu programa deve imprimir dois valores inteiros separados por espaço em branco: o número de montes e o número de picos.
+Exemplos:
+24
+7 5 8 7 3 0 0 0 4 8 10 8 6 3 0 0 4 10 14 11 12 8 7 0 0
+3 4
+8
+1 0 1 0 1 0 1 0
+4 3
+1
+5
+1 0
+2
+0 8
+1 0
+1
+0
+0 0
+13
+0 1 2 3 2 1 0 1 2 3 2 1 0
+2 2
+4
+10 7 5 2
+1 0

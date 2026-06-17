@@ -1,0 +1,18 @@
+IMC
+Escreva um programa que calcula o IMC (Índice de Massa Corporal) de uma pessoa.
+O IMC é calculado da seguinte forma:
+    IMC = massa/altura^2
+sendo a massa dada em quilogramas e a altura em metros.
+Por exemplo, uma pessoa com 1.80m de altura e 75Kg tem um IMC de valor 75/(1.80)^2 = 23.15.
+Entrada:
+A entrada contém apenas uma linha, com dois valores inteiros, a altura A em cm e a massa M em Kg.
+Restrições: 100 ≤ A ≤ 220, 30 ≤ M ≤ 200.
+Saída:
+Escreva o valor do IMC com 2 casas decimais.
+Exemplos:
+180 75
+23.15
+180 80
+24.69
+160 100
+39.06

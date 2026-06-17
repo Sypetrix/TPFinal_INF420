@@ -1,0 +1,88 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Relógio de atleta}{relogio}{2}
+
+Uma empresa está desenvolvendo um novo relógio eletrônico para atletas de alto desempenho. Uma das funcionalidades do novo relógio é que ele vai medir a \textit{frequência cardíaca atual} (batidas do coração por minuto) e a \textit{capacidade de oxigenação atual} do atleta. O relógio também vai calcular e armazenar a \textit{frequência cardíaca em repouso} do atleta.
+
+Os projetistas querem que o relógio emita um aviso para o atleta de que ele ou ela deve:\\[-18pt]
+
+\begin{itemize}
+\item \textit{diminuir} o ritmo do exercício se a frequência cardíaca atual é maior do que três vezes a frequência cardíaca em repouso ou a capacidade de oxigenação atual é menor do que 95;\\[-18pt]
+\item \textit{aumentar} o ritmo do exercício se a frequência cardíaca atual é menor do que duas vezes frequência cardíaca em repouso e a capacidade de oxigenação atual é maior do que 97;\\[-18pt]
+\item \textit{manter} o ritmo de exercício se nenhuma das condições anteriores ocorrer.\\[-18pt]
+\end{itemize}
+
+Dadas a frequência cardíaca em repouso, a frequência cardíaca atual e a capacidade de oxigenação atual obtidas pelo relógio, escreva um programa que produza a sugestão que o relógio deve emitir.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada é composta por três linhas, cada uma contendo um único número inteiro. A primeira linha contém o inteiro $R$, a frequência cardíaca em repouso do atleta. A segunda linha contém o inteiro $F$, a frequência cardíaca atual do atleta. A terceira linha contém o inteiro $C$, a capacidade de oxigenação atual do atleta. Restrições:  $35 \leq R \leq 100;\; 35 \leq F \leq 200;\; 50 \leq C \leq 100$.
+
+
+\OutputFile
+
+Seu programa deve produzir uma única linha, contendo uma única palavra, em letras minúsculas, que deve ser `\texttt{aumentar}', `\texttt{diminuir}', ou `\texttt{manter}', de acordo com os critérios estabelecidos acima.
+
+% \Notes
+% Note que a mensagem escrita não tem acento e tem um ponto final.
+
+\Example
+
+\begin{example}
+\exmp{
+60
+119
+98
+}{
+aumentar
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+60
+190
+100
+}{
+diminuir
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+50
+100
+95
+}{
+manter
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+50
+100
+94
+}{
+diminuir
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+\footnotesize \textit{Problema da OBI 2020 - Olimpíada Brasileira de Informática}
+
+\end{problem}
+
+\end{document}

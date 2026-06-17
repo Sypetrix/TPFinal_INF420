@@ -1,0 +1,98 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{3}
+
+\begin{document}
+
+\begin{problem}{Campo de minhocas}{minhocas}{2}
+
+Minhocas são muito importantes para a agricultura e como insumo para produção de ração animal. A Organização para Bioengenharia de Minhocas (OBM) é uma entidade não governamental que promove o aumento da produção, utilização e exportação de minhocas.\\[-18pt]
+
+Uma das atividades promovidas pela OBM é a manutenção de uma fazenda experimental para pesquisa de novas tecnologias de criação de minhocas. Na fazenda, a área destinada às pesquisas é de formato retangular, dividida em células quadradas de mesmo tamanho. %Em cada célula é criada apenas uma espécie de minhoca.
+%As células são utilizadas para testar os efeitos, sobre a produção de minhocas, de variações de espécies de minhoca, de tipos de terra, de adubo, de umidade, etc.
+Os pesquisadores da OBM mantêm um acompanhamento constante do desenvolvimento das minhocas em cada célula, e têm uma estimativa extremamente precisa da produtividade de cada uma das células.\\[-18pt]
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+81 & 28 & 240 & 10 \\
+\hline
+40 & 10 & 100 & 240 \\
+\hline
+20 & 180 & 110 & 35 \\
+\hline
+\end{tabular}
+\end{center}
+\vspace{-6pt}
+
+Um pesquisador da OBM inventou e construiu uma máquina colhedeira de minhocas, e quer testá-la na fazenda. A máquina tem a largura de uma célula, e em uma passada pelo terreno de uma célula colhe todas as minhocas dessa célula, separando-as, limpando-as e empacotando-as.
+%Ou seja, a máquina eliminara uma das etapas mais intensivas de mão de obra no processo de produção de minhocas.
+A máquina, porém, ainda está em desenvolvimento e %tem uma restrição: não faz curvas, podendo movimentar-se somente em linha reta.
+não faz curvas, move-se apenas em linha reta.\\[-18pt]
+
+Decidiu-se %então 
+que seria efetuado um teste com a máquina, de forma a colher o maior número possível de minhocas em uma única passada, em linha reta, de lado a lado do campo de minhocas. Ou seja, a máquina deve colher todas as minhocas de uma `coluna' ou de uma `linha' de células do campo de minhocas (a linha ou coluna cuja soma das produtividades %esperadas 
+das células é a maior possível).\\[-18pt]
+
+Escreva um programa que, fornecido o mapa do campo de minhocas
+%, descrevendo a produtividade
+com a produtividade
+estimada em cada célula,
+calcule o %número esperado total
+total esperado
+de minhocas a serem colhidas pela máquina %durante o teste, conforme descrito acima.
+no teste.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A primeira linha da entrada contém dois %números
+inteiros $N$ e $M$, representando respectivamente o número de linhas e %o número 
+de colunas de células existentes no campo experimental de minhocas. Cada uma das $N$ linhas seguintes contém $M$ inteiros, representando as produtividades estimadas das células correspondentes a uma linha do campo de minhocas.
+Restrições: $1 \leq N \leq 100; 1 \leq M \leq 100$.
+
+\OutputFile
+
+%A saída deve ser composta por uma única linha contendo um inteiro, indicando o número esperado total de minhocas a serem colhidas pela máquina durante o teste.
+A saída deve ser um inteiro informando o total esperado de minhocas colhidas pela máquina.
+
+% \Notes
+% É garantido que sempre existe uma divisão que satisfaz as condições dos reinos.
+
+\Example
+
+\begin{example}
+\exmp{
+3 4
+81 28 240 10
+40 10 100 240
+20 180 110 35
+}{
+450
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+3 1
+110
+0
+100
+}{
+210
+}%
+\end{example}
+
+\small \textit{Obs.: questão da OBI 2005} 
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

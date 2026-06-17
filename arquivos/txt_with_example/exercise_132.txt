@@ -1,0 +1,23 @@
+Maior dígito
+Faça um programa para ler dois números inteiros de 4 dígitos e calcular sua soma, mas, em vez de escrever esses valores, escrever apenas o dígito de maior valor em cada um deles.
+Por exemplo, para 2026 e 1926 temos 2026 + 1926 = 3952, então o programa deve escrever 6, 9 e 9,
+respectivamente o dígito de maior valor de 2026, 1926 e 3952.
+A fim de evitar repetição de código, seu programa deve usar obrigatoriamente uma função com o seguinte protótipo:
+A função recebe como parâmetro um número inteiro de 4 dígitos e retorna o valor do maior dígito do número.
+Entrada:
+A entrada contém dois números inteiros A e B. Restrições: 1000 ≤ A, B, A+B ≤ 9999.
+Saída:
+A saída deve conter 3 linhas com respectivamente o maior dígito de A, de B e de A+B.
+Exemplos:
+2026 1926
+6
+9
+9
+1234 5678
+4
+8
+9
+1000 5000
+1
+5
+6

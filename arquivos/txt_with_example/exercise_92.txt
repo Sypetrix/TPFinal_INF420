@@ -1,0 +1,35 @@
+Fatorial por extenso
+O fatorial N! de um número natural N > 0 é definido como a multiplicação de todos os naturais entre 1 e N, ou seja, N!=N × (N-1) × (n-2) ×…× 1. Também pode ser definido recursivamente por N! = N × (N-1)!, como na função do programa abaixo. Em todo caso, 0! = 1, por definição.
+language=C++,
+                basicstyle=,
+                keywordstyle=,
+                stringstyle=,
+                commentstyle=,
+                morecomment=[l][]#,
+                basewidth = .48em,
+                showstringspaces=false
+//Retorna o valor de x!
+long long int fatorial (int n) 
+    if (n<=1)
+        return 1;
+    else
+        return n * fatorial(n-1);
+int main() 
+    int n;
+    cin >> n;
+    cout << n << "! = ";
+    cout << fatorial(n) << endl;
+    return 0;
+Para a entrada 5, o programa imprime  .
+Modifique a função fatorial do programa acima para escrever detalhadamente o cálculo do fatorial, como nos exemplos a seguir.
+Nesta questão, seu programa deve usar a função  dada acima exatamente como está, não a modifique! Sua tarefa é modificar a função .
+Entrada:
+A entrada contém um único número natural N. Restrições: 2 ≤ N ≤ 20.
+Note que seu programa não será testado com N=0 nem N=1.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, contendo o cálculo detalhado do fatorial de N, como mostrado nos exemplos a seguir.
+Exemplos:
+5
+5! = 5 x 4 x 3 x 2 x 1 = 120
+7
+7! = 7 x 6 x 5 x 4 x 3 x 2 x 1 = 5040

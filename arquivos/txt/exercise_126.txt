@@ -1,0 +1,13 @@
+Capivarão lotado
+Capivarão é o ônibus que transporta estudantes dentro do Campus da UFV, sendo usado principalmente para deslocamento até o Restaurante Universitário (RU 2), enquanto o RU principal está sendo reformado.
+Considere que, em semanas de feriado, quando há menos estudantes, ele aguarda no DCE enquanto há cadeiras vazias.
+Em particular, sendo C sua capacidade de pessoas sentadas, ele parte quando o número de estudantes no ônibus é maior ou igual a C (os excedentes vão em pé).
+De toda forma, para que os estudantes não aguardem tanto tempo, ele parte após T minutos mesmo se houver cadeira vazia.
+Para automatizar o processo, foi instalado um sensor para contabilizar a entrada de estudantes. Sua tarefa é fazer um programa que, dada a quantidade que entra a cada minuto, determina o minuto que ele deve partir,
+isto é, quando a capacidade C é atingida ou quanto passam T minutos, o que acontecer primeiro.
+Entrada:
+A entrada contém duas linhas: a primeira contém dois números inteiros C e T, repectivamente a capacidade do ônibus e o limite de espera;
+a segunda linha contém vários números inteiros Q, informando sequencialmente quantos estudantes entraram no ônibus a cada minuto.
+Restrições: 10 ≤ C ≤ 50, 1 ≤ T ≤ 30, 0 ≤ Q ≤ 30.
+Saída:
+Seu programa deve escrever o minuto que o Capivarão deve partir.

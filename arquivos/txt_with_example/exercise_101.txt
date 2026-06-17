@@ -1,0 +1,20 @@
+Distintos
+Dada uma lista de N números inteiros, seu programa deve determinar quantos números distintos existem na lista.
+Entrada:
+A entrada contém duas linhas: a primeira contém um valor inteiro N, indicando a quantidade de números na lista; a segunda contém os N números da lista, que são números inteiros V_i separados por espaço em branco.
+Restrições: 1 ≤ N ≤ 1000, -2^31≤ V_i ≤ 2^31-1 (ou seja, qualquer valor ).
+Saída:
+Seu programa deve gerar apenas uma linha de saída, informando a quantidade de números distintos da lista.
+Exemplos:
+10
+1 2 3 4 5 6 7 8 9 10
+10
+10
+5 1 0 -2 0 5 1 0 -2 3
+5
+3
+0 0 0
+1
+7
+0 1 1 1 0 1 0
+2

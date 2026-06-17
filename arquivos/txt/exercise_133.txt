@@ -1,0 +1,16 @@
+Amplitude térmica
+Os últimos dias têm sido bem frios em Viçosa. Em algumas dias a temperatura aumenta após as primeiras horas da manhã, mas em outros dias ela permanece baixa o dia todo.
+Nesse exercício estamos interessados em estudar a amplitude térmica na cidade. A amplitude térmica de um certo dia é a diferença entre a maior e a menor temperatura registrada naquele dia.
+Como exemplo, veja a tabela abaixo, que mostra os dados de Viçosa na semana passada. No dia 17, a máxima temperatura foi de 27 ^∘C, enquanto a mínima foi de 17 ^∘C. Então, a amplitude térmica nesse dia foi de 27 - 17 = 10 ^∘C.
+Dia (maio/2026)          17     18     19     20     21     22     23 
+Temperatura Máxima (^∘C)     27     26     23     21     20     19     24 
+Temperatura Mínima (^∘C)     17     17     17     16     14     13     14 
+Amplitude térmica (^∘C)     10     9     6     5     6     6     10 
+Faça um programa para calcular a amplitude térmica dos dias informados na entrada.
+Entrada:
+A entrada contém três linhas: a primeira contém um número inteiro N, indicando a quantidade de dias em estudo;
+a segunda contém as temperaturas máximas em cada um dos N dias;
+e a terceira as temperaturas mínimas em cada um dos N dias.
+Restrições: 1 ≤ N ≤ 1000, -60 ≤temperaturas≤ 60. Todos os valores da entrada são números inteiros.
+Saída:
+Seu programa deve escrever uma linha com a amplitude térmica de cada dia.

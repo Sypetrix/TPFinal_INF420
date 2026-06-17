@@ -1,0 +1,8 @@
+Diagonais
+Em álgebra linear, as diagonais de uma matriz quadrada são os conjuntos de elementos da matriz que unem dois cantos opostos. Existem duas diagonais: a diagonal principal e a diagonal secundária. Veja o exemplo:
+Nesta matriz, os elementos da diagonal principal são os interceptados pela seta vermelha (1, 5 e 9) e os da diagonal secundária são os interceptados pela seta azul (3, 5 e 7).
+Faça um programa para ler uma matriz quadrada de tamanho N × N e escrever os elementos de suas duas diagonais.
+Entrada:
+A primeira linha contém um inteiro N, que indica o tamanho da matriz. Em seguida virão N linhas com N inteiros cada, indicando os elementos da matriz. Restrição: 1 ≤ N ≤ 1000.
+Saída:
+Seu programa deve gerar 2N+1 linhas de saída. As primeiras N linhas devem conter os elementos da diagonal principal, um em cada linha. Em seguida, uma linha em branco, e novamente N linhas, cada uma com um valor, desta vez contendo os elementos da diagonal secundária. Escreva os elementos sempre de cima para baixo.

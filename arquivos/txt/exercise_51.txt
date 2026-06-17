@@ -1,0 +1,8 @@
+Metade da prova
+José é um excelente aluno e acerta todas as questões que faz. Mas ele também é preguiçoso e não quer fazer a prova toda, já que só precisa de metade dos pontos para passar. Ele faz as questões na ordem e para quando já completa exatamente a metade dos pontos da prova. Por exemplo, suponha uma prova com 4 questões, de valores 5, 3, 2 e 10, nesta ordem. Após terminar a questão 3 ele já tem 10 pontos (5+3+2), que é a metade do valor total de prova, então ele para de fazer a prova na questão 3.
+Sua tarefa é, dada os valores das questões, descobrir até qual questão da prova José fará.
+Entrada:
+A entrada é composta por duas linhas. A primeira contém um valor inteiro N, que indica o número de questões da prova. A segunda linha contém N valores inteiros q_1, q_2, …, q_N indicando o valor de cada questão. Restrições: 1 < N ≤ 10^5; 1 ≤ q_i ≤ 100, ∀ i=1… N.
+Saída:
+Seu programa deve imprimir uma única linha contendo um inteiro que indica a número da última questão que José vai fazer.
+É garantido que sempre existe uma resposta.

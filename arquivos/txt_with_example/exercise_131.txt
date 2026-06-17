@@ -1,0 +1,37 @@
+Vendas do funcionário do mês
+Uma empresa tem uma tabela com o relatório das vendas de cada funcionário em cada dia do mês.
+Por exemplo, a seguinte tabela mostra as vendas dos 3 funcionários em 4 dias.
+            3c|Funcionário 
+            1     2     3 
+ 4*90Dia
+        1     gray!2010     gray!205      gray!207  
+        2     gray!2020     gray!208      gray!2011 
+        3     gray!2014     gray!207      gray!2012 
+        4     gray!2013     gray!2018     gray!2015 
+ 2c|Total     57     38     45
+A empresa planeja premiar o “funcionário do mês”, que é o que efetuou maior total de vendas no mês.
+Como primeiro passo, ela quer saber apenas as vendas do funcionário do mês. No exemplo acima, 57.
+Entrada:
+A primeira linha contém dois inteiros, D e F, que são o número de dias e de funcionários que constam no relatório.
+Em seguida existem D linhas, uma para cada dia. Cada uma delas contém F inteiros, indicando o total de vendas de cada funcionário naquele dia.
+Restrições:
+2 ≤ D ≤ 30
+e 2 ≤ F ≤ 20.
+Saída:
+Seu programa deve informar a maior venda total feita por um funcionário.
+Exemplos:
+4 3
+10 5 7
+20 8 11
+14 7 12
+13 18 15
+57
+3 3
+10 20 30
+40 50 60
+70 80 90
+180
+2 4
+7 10 4 5
+5 4 8 9
+14

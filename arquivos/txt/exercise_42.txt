@@ -1,0 +1,13 @@
+Ano Bissexto
+Faça um programa que, dado um certo ano, determine se ele é bissexto ou não.
+O ano bissexto ocorre a cada quatro anos, nos anos múltiplos de 4 (exceto anos múltiplos de 100, que não são bissextos, a não ser os múltiplos de 400, que são). Veja alguns exemplos:
+  * 2023 não é bissexto, pois não é múltiplo de 4
+  * 2020 foi bissexto e 2024 será também
+  * 2100 não será bissexto pois, apesar de múltiplo de 4, é também múltiplo de 100
+  * 2000 foi bissexto pois era múltiplo de 400, que sobrepõe a regra de não ser múltiplo de 100
+Para a resolução do problema construa obrigatoriamente uma função com o protótipo abaixo, que recebe um inteiro representando o ano e retorna um valor lógico, sendo verdadeiro se o ano passado por parâmetro for bissexto, ou falso caso contrário:
+Entrada:
+A entrada contém várias linhas, cada uma contendo um ano de 4 dígitos compreendido entre 1582 e 3999.
+A entrada termina com um ano negativo, que não deve ser processado.
+Saída:
+Seu programa deve gerar uma linha de saída para cada ano informado na entrada, com a palavra “”, caso o ano informado seja bissexto, ou a mensagem “”, caso contrário.

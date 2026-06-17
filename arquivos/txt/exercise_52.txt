@@ -1,0 +1,10 @@
+Trilha na praça
+Carlinhos é um garoto sortudo! Seu avô adora fazer trilhas na praça para ele brincar. Essas trilhas são marcadas por setas no chão, que Carlinhos deve seguir até sair da praça. Um exemplo de trilha feita por seu avô é mostrada abaixo. Começando no canto superior esquerdo, Carlinhos sai da praça após dar 7 passos (veja o caminho seguido por Carlinhos na figura da direita).
+Algumas trilhas são bem legais, como as das figuras abaixo, em que Carlinhos percorre a praça toda!
+Mas quando seu avô está cansado, ele faz uma armadilha... Note que nas trilhas abaixo Carlinhos não sai da praça. Como ele é criança, continua seguindo as setas, sem perceber que está preso na praça.
+Ajude Carlinhos a perceber se ele está entrando numa armadilha!
+Entrada:
+A entrada começa com uma linha contendo dois inteiros N e M, a dimensão da praça. A seguir existem N linhas, cada uma com M caracteres cada. Os caracteres podem ser '', '', '' ou '', que indicam respectivamente setas para direita, para esquerda, para baixo e para cima.
+Restrições: 1 ≤ N, M ≤ 100.
+Saída:
+Seu programa deve escrever o número de passos que Carlinhos dará até sair da praça, ou '' caso ele fique preso na praça. Ele sempre começa a trilha no canto superior esquerdo da praça.

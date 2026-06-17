@@ -1,0 +1,14 @@
+Tabela
+Como parte do estágio, seu colega precisou fazer um programa para
+uma empresa que deveria imprimir as vendas de cada funcionário em cada dia. Supondo a seguinte tabela de vendas dos 3 funcionários em 4 dias, o programa de seu colega escreve os dados conforme mostrado abaixo.
+Mas a empresa não gostou do formato, ela quer o relatório por funcionário, como mostrado abaixo.
+Faça um programa para converter a tabela de seu colega para o formato desejado pela empresa.
+Entrada:
+A primeira linha contém dois inteiros,
+D e F, que são o número de dias e de funcionários que constam no relatório. Em seguida existem D linhas, uma para cada dia. Cada uma delas contém F inteiros,
+indicando o total de vendas de cada funcionário naquele dia.
+Restrições: 2 ≤ D ≤ 30, 
+e 2 ≤ F ≤ 20.
+Saída:
+Seu programa deve gerar F linhas na saída, uma para cada funcionário. Cada linha deve conter D inteiros, um para cada dia. Os valores representam as vendas do funcionário no dia correspondente.
+Atenção: em cada linha os valores devem ser separados por espaço em branco, mas não deve haver espaço após o último; e deve haver quebra de linha ao final de todas elas, inclusive da última.

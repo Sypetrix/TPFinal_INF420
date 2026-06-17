@@ -1,0 +1,9 @@
+Matriz triangular
+Em álgebra linear, uma matriz triangular superior é aquela em que todos os elementos abaixo da diagonal principal são nulos (iguais a zero). Em outras palavras, se A é uma matriz triangular superior, então a_ij=0, ∀ i>j.
+Veja um exemplo abaixo:
+    [ 7 2 3; 0 0 0; 0 0 9;   ]
+Faça um programa para ler uma matriz quadrada de ordem N e informar se ela é ou não uma matriz triangular superior.
+Entrada:
+Cada entrada contém apenas um caso de teste. A primeira linha contém um número N, indicando a ordem da matriz. Em seguida virão N linhas contendo N inteiros cada, indicando os elementos da matriz.  Restrição 1 ≤ N ≤ 1000.
+Saída:
+Seu programa deve gerar uma única linha de saída. Se a matriz for triangular superior, escreva “”. Caso contrário, escreva “”.

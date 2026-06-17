@@ -1,0 +1,123 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{Movimentos da torre}{torre}{1}
+
+Você começou a participar de um projeto que está desenvolvendo um tutorial de xadrez.
+% O trecho de código abaixo imprime um tabuleiro $8 \times 8$.
+
+% \lstset{language=C++,
+%                 basicstyle=\ttfamily,
+%                 keywordstyle=\color{Mulberry}\ttfamily,
+%                 stringstyle=\color{Maroon}\ttfamily,
+%                 commentstyle=\color{YellowGreen}\ttfamily,
+%                 morecomment=[l][\color{magenta}]{\#},
+%                 basewidth = {.48em}
+% }
+% \begin{lstlisting}
+%     for(int i=1;i<=8;i++) {
+%         for(int j=1;j<=8;j++)
+%             cout << "-";
+%         cout << endl;
+%     }
+% \end{lstlisting}
+
+
+
+Sua primeira tarefa é mostrar os possíveis movimentos de uma torre. No xadrez, uma torre pode ser movida ortogonalmente no tabuleiro, ou seja, para casas que estejam na mesma linha ou na mesma coluna.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém dois números $L$ e $C$, que indicam a linha e a coluna da posição atual da torre. As linhas são numeradas de cima para baixo e as colunas da esquerda para direita. Restrições, $1 \leq L, C \leq 8$.
+
+
+\OutputFile
+
+Seu programa deve produzir uma saída como a mostrada abaixo, onde `\texttt{T}' indica a posição atual da torre, `\texttt{x}' (minúsculo) indica uma casa para onde ela pode se mover e `\texttt{-}' uma casa para onde ela não pode se mover.
+
+\Example
+
+\begin{example}
+\exmp{
+2 4
+}{
+---x----
+xxxTxxxx
+---x----
+---x----
+---x----
+---x----
+---x----
+---x----
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+8 2
+}{
+-x------
+-x------
+-x------
+-x------
+-x------
+-x------
+-x------
+xTxxxxxx
+}%
+\end{example}
+
+
+
+% \begin{example}
+% \exmp{
+% 2 4
+% }{
+% \hspace*    1 2 3 4 5 6 7 8
+% \hspace*.  ----------------
+% 1| - - - x - - - -
+% 2| x x x T x x x x
+% 3| - - - x - - - -
+% 4| - - - x - - - -
+% 5| - - - x - - - -
+% 6| - - - x - - - -
+% 7| - - - x - - - -
+% 8| - - - x - - - -
+% }%
+% \end{example}
+
+% \begin{example}
+% \exmp{
+% 2 4
+% }{
+% \hspace*    1 2 3 4 5 6 7 8
+% \hspace*.  ----------------
+% 1| - - - x - - - -
+% 2| x x x T x x x x
+% 3| - - - x - - - -
+% 4| - - - x - - - -
+% 5| - - - x - - - -
+% 6| - - - x - - - -
+% 7| - - - x - - - -
+% 8| - - - x - - - -
+% }%
+% \end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

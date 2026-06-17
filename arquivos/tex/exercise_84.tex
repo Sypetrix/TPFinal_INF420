@@ -1,0 +1,84 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{2}
+
+\begin{document}
+
+\begin{problem}{Iccanobif}{bif}{2}
+ 
+Como visto na aula prática 4, a sequência de Fibonacci é uma sequência de números naturais cujos dois primeiros termos são 0 e 1, e todos os termos subsequentes são calculados pela soma dos dois anteriores.
+
+Matematicamente, representando por $F(n)$ o $n$-ésimo termo da série, começando de 0, temos que:
+
+\begin{itemize}
+\vspace{-2pt}
+    \item $F(0) = 0$
+\vspace{-2pt}
+    \item $F(1) = 1$
+\vspace{-2pt}
+    \item $F(n) = F(n-1) + F(n-2)$, para todo $N \geq 2$.
+\end{itemize}
+
+Assim, os 10 primeiros termos da sequência de Fibonacci são os apresentados a seguir:
+
+\begin{center}
+\begin{tabular}{l|cccccccccc}
+    $n$    & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
+    \hline
+    $F(n)$ & 0 & 1 & 1 & 2 & 3 & 5 & 8 & 13 & 21 & 34 
+\end{tabular}
+\end{center}
+
+Faça um programa para, dado um número natural $n$, escrever os $n$ primeiros números da série de Fibonacci, na ordem inversa!
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém um único número natural $N$. Restrições: $1 \leq N \leq 90$.
+
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha de saída, contendo os $N$ primeiros números de Fibonacci, escritos de trás pra frente. Deve haver espaço em branco entre os números da lista, mas não deve haver espaço após o último nem antes do primeiro.
+
+\Notes
+Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+5
+}{
+3 2 1 1 0
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+10
+}{
+34 21 13 8 5 3 2 1 1 0
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+1
+}{
+0
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

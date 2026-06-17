@@ -1,0 +1,24 @@
+Quadro na parede
+A mãe da Lisa gosta muito de arte e comprou um quadro para colocar na parede da sala. No entanto, ela confundiu as medidas e o quadro não coube na parede.
+Felizmente era um quadro de pintura abstrata, então ela pôde simplesmente girar o quadro 90º e ninguém notou.
+Como exemplo, suponha que ela tenha comprado um quadro 5 × 8 (5 metros de altura e 8 de largura), mas sua parede seja 10 × 6. O quadro não cabe na parede porque ele tem 8 metros de largura e a parede apenas 6.
+Mas, girando o quadro, ele se torna  8 × 5, cabendo tranquilamente na parede 10 × 6.
+Com receio de errar em novas compras, a mãe da Lisa te pediu um programa para informar as medidas de um quadro e da parede e saber se ele cabe, girado 90º ou não.
+Entrada:
+A entrada contém duas linhas. A primeira com dois valores inteiros, A e L, que são a altura e a largura do quadro. A segunda também tem dois valores inteiros, X e Y, que são a altura e a largura da parede.
+Restrições: 1 ≤ A, L, X, Y ≤ 10.
+Saída:
+Escreva uma linha na saída, com a palavra , se o quadro couber na parede, ou a palavra , caso não caiba, mesmo girado 90º.
+Exemplos:
+5 8
+10 6
+SIM
+8 5
+10 6
+SIM
+3 5
+5 5
+SIM
+5 5
+4 10
+NAO

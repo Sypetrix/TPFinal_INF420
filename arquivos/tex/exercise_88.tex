@@ -1,0 +1,80 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+
+\newlength{\exmpwidouf}
+\exmpwidinf=10cm
+\exmpwidouf=6cm
+
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{ASCII ART}{ascii}{1}
+
+ASCII art (ou Arte-ascii) é uma forma de expressão artística que usa apenas os caracteres disponíveis na tabela ASCII. Antigamente as impressoras não dispunham de recursos gráficos, então caracteres eram usados para fazer desenhos. ASCII art também costumava ser usada em e-mail, quando não era possível anexar imagens.
+
+\begin{verbatim}
+__________________|      |____________________________________________
+     ,--.    ,--.          ,--.   ,--.
+    |oo  | _  \  `.       | oo | |  oo|
+o  o|~~  |(_) /   ;       | ~~ | |  ~~|o  o  o  o  o  o  o  o  o  o  o
+    |/\/\|   '._,'        |/\/\| |/\/\|
+__________________        ____________________________________________
+                  |      |dwb
+\end{verbatim}
+
+Nesta questão você precisa fazer um recorte numa ACSCII art. 
+
+% \Notes
+
+% Você pode criar uma função para o cálculo do fatorial.
+
+\InputFile
+
+A entrada começa com uma linha contendo dois números inteiros, $N$ e $M$, respectivamente o número de linhas e colunas da ASCII art. Em seguida a ASCII art propriamente, em $N$ linhas contendo $M$ caracteres cada. Por fim, uma linha contendo o tamanho do recorte desejado (dois inteiros $L$ e $C$, respectivamente número de linhas e colunas) e uma linha com a posição inicial do recorte (dois inteiros $A$ e $B$, respectivamente a linha e coluna inicial do recorte, ou seja, o canto superior esquerdo). Restrições: $1\leq N,M \leq 100$ e $L,C,A,B$ formam um recorte válido, ou seja, a janela recortada nunca sairá dos limites da ASCII art.
+
+\OutputFile
+
+Seu programa deve imprimir o recorte solicitado na entrada.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+3 5
+01234
+56789
+abcde
+2 3
+2 2
+}{
+678
+bcd
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+2 12
+1234567890ab
+|\_|./=.\char`\\/[]|
+1 9
+2 1
+}{
+|\_|./=.\char`\\/
+}%
+\end{example}
+
+
+% \textit{Problema baseado na questão ``A idade de dona Mônica'' da OBI2019 fase local.}
+
+\end{problem}
+
+\end{document}

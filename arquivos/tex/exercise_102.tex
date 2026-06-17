@@ -1,0 +1,100 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{wrapfig}
+\usepackage{olymp}
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{Cotação do dólar}{dolar}{2}
+
+\begingroup
+\setlength{\intextsep}{0pt}%
+% \setlength{\columnsep}{0pt}
+\begin{wrapfigure}{r}{0.35\textwidth}
+\includegraphics[width=0.95\linewidth]{images/exercise_102_0.png} 
+%\caption{Caption1}
+%\label{fig:subim1}
+\end{wrapfigure}
+
+Na semana passada o dólar comercial fechou cotado para compra em mais de R\$5,70 na compra, o maior valor de outubro. Na semana anterior chegou a ser cotado abaixo de R\$5,50. O gráfico ao lado ilustra a variação nos últimos dias.
+
+Embora uma análise dessa situação seja importante sob vários aspectos econômicos, nesta questão estamos interessados apenas no valor de alta e de queda do dólar em algum período. Particularmente, dadas as cotações de vários dias de semana consecutivos, queremos saber qual a maior alta e a maior queda neste período.
+
+Por exemplo, considere a cotação nos últimos 7 dias do gráfico:
+
+{%\small
+\texttt{
+5.5565
+5.6417
+5.7111
+5.5967
+5.5794
+5.5661
+5.6118
+}
+}
+
+A maior queda foi de \texttt{0.1144} (de \texttt{5.7111} para \texttt{5.5967}).
+
+A maior alta foi de \texttt{0.0852} (de \texttt{5.5565} para \texttt{5.6417}).
+
+% \Notes
+
+% Uma seleção ganha 3 pontos para cada vitória e 1 ponto para cada empate. Derrotas não alteram sua pontuação.
+
+\InputFile
+
+A entrada começa com uma linha contendo um número inteiro $N$, a quantidade de cotações. Em seguida $N$ linhas, cada uma contendo um número real, indicando a cotação de cada dia.
+
+Restrições: $4 \leq N \leq 100$, cada cotação entre $1.0000$ e $6.0000$.
+\endgroup
+
+\OutputFile
+
+Imprima duas linhas na saída, a primeira com o valor da maior queda e a segunda com o valor da maior alta. Os dois valores devem conter 4 casas decimais. Sempre haverá pelo menos uma queda e pelo menos uma alta nas cotações da entrada.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+4
+2.0000
+3.0000
+4.0000
+2.0000
+}{
+2.0000
+1.0000
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+7
+5.5565
+5.6417
+5.7111
+5.5967
+5.5794
+5.5661
+5.6118
+}{
+0.1144
+0.0852
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

@@ -8,6 +8,7 @@ Módulos (na ordem do fluxo de trabalho):
     config        -> configuração central (.env, caminhos, colunas)
     data_utils    -> carregamento de dados e limpeza de texto
     gemini_client -> cliente fino para o Google Gemini
+    ingest        -> Etapa 1: lê arquivos/ (enunciados + feedbacks) -> questoes.csv
     preprocess    -> Etapa 2: limpeza + vetorização TF-IDF
     train_ml      -> Etapa 3: LogReg, KNN, SVM, Random Forest
     llm_baseline  -> Etapa 4: classificação direta via Gemini

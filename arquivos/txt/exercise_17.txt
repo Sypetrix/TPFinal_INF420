@@ -1,0 +1,10 @@
+Barragem
+Na iminência de rompimento de mais uma barragem de rejeitos, certa companhia de mineração está implantando práticas para uma rápida evacuação de pessoas das zonas de risco. Várias simulações estão sendo feitas e você precisa preparar um programa para determinar se cada uma delas foi ou não bem sucedida. 
+Entrada:
+A entrada começa com uma linha contendo dois inteiros, P e T, que indicam respectivamente o número de pessoas que deve evacuar o local e o tempo em minutos disponível para isso.
+A linha seguinte contém uma sequência de inteiros indicando o número de pessoas evacuadas a cada minuto após soar o alarme da simulação. Ou seja, valores N_1 N_2 N_3… indicando quantas pessoas evacuaram no 1^∘ minuto, no 2^∘ minuto, no 3^∘ minuto e assim por diante. O valor -1 indica o fim da simulação.
+Restrições: P≤1000000, T≤ 1000, 0 ≤ N_i ≤ P, N_1 + N_2 + N_3 + …≤ P.
+Saída:
+Seu programa deve escrever apenas uma linha na saída contendo uma das frases seguintes:
+  * “”, caso todas as P pessoas sejam evacuadas em até T minutos;
+  * “”, caso contrário, sendo X o número de pessoas evacuadas nos primeiros T minutos (em outras palavras, se X < P, sendo X = N_1+N_2+…+N_T).

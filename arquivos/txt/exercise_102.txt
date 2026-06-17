@@ -1,0 +1,11 @@
+Cotação do dólar
+Na semana passada o dólar comercial fechou cotado para compra em mais de R$5,70 na compra, o maior valor de outubro. Na semana anterior chegou a ser cotado abaixo de R$5,50. O gráfico ao lado ilustra a variação nos últimos dias.
+Embora uma análise dessa situação seja importante sob vários aspectos econômicos, nesta questão estamos interessados apenas no valor de alta e de queda do dólar em algum período. Particularmente, dadas as cotações de vários dias de semana consecutivos, queremos saber qual a maior alta e a maior queda neste período.
+Por exemplo, considere a cotação nos últimos 7 dias do gráfico:
+A maior queda foi de  (de  para ).
+A maior alta foi de  (de  para ).
+Entrada:
+A entrada começa com uma linha contendo um número inteiro N, a quantidade de cotações. Em seguida N linhas, cada uma contendo um número real, indicando a cotação de cada dia.
+Restrições: 4 ≤ N ≤ 100, cada cotação entre 1.0000 e 6.0000.
+Saída:
+Imprima duas linhas na saída, a primeira com o valor da maior queda e a segunda com o valor da maior alta. Os dois valores devem conter 4 casas decimais. Sempre haverá pelo menos uma queda e pelo menos uma alta nas cotações da entrada.

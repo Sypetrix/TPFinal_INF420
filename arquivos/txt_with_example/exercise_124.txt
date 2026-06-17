@@ -1,0 +1,33 @@
+Peso em outros planetas
+r0.3
+    < g r a p h i c s >
+    Pôr-da-terra: foto do comandante
+da missão Artemis II
+Na sexta-feira passada, os 4 astronautas da missão Artemis 2, da Nasa, retornaram com sucesso à Terra.
+O ponto alto da missão foi um sobrevoo ao redor da Lua, permitindo que os astronautas vissem com seus próprios olhos o lado oculto da Lua.
+Eles ainda viram um eclipse solar e um “Pôr-da-Terra” (foto ao lado).
+Segundo a Nasa, esse foi um voo de teste para uma missão futura que deve levar humanos de volta à Lua e também para validar tecnologias essenciais para viagens mais longas,
+por exemplo verificar o quão rapidamente os astronautas conseguem se ajustar a uma mudança de gravidade para o pouso na Lua e uma possível missão a Marte.
+Devido à diferença de gravidade, o peso de uma pessoa na Lua é cerca de 1/6 do seu peso na Terra, enquanto em Marte cai para quase 1/3.
+A tabela a seguir mostra valores mais precisos, que devem ser usados nesse exercício.
+        Corpo Celeste     Valor (
+        Lua     16.5
+        Marte     38
+        Venus     91
+        Jupiter     234
+Entrada:
+A entrada contém apenas uma linha, com um valor inteiro K, o peso em Kg de uma pessoa na Terra, e uma letra maiúscula P informando um local.
+Restrições: 50 ≤ K ≤ 120 e P pode ser `', `', `' ou `', respectivamente os corpos celestes na tabela.
+Saída:
+Escreva o peso da pessoa no local solicitado, formatado para uma casa decimal.
+Exemplos:
+70 L
+11.6
+70 M
+26.6
+100 L
+16.5
+50 J
+117.0
+Primeiro exemplo: uma pessoa de 70 Kg na Terra pesará 70 × 0.165 = 11.55 ≈ 11.6 Kg na Lua.
+Último exemplo: uma pessoa de 50 Kg na Terra pesará impressionantes 117.0 Kg em Júpiter.

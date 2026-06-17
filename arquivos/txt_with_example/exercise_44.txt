@@ -1,0 +1,19 @@
+Datas válidas
+Faça um programa que receba uma data e informe se ela é uma data válida ou inválida.
+Para isso faça obrigatoriamente uma função com o seguinte protótipo:
+A função tem 3 parâmetros inteiros, representando o dia, o mês e o ano de uma data, e retorna um valor lógico, sendo verdadeiro caso a data seja uma data válida ou falso caso contrário.
+Entrada:
+A entrada contém apenas uma linha, com três números inteiros, que indicam respectivamente dia, mês e ano. Restrições: 1 ≤ dia ≤ 31, 1 ≤ mês ≤ 12, 1592 ≤ ano ≤ 3999.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, contendo “” quando a data informada na entrada for válida ou “” quando não for. 
+Exemplos:
+26 05 2023
+data valida
+31 04 1983
+data invalida
+31 02 2001
+data invalida
+29 02 2023
+data invalida
+29 02 2020
+data valida

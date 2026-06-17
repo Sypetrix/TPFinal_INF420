@@ -1,0 +1,7 @@
+Recomendação Netflix
+O programa de recomendação de filmes, séries e documentários da Netflix compara as preferências de diversos usuários para decidir quais títulos recomendar a um usuário. Neste problema, você deve escrever um programa para comparar as preferências de um usuário U com as preferências de vários outros usuários e informar qual usuário mais se assemelha a U.
+Consideramos N usuários e T títulos. Cada usuário indica a preferência por cada um dos títulos. As preferências são valores inteiros de 0 e 9 que representam a nota do usuário para um título. A similaridade deve ser calculada como o número de preferências (notas) iguais entre U e um outro usuário. Por exemplo, para T = 2, se um usuário fornece as notas 4 9 para os dois títulos e U fornece as notas 4 8, a similaridade entre os dois é igual a 1. Se U fornece as notas 3 8, a similaridade é igual a 0.
+Entrada:
+A primeira linha contém dois inteiros, N e T, respectivamente o número de usuários e o número de títulos (portanto, de notas). Em seguida há N linhas com T inteiros cada, informando as preferências de cada usuário por cada título. Por fim, há mais uma linha, com as T preferências do usuário U. Restrição: 1 ≤ N, T ≤ 100.
+Saída:
+Seu programa gera apenas uma linha de saída, com um valor entre 1 e N, indicando o número do usuário que mais se assemelha a U. Caso haja empate entre mais de um usuário que mais se assemelha a U, deve ser escrito o menor número entre os empatados. Por exemplo, se os usuários que mais se assemelham a U são os usuários 20 e 23, deve ser escrito 20.

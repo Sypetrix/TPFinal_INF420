@@ -1,0 +1,76 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Quadrado mágico}{quadrado}{2}
+
+Senhor Coelho é conhecido mundialmente pela fabricação de quadrados mágicos de dimensões $3 \times 3$. Um quadrado é chamado mágico quando a soma dos elementos de uma determinada linha, coluna ou diagonal é sempre igual.
+
+Infelizmente, assaltantes invadiram recentemente a oficina do Sr. Coelho e roubaram alguns dos números de seus quadrados mágicos. Felizmente os meliantes não conseguiram roubar mais do que 3 números de cada quadrado. Desesperado, pois devia entregar os quadrados naquele dia, o Sr. Coelho veio procurar a sua ajuda para tentar completar os quadrados com os números faltantes.
+
+Escreva um programa que, dado um quadrado mágico com alguns números faltando, determine qual era o quadrado mágico original.
+
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém três linhas, cada uma contendo três inteiros entre 0 e 2 x ${10^4}$, inclusive. O número zero representa os dígitos que foram roubados. Existem no máximo três números zero na entrada.
+
+\OutputFile
+
+Seu programa deve imprimir três linhas, cada uma contendo três inteiros, descrevendo a configuração original do quadrado mágico.
+
+% \Notes
+% É garantido que sempre existe uma divisão que satisfaz as condições dos reinos.
+
+\Example
+
+\begin{example}
+\exmp{
+4 9 2
+3 0 7
+8 1 6
+}{
+4 9 2
+3 5 7
+8 1 6
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+0 12 12
+16 10 0
+8 8 14
+}{
+6 12 12
+16 10 4
+8 8 14
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+495 468 0
+0 522 414
+441 0 549
+}{
+495 468 603
+630 522 414
+441 576 549
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

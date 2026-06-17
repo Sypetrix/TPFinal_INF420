@@ -1,0 +1,37 @@
+Notas de prova
+Certo professor terminou de corrigir todas as provas de sua turma e está com as notas anotadas numa ordem qualquer, como mostrado no exemplo abaixo, à esquerda. Como as notas são lançadas no Sapiens em ordem de matrícula, facilitaria muito seu trabalho se a lista de notas estivesse ordenada pelo número de matrícula, como a lista da direita!
+.3
+.3
+Ajude o professor fazendo um programa que ordena as notas pela matrícula.
+Entrada:
+A entrada começa com uma linha contendo um número T, que é o número de alunos da turma. Em seguida vem T linhas, cada uma com dois inteiros M_i e N_i, que são o número de matrícula e a nota do i-ésimo aluno da lista, respectivamente. Restrições: 1 ≤ T ≤ 100; 1 ≤ M_i ≤ 99999; 0 ≤ N_i ≤ 30. Não há número de matrícula repetido.
+Saída:
+Seu programa deve gerar T linhas de saída, cada uma contendo o número de matrícula e a nota de um dos alunos. A saída deve estar ordenada pelo número de matrícula.
+Exemplos:
+5
+60001 20
+61234 23
+59999 18
+56789 19
+66666 22
+56789 19
+59999 18
+60001 20
+61234 23
+66666 22
+4
+20000 18
+19000 15
+18000 20
+17000 15
+17000 15
+18000 20
+19000 15
+20000 18
+2
+54321 9
+12345 20
+12345 20
+54321 9
+Dica: crie uma  com os campos matrícula e nota; armazene os dados de entrada em um vetor de  e então ordene o vetor de acordo
+com as matrículas dos alunos.

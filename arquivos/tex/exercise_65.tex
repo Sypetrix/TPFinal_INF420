@@ -1,0 +1,61 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{Doublets}{doublets}{2}
+ 
+Um \textit{doublet} é formado por um par de palavras de mesmo tamanho que diferem entre si em somente uma letra. Por exemplo: ``bola'' e ``bala'', ou ``passa'' e ``massa''. Faça um programa para determinar se duas cadeias de caracteres formam um \textit{doublet} ou não.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém exatamente duas linhas, cada uma delas com uma cadeia de no máximo 100 caracteres, contendo somente letras minúsculas.
+
+\OutputFile
+
+Seu programa deve escrever somente ``\texttt{SIM}'' ou ``\texttt{NAO}' (sem acento), indicando se as duas cadeias formam ou não um \textit{doublet}.
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+bolo
+bola
+}{
+SIM
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+passa
+massa
+}{
+SIM
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+marra
+massa
+}{
+NAO
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

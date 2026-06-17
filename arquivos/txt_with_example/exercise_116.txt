@@ -1,0 +1,22 @@
+Aceleração
+Em projetos de extensão da UFV, alunos de Engenharia Mecânica e interessados de outros cursos desenvolvem veículos e participam de competições nacionais.
+A equipe Fórmula UFVolts Majorados projeta e fabrica veículos elétricos para participar do Fórmula SAE Brasil.
+Já a equipe UFVbaja Pererecas projeta e constrói protótipos de veículos off-road para participar do Baja SAE Brasil.
+Em algumas etapas, devem medir a aceleração do veículo. Se considerada uma aceleração constante, pode ser usada a Equação de Torricelli, proposta pelo físico e matemático italiano Evangelista Torricelli:
+    v^2 = v_0^2 + 2aΔ x
+onde v representa a velocidade final do veículo e v_0 sua velocidade inicial, a representa a aceleração e Δ x o deslocamento. Neste exercício, consideramos que o veículo parte do repouso, ou seja, v_0 = 0.
+Como exemplo, estimando-se que o DeLorean do filme De Volta para o Futuro tenha percorrido 370m até atingir 88 milhas/hora (cerca de 142 km/h, equivalente a 39.444 m/s),
+sua aceleração foi de 2.1 m/s^2.
+Entrada:
+A entrada é composta por dois valores reais, D e V, representando respectivamente o deslocamento do veículo em metros e sua velocidade final em km/h.
+Ou seja, partindo do repouso (v_0=0), após percorrer D metros sua velocidade é V km/h.
+Restrições: 1 ≤ D ≤ 1000 e 1 ≤ V ≤ 200.
+Saída:
+Escreva o valor da aceleração do veículo, em m/s^2, com uma casa decimal.
+Exemplos:
+100 36
+0.5
+370 142
+2.1
+12.3 45.6
+6.5

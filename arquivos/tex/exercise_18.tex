@@ -1,0 +1,66 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Fatorial}{fatorial}{2}
+ 
+O \textbf{fatorial} de um número natural $n$, representado por $n!$, é o produto de todos os inteiros positivos menores ou iguais a $n$. Ou seja,
+
+$$n!=1 \times 2 \times 3 \times \dots \times (n-1) \times n$$
+
+Além disso, por definição, $0! = 1$.
+
+Faça um programa para, dado um número natural $n$, calcular seu fatorial $n!$.
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém um único número natural $N$. Restrições: $0 \leq N \leq 20$.
+
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha de saída, contendo o valor de $N!$.
+
+\Notes
+Preste atenção aos tipos das variáveis, pois $20! \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+3
+}{
+6
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+5
+}{
+120
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+18
+}{
+6402373705728000
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

@@ -1,0 +1,122 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{2}
+
+\begin{document}
+
+\begin{problem}{Classificação nas eliminatórias}{classif}{2}
+ 
+A seleção brasileira de futebol tem acumulado uma série de fiascos nas eliminatórias para a próxima Copa do Mundo. Perdeu para Colômbia (pela primeira vez na história das eliminatórias), para o Uruguai (de quem não perdia há 22 anos) e para a Argentina, no Maracanã (pela primeira vez na história das eliminatórias o Brasil perdeu um jogo como mandante). Como se não bastasse, foi eliminada cedo da Copa América deste ano, ainda nas quartas de final. 
+
+Nem a seleção olímpica escapa! Depois do ouro na Rio 2016 e em Tokyo 2020, sequer se classificou para Paris 2024, que começa daqui a algumas horas.
+
+Com os maus resultados nas eliminatórias, está em 6º lugar na América do Sul. Por sorte, ainda na zona de classificação, porque pela primeira vez há 6 vagas, em vez de 4, como de costume.
+%se classificarão os melhores 6 times, em vez de 4, como de costume.
+
+Sua tarefa aqui é escrever um programa para ler os resultados das partidas de uma seleção nas eliminatórias da Copa e informar seu total de pontos, seu saldo de gols e seu aproveitamento.
+
+\begin{minipage}{.58\textwidth}
+O total de pontos é a soma dos pontos obtidos nas partidas: 3 pts por vitória, 1 pt por empate e 0 por derrota. Por exemplo, nas partidas já disputadas das eliminatórias (resultados ao lado), o Brasil acumulou apenas 7 pontos: 3 + 3 + 1, respectivamente das duas vitórias e um empate nas primeiras partidas.
+\end{minipage}
+\hfill
+\begin{minipage}{.35\textwidth}
+\begin{tabular}{rcccl}
+\textbf{Brasil} & 5 & x & 1 &Bolívia\\
+Peru & 0 & x & 1 & \textbf{Brasil}\\
+\textbf{Brasil} & 1 & x & 1 & Venezuela\\
+Uruguai & 2 & x & 0 & \textbf{Brasil}\\
+Colômbia & 2 & x & 1 & \textbf{Brasil}\\
+\textbf{Brasil} & 0 & x & 1 & Argentina
+\end{tabular}
+\end{minipage}
+
+O saldo de gols é a diferença entre o total de gols marcados e sofridos. Por exemplo, o saldo de gols do Brasil é 1: marcou $5+1+1+0+1+0 = 8$ gols e sofreu $1+0+1+2+2+1 = 7$ gols.
+
+E o aproveitamento é a porcentagem de pontos obtidos do total disputado. Por exemplo, o Brasil disputou 6 partidas. Poderia ter obtido 18 pts mas obteve 7, logo um aproveitamento de 38.9\%.
+
+% Considere uma entrada simplificada, que informa o número de partidas do time e em seguida o resultado de cada partida por dois números, na ordem gols marcados e sofridos pelo time.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada começa com um número inteiro $N$, o número de partidas disputadas. Em seguida, há $N$ linhas, cada uma com o resultado de uma partida. O resultado de uma partida é dado por uma letra maiúscula e dois inteiros: se a letra for '\texttt{M}', a seleção disputou a partida como mandante, sendo informado primeiro os gols marcados e depois os sofridos; se for '\texttt{V}', disputou como visitante, sendo informado os gols sofridos e depois os marcados. Restrição: $1 \leq N \leq 18$.
+
+
+\OutputFile
+
+Seu programa deve escrever o total de pontos, o saldo de gols e o aproveitamento da seleção (com 1 casa decimal) nas partidas da entrada, seguindo o modelo dos exemplos a seguir.
+
+% \Notes
+% Note que a mensagem escrita não tem acento e tem um ponto final.
+
+\Example
+
+\begin{example}
+\exmp{
+6
+M 5 1
+V 0 1
+M 1 1
+V 2 0
+V 2 1
+M 0 1
+}{
+pontos: 7
+saldo de gols: 1
+aproveitamento: 38.9\%
+}%
+\end{example}
+\textit{\small exemplo do enunciado
+}
+
+\begin{example}
+\exmp{
+6
+V 1 0
+M 1 0
+V 1 1
+M 3 0
+M 0 0
+V 1 1
+}{
+pontos: 9
+saldo de gols: 3
+aproveitamento: 50.0\%
+}%
+\end{example}\\
+\textit{\small resultados da Venezuela
+}\\
+
+\begin{example}
+\exmp{
+9
+M 5 0
+V 2 4
+M 1 0
+V 0 2
+M 2 0
+V 0 2
+V 0 1
+M 2 0
+V 1 3
+}{
+pontos: 27
+saldo de gols: 19
+aproveitamento: 100.0\%
+}%
+\end{example}
+\textit{\small Brasil nas eliminatóirias da última Copa
+}
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

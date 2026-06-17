@@ -1,0 +1,9 @@
+Equação de segundo grau
+Faça um programa que calcule ambas as raízes de uma equação de segundo grau.
+Entrada:
+A entrada terá apenas um caso de teste.
+O caso de teste é composto por três valores reais, A, B e C, representando os coeficientes da equação de segundo grau.
+Neste problema, é garantido que sempre haverá duas raízes reais.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, contendo as raízes da equação de segundo grau de coeficientes A, B, C. Esses valores devem ser impressos como números reais com precisão de 4 casas decimais, separados por um espaço em branco, seguindo a ordem mostrada nos exemplos.
+Não se esqueça de quebrar a linha após a impressão dos valores.

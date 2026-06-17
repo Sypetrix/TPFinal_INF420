@@ -1,0 +1,10 @@
+Número espelhado
+Nesta questão você deve escrever um programa que lê um número e o
+escreve espelhado. Por exemplo, para a entrada 12345 deve ser
+escrito 54321.
+Existem vários maneiras de se fazer isto. Nesta questão, entretanto, o
+número espelhado deve ser escrito por uma função recursiva.
+Entrada:
+A entrada contém um único número natural N. Restrições: 0 < N < 2000000000.
+Saída:
+Seu programa deve gerar uma linha de saída contendo o número N espelhado.

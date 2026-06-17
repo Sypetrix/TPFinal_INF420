@@ -1,0 +1,13 @@
+Quadrante
+Como etapa no desenvolvimento de um jogo de computador, você precisa escrever um programa que decida onde está um personagem. Mais especificamente, dadas suas coordenadas cartesianas, informar em qual quadrante ele está. O personagem pode ainda não estar em quadrante algum, por exemplo, se estiver sobre um dos eixos ou na origem.
+.4
+A figura ao lado ilustra algumas das situações possíveis. Nesta figura, o ponto A está na origem, o ponto B sobre o Eixo Y e os pontos C e D respectivamente no 1^∘ e 2^∘ quadrantes.
+.5
+Entrada:
+A entrada contém dois números inteiros, X e Y, indicando as coordenadas da localização do personagem. Restrições: -10000 ≤ X,Y ≤ 10000.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, contendo uma das sequintes mensagens, dependendo da localização do personagem:
+  * “ N”, onde N pode ser 1, 2, 3 ou 4
+  * “”
+  * “”
+  * “”

@@ -28,20 +28,33 @@ SYSTEM = (
 
 
 def _normalize(label: str) -> str:
-    """Mapeia variações ('fácil', 'easy', 'hard'...) para o rótulo canônico."""
+    """Mapeia variações ('muito fácil', 'very easy', 'hard'...) p/ o rótulo canônico."""
     txt = unicodedata.normalize("NFKD", str(label).lower())
     txt = "".join(c for c in txt if not unicodedata.combining(c)).strip()
+    txt = txt.replace("_", " ").replace("-", " ")
+    txt = " ".join(txt.split())   # colapsa espaços
+
     mapa = {
+        "muito facil": "muito_facil", "very easy": "muito_facil",
+        "muito baixa": "muito_facil", "muito simples": "muito_facil",
         "facil": "facil", "easy": "facil", "baixa": "facil", "simples": "facil",
         "medio": "medio", "media": "medio", "medium": "medio", "moderada": "medio",
+        "muito dificil": "muito_dificil", "very hard": "muito_dificil",
+        "muito alta": "muito_dificil", "muito complexa": "muito_dificil",
         "dificil": "dificil", "hard": "dificil", "alta": "dificil", "complexa": "dificil",
     }
     if txt in mapa:
         return mapa[txt]
-    for chave, valor in mapa.items():       # casamento parcial
+    # Casamento parcial: testar os termos "muito ..." antes dos simples, para
+    # não confundir "muito dificil" com "dificil".
+    ordem = [
+        "muito facil", "very easy", "muito dificil", "very hard",
+        "facil", "easy", "medio", "medium", "media", "dificil", "hard",
+    ]
+    for chave in ordem:
         if chave in txt:
-            return valor
-    return txt
+            return mapa[chave]
+    return txt.replace(" ", "_")
 
 
 def _build_prompt(statement: str, examples: list[tuple[str, str]] | None = None) -> str:

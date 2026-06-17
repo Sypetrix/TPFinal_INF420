@@ -1,0 +1,15 @@
+Vogais
+Como parte de um trabalho de processamento e pesquisa em textos escritos em vários idiomas, você precisa fazer um programa que calcula a porcentagem de vogais em uma palavra.
+Entrada:
+A entrada contém apenas uma linha, contendo uma única palavra. A palavra contém apenas letras (maiúsculas ou minúsculas), sem acentos, cedilhas, hífens nem espaços. Restrições: a palavra tem no máximo 30 caracteres.
+Saída:
+Seu programa deve gerar uma linha na saída, contendo a porcentagem de vogais da palavra lida. O valor deve ser arredondado para não conter casa decimal.
+Exemplos:
+Vogais
+50
+Uai
+100
+Why
+0
+english
+29

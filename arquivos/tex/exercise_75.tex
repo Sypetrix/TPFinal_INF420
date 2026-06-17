@@ -1,0 +1,131 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+
+\newlength{\exmpwidouf}
+\exmpwidinf=10cm
+\exmpwidouf=6cm
+
+
+\setcounter{problem}{2}
+
+\begin{document}
+
+\begin{problem}{ccTLD}{codigo}{1}
+
+O domínio de topo de código de país (ccTLD, do inglês \textit{country code top-level domain}), também chamado de domínio nacional de nível superior, é o domínio de topo na Internet geralmente usado ou reservado para um país. Os identificadores de ccTLD são de duas letras, como o \texttt{.br} usado no Brasil. Assim como no caso do Brasil, muitos países usam as duas letras inicias do seu nome: \texttt{.it} na Itália e \texttt{.de} na Alemanha (em alemão, \textit{Deutschland}). Outros usam a letra inicial e alguma outra letra do nome, seja por preferência ou por não estar mais disponível o código com as duas iniciais: México usa \texttt{.mx} e Paraguai usa \texttt{.py} (de \textit{Paraguay}) (enquanto Panamá usa \texttt{.pa}). E alguns são forçados a criar alternativas: Benin usa \texttt{.bj} pois \texttt{.be}, \texttt{.bn} e \texttt{.bi} já eram usados.
+
+Nesta questão, seu programa deve verificar se um código usa as duas letras iniciais do nome do país ou a letra inicial e alguma outra letra do nome.
+
+% \Notes
+
+% Você pode criar uma função para o cálculo do fatorial.
+
+\InputFile
+
+A entrada contém vários casos de teste, cada um deles descrito em uma linha contendo um código (ponto e duas letras minúsculas) seguido de um espaço e o nome do país. O nome do país contém apenas letras e espaços, sem acentos ou cedilhas. O código sempre tem duas letras e o nome do país no máximo 50. O código \texttt{.zz} indica o fim da entrada.
+
+\OutputFile
+
+Para cada caso de teste da entrada, escreva: \texttt{Ok}, se o código usa as duas letras iniciais ou a letra inicial e alguma outra letra do nome informado; ou \texttt{No}, caso contrário.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+.br Brasil
+.de Alemanha
+.de Germany
+.de Deutschland
+.za Africa do Sul
+.za South Africa
+.za Zuid Afrika
+.tv Tuvalu
+.cu Cuba
+.py Paraguai
+.py Paraguay
+.ae Emirados Arabes Unidos
+.ae United Arab Emirates
+.zz
+}{
+Ok
+No
+No
+Ok
+No
+No
+Ok
+Ok
+Ok
+No
+Ok
+No
+No
+}%
+\end{example}
+
+% \begin{example}
+% \exmp{
+% .br Brasil
+% 2
+% Brasil
+% Brazil
+% }{
+% OK
+% }%
+% \end{example}
+
+% \begin{example}
+% \exmp{
+% .de
+% 3
+% Alemanha
+% Germany
+% Deutschland
+% }{
+% OK
+% }%
+% \end{example}
+
+% \begin{example}
+% \exmp{
+% .tv
+% 1
+% Tuvalu
+% }{
+% OK
+% }%
+% \end{example}
+
+% \begin{example}
+% \exmp{
+% .tv
+% 1
+% Tuvalu
+% }{
+% OK
+% }%
+% \end{example}
+
+% \begin{example}
+% \exmp{
+% .za
+% 3
+% Africa do Sul
+% South Africa
+% Zuid-Afrika
+% }{
+% OK
+% }%
+% \end{example}
+
+% \textit{Problema baseado na questão ``A idade de dona Mônica'' da OBI2019 fase local.}
+
+\end{problem}
+
+\end{document}

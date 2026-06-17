@@ -1,0 +1,6 @@
+Doublets
+Um doublet é formado por um par de palavras de mesmo tamanho que diferem entre si em somente uma letra. Por exemplo: “bola” e “bala”, ou “passa” e “massa”. Faça um programa para determinar se duas cadeias de caracteres formam um doublet ou não.
+Entrada:
+A entrada contém exatamente duas linhas, cada uma delas com uma cadeia de no máximo 100 caracteres, contendo somente letras minúsculas.
+Saída:
+Seu programa deve escrever somente “” ou “' (sem acento), indicando se as duas cadeias formam ou não um doublet.

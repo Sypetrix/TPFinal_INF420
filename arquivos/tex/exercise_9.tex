@@ -1,0 +1,56 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{3}
+
+\begin{document}
+
+\begin{problem}{Temperatura em Viçosa}{temp}{2}
+ 
+A UFV recebe diversos estrangeiros para cursar disciplinas de graduação e pós-graduação. Muitos estranham as constantes mudanças bruscas de clima e de temperatura na cidade. Saem de casa com temperatura de $25^{\circ}$C e de repente uma chuva muda a temperatura para $15^{\circ}$C. Pior ainda para os americanos, que nem entendem essas temperaturas em $^{\circ}$C!
+
+Faça um programa para converter temperaturas de $^{\circ}$C (graus Celsius) para $^{\circ}$F (graus Fahrenheit) e vice-versa. Para facilitar seu trabalho, damos a seguir a fórmula de conversão de $^{\circ}$F para $^{\circ}$C:
+
+\[ \displaystyle ^{\circ}\text{C} = \frac{5}{9}(^{\circ}\text{F}-32) \]
+
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada é composta por um valor real $T$ e um caractere $E$, sendo $T$ a temperatura e $E$ a escala utilizada, que pode ser `\texttt{F}' para Fahrenheit ou `\texttt{C}' para Celsius. Restrição: $-100 \leq T \leq 300$.
+
+
+%\Notes
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha na saída, contendo um valor real, com uma casa decimal, representando a temperatura convertida, seguida por um espaço e um caractere (`\texttt{C}' ou `\texttt{F}') representando essa escala. Se a escala da entrada for Fahrenheit a temperatura na saída deve ser a correspondente em Celsius, e vice-versa.
+
+\Example
+
+\begin{example}
+\exmp{
+100 F
+}{
+37.8 C
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+100 C
+}{
+212.0 F
+}%
+\end{example}
+
+%comment
+
+\end{problem}
+
+\end{document}

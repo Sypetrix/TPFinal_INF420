@@ -1,0 +1,70 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{Inverter}{inverter}{2}
+ 
+Dada uma lista de $N$ números inteiros, seu programa deve imprimir estes números na ordem inversa à da entrada.
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém duas linhas: a primeira contém um valor inteiro $N$, indicando a quantidade de números na lista; a segunda contém os $N$ números da lista, que são números inteiros $V_i$ separados por espaço em branco.
+
+Restrições: $1 \leq N \leq 1000$, $-10^6 \leq V_i \leq 10^6$.
+
+
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha de saída, contendo todos os $N$ números da lista, em ordem inversa.
+
+\Notes
+Escreva espaço em branco para separar os números, mas não escreva espaço em branco antes do primeiro nem depois do último número da lista. Após o último escreva apenas um caractere de quebra de linha.
+
+
+\Example
+
+\begin{example}
+\exmp{
+10
+1 2 3 4 5 6 7 8 9 10
+}{
+10 9 8 7 6 5 4 3 2 1
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+7
+5 7 2 14 9 -8 3
+}{
+3 -8 9 14 2 7 5
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+1
+2
+}{
+2
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

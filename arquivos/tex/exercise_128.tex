@@ -1,0 +1,78 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Gráfico de faltas}{grafico}{2}
+
+Preocupado com a frequência dos alunos nas aulas, certo professor quer fazer um gráfico para entender se há alguma relação da frequência com a temperatura na cidade.
+
+Ele não está com tempo para fazer um gráfico detalhado, então pretende simplesmente marcar quando o número de alunos ausentes esteve abaixo ou acima da média dos últimos dias.
+
+Mais especificamente, dado o número de alunos ausentes em cada dia,
+ele quer marcar em que dias esse número esteve abaixo da média (com `\texttt{.}'), na média  (com `\texttt{o}') e acima dela (com `\texttt{O}').
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém duas linhas: a primeira contém um valor inteiro $N$, indicando a quantidade de dias do estudo;
+a segunda contém $N$ números inteiros $A_i$ separados por espaço em branco, indicando o número de estudantes ausentes em cada um dos dias.
+
+Restrições: $1 \leq N \leq 100$, $0 \leq A_i \leq 100$.
+
+\OutputFile
+
+Escreva uma linha na saída, .
+
+%\Notes
+
+\Example
+
+\begin{example}
+\exmp{
+10
+1 2 3 4 5 6 7 8 9 10
+}{
+.....OOOOO
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+10
+0 1 2 3 4 2 3 1 4 0
+}{
+..oOOoO.O.
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+2
+10 9
+}{
+O.
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+3
+10 10 10
+}{
+ooo
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

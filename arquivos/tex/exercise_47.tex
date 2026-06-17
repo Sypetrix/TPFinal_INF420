@@ -1,0 +1,99 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{Primos}{primos}{2}
+ 
+O seguinte programa foi escrito para gerar uma lista de números primos. Após ler dois valores inteiros $A$ e $B$, ele deveria gerar todos os números primos entre $A$ e $B$, inclusive.
+
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{Mulberry}\ttfamily,
+                stringstyle=\color{Maroon}\ttfamily,
+                commentstyle=\color{YellowGreen}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#},
+                basewidth = {.48em},
+                showstringspaces=false
+}
+{\small
+\begin{lstlisting}
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int a, b;
+
+    cin >> a >> b;
+    
+    cout << "Primos entre " << a << " e " << b << ":";
+    for(int i = a; i <= b; i++)
+        if (primo(i))           //Se for primo
+            cout << " " << i;   //imprime o valor
+    cout << endl;
+
+    return 0;
+}
+\end{lstlisting}
+}
+
+O problema é que não existe a função \texttt{primo} usada neste programa. Sua tarefa é completar o programa criando esta função. A função deve seguir o cabeçalho abaixo. Ela recebe um número inteiro e retorna true/false caso o número recebido seja primo ou não\footnote{Se fizer na linguagem C, a função deve ser \texttt{int primo(int n)} e retornar 1 ou 0, pois em C não há \texttt{bool}.}.
+
+\texttt{\textcolor{Mulberry}{bool} primo(\textcolor{Mulberry}{int} n)}
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém dois valores inteiros, $A$ e $B$. Restrição: $1 \leq A \leq B \leq 1000$.
+
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha de saída, contendo a lista de primos entre $A$ e $B$, escritos conforme os exemplos a seguir.
+
+\Notes
+Nesta questão, seu programa deve usar a função \texttt{main} dada acima exatamente como está, não a modifique! Sua tarefa é apenas criar a função \texttt{primo}.
+
+\Example
+
+\begin{example}
+\exmp{
+1 10
+}{
+Primos entre 1 e 10: 2 3 5 7
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+2 11
+}{
+Primos entre 2 e 11: 2 3 5 7 11
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+315 340
+}{
+Primos entre 315 e 340: 317 331 337
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

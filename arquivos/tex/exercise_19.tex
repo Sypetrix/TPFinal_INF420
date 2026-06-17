@@ -1,0 +1,92 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{2}
+
+\begin{document}
+
+\begin{problem}{Futebol olímpico}{futebol}{2}
+ 
+O Brasil é uma potência mundial no futebol: o único a participar de todas as Copas do Mundo e o único pentacampeão. Em Olimpíadas, a história era bem diferente... Até que, finalmente, o Brasil ganhou sua primeira medalha de ouro nesta modalidade. E foi em casa, na Rio 2016! E não parou aí, ganhou outra logo em seguida, na Tokyo 2020, disputada em 2021.
+
+O futebol é uma modalidade olímpica com limitação de idade. Os times devem ser formados por jogadores com menos de 23 anos. A partir de Atlanta 96, permite-se que cada time tenha até 3 atletas com 23 anos ou mais. Em outras palavras, um time não é aceito se o número de jogadores do time que já completaram 23 anos for maior que 3.
+
+Faça um programa para testar esta regra com diferentes limites de diferentes idades.
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém duas linhas de números inteiros informando os dados de um time. A primeira linha contém três números, $N$, $I$ e $L$, indicando respectivamente o número de jogadores do time, a idade usada na regra e o limite de jogadores que podem ter completado esta idade. A segunda linha contém uma lista de $N$ números inteiros, que são as idades dos jogadores do time. Restrições: $1 \leq N \leq 30, 15 \leq I \leq 30, 0 \leq L \leq N$.
+
+
+\OutputFile
+
+Seu programa deve verificar se entre os $N$ jogadores existem mais que $L$ %jogadores
+que já completaram $I$ anos %. Seu programa deve 
+e
+escrever ``\texttt{Aceito.}'' ou ``\texttt{Nao aceito.}'', indicando se o time atende ou não a regra.
+
+\Notes
+Note que a mensagem escrita não tem acento e tem um ponto final.
+
+\Example
+
+\begin{example}
+\exmp{
+6 21 2
+15 23 22 18 19 21
+}{
+Nao aceito.
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+6 22 2
+15 23 22 18 19 21
+}{
+Aceito.
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+6 20 3
+15 23 22 18 19 21
+}{
+Aceito.
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+8 15 1
+14 14 14 14 14 14 14 15
+}{
+Aceito.
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+5 15 1
+8 8 15 20 8
+}{
+Nao aceito.
+}%
+\end{example}
+
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\small
+No primeiro examplo, o time não é aceito porque há mais de 2 jogadores que completaram 21 anos.
+
+\end{problem}
+
+\end{document}

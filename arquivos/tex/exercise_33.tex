@@ -1,0 +1,75 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+
+\setcounter{problem}{5}
+
+\begin{document}
+
+\begin{problem}{Interseção}{intersecao}{2}
+
+A interseção entre dois conjuntos $A$ e $B$, representada por $A \cap B$, é um conjunto contendo todos os elementos que pertencem, simultaneamente, aos dois conjuntos. Ou seja, um elemento $x \in A \cap B$ se e somente se $x \in A$ e $x \in B$.
+
+Escreva um programa para calcular a interseção de dois conjuntos.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém três linhas: a primeira contém dois números inteiros, $N$ e $M$, representando a quantidade de elementos dos conjuntos $A$ e $B$, respectivamente; a segunda linha contém $N$ números inteiros, os elementos do conjunto $A$; e a terceira linha contém $M$ números inteiros, os elementos do conjunto $B$. Restrições: $1 \leq N, M \leq 20$.
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha de saída, contendo o resultado de $A \cap B$, em notação de conjuntos, isto é, envolvidos por \texttt{\{ \}}. Os elementos da interseção devem aparecer na ordem em que são apresentados no conjunto $A$, e deve haver um espaço em branco entre eles e as chaves (veja exemplos de saída). 
+
+
+% \Notes
+% Escreva espaço em branco para separar os números, mas não escreva espaço em branco antes do primeiro nem depois do último número da lista. Após o último escreva apenas um caractere de quebra de linha.
+
+
+\Example
+
+\begin{example}
+\exmp{
+5 5
+4 5 3 2 1
+9 4 7 1 8
+}{
+\{ 4 1 \}
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+5 5
+89 26 37 42 11
+26 11 89 42 37
+}{
+\{ 89 26 37 42 11 \}
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+3 5
+44 22 11
+20 60 85 10 2
+}{
+\{ \}
+}%
+\end{example}
+
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

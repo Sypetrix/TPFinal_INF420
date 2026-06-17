@@ -1,0 +1,8 @@
+Quadrado mágico
+Senhor Coelho é conhecido mundialmente pela fabricação de quadrados mágicos de dimensões 3 × 3. Um quadrado é chamado mágico quando a soma dos elementos de uma determinada linha, coluna ou diagonal é sempre igual.
+Infelizmente, assaltantes invadiram recentemente a oficina do Sr. Coelho e roubaram alguns dos números de seus quadrados mágicos. Felizmente os meliantes não conseguiram roubar mais do que 3 números de cada quadrado. Desesperado, pois devia entregar os quadrados naquele dia, o Sr. Coelho veio procurar a sua ajuda para tentar completar os quadrados com os números faltantes.
+Escreva um programa que, dado um quadrado mágico com alguns números faltando, determine qual era o quadrado mágico original.
+Entrada:
+A entrada contém três linhas, cada uma contendo três inteiros entre 0 e 2 x 10^4, inclusive. O número zero representa os dígitos que foram roubados. Existem no máximo três números zero na entrada.
+Saída:
+Seu programa deve imprimir três linhas, cada uma contendo três inteiros, descrevendo a configuração original do quadrado mágico.

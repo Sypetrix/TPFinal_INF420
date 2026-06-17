@@ -1,0 +1,68 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{Ângulo interno}{angulo}{2}
+
+Num polígono regular, todos os ângulos internos tem o mesmo valor. Por exemplo, num triângulo isósceles todos os ângulos valem 60$^{\circ}$. Num quadrado todos são 90$^{\circ}$. E num pentágono regular todos são 108$^{\circ}$.
+
+É possível calcular os ângulos internos de um polígono regular de $N$ lados pela fórmula abaixo:
+
+$$\text{ângulo} = \frac{180(N-2)}{N}$$
+
+Faça um programa que calcula o valor dos ângulos internos de vários polígonos.
+
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém dois valores inteiros, $A$ e $B$, que indicam o menor e o maior número de lados de polígono que seu programa deve tratar. Restrição: $3 \leq A < B \leq 100$.
+
+\OutputFile
+
+Seu programa deve escrever o valor do ângulo interno dos polígonos regulares de $A$ lados, $A+1$ lados, $\dots$, $B$ lados. Cada valor deve ser escrito em uma linha, formatado com 1 casa decimal.
+
+% \Notes
+% xxx
+
+\Example
+
+\begin{example}
+\exmp{
+3 5
+}{
+60.0
+90.0
+108.0
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+5 10
+}{
+108.0
+120.0
+128.6
+135.0
+140.0
+144.0
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+\small
+No segundo exemplo são mostrados os ângulos internos dos polígonos de 5, 6, 7, 8, 9 e 10 lados
+
+\end{problem}
+
+\end{document}

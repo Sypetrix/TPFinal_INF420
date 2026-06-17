@@ -1,0 +1,22 @@
+Geração Z
+Estudiosos de comportamento social e tendências culturais estimam que neste ano de 2025 tem início a Geração Beta, sucessora da Geração Alfa. Se os indivíduos da Geração Alfa já estavam imersos em tecnologia, redes sociais e serviços de streaming desde crianças, os da Geração Beta já crescerão imersos em ambientes com Inteligência Artificial e Realidade Aumentada. 
+A classificação e a caracterização das gerações são geralmente baseadas em estudos de comportamento social e tendências culturais, além de mudanças econômicas e tecnológicas que marcam os períodos em que essas gerações cresceram, como as citadas acima. Como a divisão é feita pelo ano de nascimento, outras características acabam diferenciando as gerações.  Indivíduos da Geração Z, por exemplo, têm poucas ou nenhuma lembrança dos ataques terroristas de 11 de setembro, por serem muito novos ou terem nascido depois desse marco histórico.
+Faça um programa para ler o ano de nascimento de uma pessoa e identificar sua geração. Para isso, utilize os períodos definidos na tabela abaixo, que informa as datas mais comumente aceitas como limite das gerações.
+    De     Até     Geração
+    1965     1980     X 
+    1981     1996     Y 
+    1997     2012     Z 
+    2013     ...     Alfa
+Entrada:
+A entrada contém apenas um inteiro N, o ano de  nascimento de um indivíduo. Restrições: 1965 ≤ N ≤ 2024.
+Saída:
+Seu programa deve escrever apenas uma letra, informando a geração do indivíduo. No caso de Geração Alfa, escreva apenas .
+Exemplos:
+2006
+Z
+1999
+Z
+1990
+Y
+2020
+A

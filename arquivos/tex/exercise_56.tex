@@ -1,0 +1,92 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+
+
+\setcounter{problem}{2}
+
+\begin{document}
+
+\begin{problem}{Equação de segundo grau (again!)}{equacao2}{2}
+ 
+Faça um programa que calcule a(s) raíz(es) de uma equação de segundo grau, e escreva seu(s) valor(es), se houver.
+
+Seu programa deve obrigatoriamente usar uma função para o cálculo das raízes com o seguinte protótipo:
+
+\texttt{\textcolor{YellowGreen}{\textbackslash\textbackslash Retorna o número de raízes reais de uma eq. do 2^$\circ$ grau de coeficientes a b c}}\\
+\texttt{\textcolor{YellowGreen}{\textbackslash\textbackslash Retorna as raízes por referência em x1 e x2}}\\
+\texttt{\textcolor{Mulberry}{int} eq2grau(\textcolor{Mulberry}{double} a, \textcolor{Mulberry}{double} b, \textcolor{Mulberry}{double} c, \textcolor{Mulberry}{double \&}x1, \textcolor{Mulberry}{double \&}x2)};
+
+Note que os três primeiros parâmetros são os coeficientes $A$, $B$ e $C$ da equação, e os dois últimos são as raízes retornadas por referência. Se houver apenas uma raiz, o último parâmetro não será usado. Se não houver raiz real, nenhum dos dois últimos será usado.
+
+A função deve retornar um número inteiro, indicando o número de raízes da equação (0, 1 ou 2).
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém três valores reais, $A$, $B$ e $C$, representando os coeficientes da equação de segundo grau. Restrições: $-10000 \leq A,B,C \leq 10000$, e $A \neq 0$.
+
+%\Notes
+%Neste problema, é garantido que sempre haverá duas raízes reais.
+
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha de saída, e há três situações possíveis:
+
+\begin{enumerate}
+    \item existe apenas uma raiz real: imprimir seu valor
+    \item não existe raiz real: imprimir a mensagem ``\texttt{Nao ha raiz real}''
+    \item existem duas raízes distintas: imprimir as raízes $x'$ e $x''$, separadas por espaço em branco, sendo $x' = \frac{-b-\sqrt{b^2 -4ac}}{2a}$ e $x'' = \frac{-b+\sqrt{b^2 -4ac}}{2a}$
+\end{enumerate}
+
+Valores devem ser impressos com 2 casas decimais e a mensagem não deve conter acentos.
+
+%O primeiro valor é a raiz  $\frac{-b+\sqrt{\Delta}}{2a}$ e o segundo a raiz $\frac{-b-\sqrt{\Delta}}{2a}$, sendo $\Delta = b^2-4ac$.
+
+\Example
+
+\begin{example}
+\exmp{
+1 4 -4
+}{
+-4.83 0.83
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+1 -4 4
+}{
+2.00
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+1 2 3
+}{
+Nao ha raiz real
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+2 4 -4
+}{
+-2.73 0.73
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

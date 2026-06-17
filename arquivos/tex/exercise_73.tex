@@ -1,0 +1,87 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Horário}{horario}{2}
+ 
+Faça um programa para ler um horário no formato 24 horas e escrevê-lo no formato HH:MM AM/PM. Para escrever o horário você deve utilizar obrigatoriamente uma função com o seguinte protótipo:
+
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{Mulberry}\ttfamily,
+                stringstyle=\color{Maroon}\ttfamily,
+                commentstyle=\color{YellowGreen}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#},
+                basewidth = {.48em}
+}
+\begin{lstlisting}
+void escreve (Horario h);
+\end{lstlisting}
+
+onde \texttt{Horario} é um tipo definido da seguinte forma:
+
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{Mulberry}\ttfamily,
+                stringstyle=\color{Maroon}\ttfamily,
+                commentstyle=\color{YellowGreen}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#},
+                basewidth = {.48em}
+}
+\begin{lstlisting}
+struct Horario {
+  int horas, minutos;
+};
+\end{lstlisting}
+
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A primeira linha da entrada contém um número $N$, indicando que haverá $N$ casos de teste. As $N$ linhas seguintes contêm um caso de teste cada, que são dois inteiros $H$ e $M$, respectivamente o número de horas e minutos. Restrições: $0 \leq H \leq 23, 0 \leq M \leq 59$.
+
+\OutputFile
+
+Seu programa deve gerar $N$ linhas de saída, uma para cada caso de teste da entrada, com o horário no formato desejado.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+6
+10 20
+22 20
+12 0
+0 0
+12 5
+13 0
+}{
+10:20 AM
+10:20 PM
+12:00 PM
+12:00 AM
+12:05 PM
+01:00 PM
+}%
+\end{example}
+
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

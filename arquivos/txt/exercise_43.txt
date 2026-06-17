@@ -1,0 +1,24 @@
+Combinação
+Uma turma de faculdade tem N alunos e precisa escolher K para compor a comissão de organização da calourada. O número de diferentes comissões que
+podem ser formadas pode ser calculado pela fórmula do coeficiente binomial, que consiste no número de combinações de N termos, K a K:
+NK = N!/K!(N-K)!
+Como a fórmula requer o cálculo de fatoriais, foi criada a função abaixo:
+,
+                stringstyle=,
+                commentstyle=,
+                morecomment=[l][]#,
+                basewidth = .48em
+//Retorna o valor de x!
+long long int fatorial (int x) 
+   long long int fat = 1;
+   for(int i=2; i<=x; i++)
+      fat *= i;
+   return fat;
+Sua tarefa é fazer um programa que utiliza esta função para calcular o número de diferentes comissões.
+Entrada:
+A entrada contém dois valores inteiros, N e K, que são respectivamente o número de alunos da turma e o número de alunos na comissão. Restrição: 1 ≤ K ≤ N ≤ 20.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, o número de
+diferentes comissões que podem ser formadas.
+Nesta questão, seu programa deve usar a função  dada acima exatamente como está, não a modifique! Sua
+tarefa é apenas criar o programa com a função .

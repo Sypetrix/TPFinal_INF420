@@ -1,0 +1,17 @@
+Equação de segundo grau (reloaded!)
+Faça um programa que calcule a(s) raíz(es) de uma equação de segundo grau, se houver.
+Entrada:
+A entrada contém três valores reais, A, B e C, representando os coeficientes da equação de segundo grau. Restrições: -10000 ≤ A,B,C ≤ 10000.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, e há três situações possíveis:
+  * existe apenas uma raiz real: imprimir seu valor
+  * não existe raiz real: imprimir a mensagem “”
+  * existem duas raízes distintas: imprimir as raízes x' e x”, separadas por espaço em branco, sendo x' = -b-√(b^2 -4ac)/2a e x” = -b+√(b^2 -4ac)/2a
+Valores devem ser impressos com 2 casas decimais e a mensagem não deve conter acentos.
+Exemplos:
+1 4 -4
+-4.83 0.83
+1 -4 4
+2.00
+1 2 3
+Nao ha raiz real

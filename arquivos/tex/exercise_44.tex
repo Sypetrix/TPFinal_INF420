@@ -1,0 +1,87 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+
+\setcounter{problem}{3}
+
+\begin{document}
+
+\begin{problem}{Datas válidas}{data}{2}
+
+Faça um programa que receba uma data e informe se ela é uma data válida ou inválida.
+
+Para isso faça obrigatoriamente uma função com o seguinte protótipo:
+
+\texttt{\textcolor{Mulberry}{bool} validaData(\textcolor{Mulberry}{int} d, \textcolor{Mulberry}{int} m, \textcolor{Mulberry}{int} a)}
+
+A função tem 3 parâmetros inteiros, representando o dia, o mês e o ano de uma data, e retorna um valor lógico, sendo verdadeiro caso a data seja uma data válida ou falso caso contrário.
+
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém apenas uma linha, com três números inteiros, que indicam respectivamente dia, mês e ano. Restrições: $1 \leq$ dia $\leq 31, 1 \leq$ mês $\leq 12, 1592 \leq$ ano $\leq 3999$.
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha de saída, contendo ``\texttt{data valida}'' quando a data informada na entrada for válida ou ``\texttt{data invalida}'' quando não for. 
+
+% \Notes
+% Nesta questão, seu programa deve usar a função \texttt{main} dada acima exatamente como está, não a modifique! Sua tarefa é apenas criar a função \texttt{eh\_primo}.
+
+\Example
+
+\begin{example}
+\exmp{
+26 05 2023
+}{
+data valida
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+31 04 1983
+}{
+data invalida
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+31 02 2001
+}{
+data invalida
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+29 02 2023
+}{
+data invalida
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+29 02 2020
+}{
+data valida
+}%
+\end{example}
+
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

@@ -31,9 +31,25 @@ RAW_DIR = DATA_DIR / "raw"
 PROCESSED_DIR = DATA_DIR / "processed"
 MODELS_DIR = ROOT_DIR / "models"
 
-# Arquivo de dados bruto dentro de data/raw/.
+# Dados de origem entregues pelo professor (enunciados + avaliações dos alunos).
+ARQUIVOS_DIR = ROOT_DIR / os.getenv("ARQUIVOS_DIR", "arquivos").strip()
+TXT_DIR = ARQUIVOS_DIR / "txt"                       # enunciados puros
+TXT_EXEMPLOS_DIR = ARQUIVOS_DIR / "txt_with_example"  # enunciados + casos de exemplo
+TEX_DIR = ARQUIVOS_DIR / "tex"                        # versão LaTeX (não usada no ML)
+
+# Usar a versão com exemplos (casos de teste) como texto do enunciado?
+USE_EXAMPLES = os.getenv("USE_EXAMPLES", "true").strip().lower() in {"1", "true", "sim", "yes"}
+
+# Como agregar as notas 1-5 dos alunos no rótulo de dificuldade (5 níveis):
+#   "media" -> média aritmética arredondada ao inteiro mais próximo (padrão)
+#   "moda"  -> nota mais frequente (empate: a mais próxima da média)
+# Em ambos, a nota inteira 1-5 vira o nível correspondente (ver DIFFICULTY_LABELS).
+LABEL_STRATEGY = os.getenv("LABEL_STRATEGY", "media").strip().lower()
+
+# Arquivo de dados bruto dentro de data/raw/, gerado pela Etapa 1 (src.ingest).
 # Se vazio, o data_utils tenta detectar automaticamente o primeiro .csv.
-RAW_DATA_FILE = os.getenv("RAW_DATA_FILE", "").strip()
+RAW_DATA_FILE = os.getenv("RAW_DATA_FILE", "questoes.csv").strip()
+QUESTOES_CSV = RAW_DIR / "questoes.csv"
 
 # Saídas padronizadas (geradas pelos scripts)
 CLEAN_DATASET = PROCESSED_DIR / "dataset_limpo.csv"
@@ -50,8 +66,18 @@ TEXT_COL = os.getenv("TEXT_COL", "enunciado").strip()
 LABEL_COL = os.getenv("LABEL_COL", "dificuldade").strip()
 ID_COL = os.getenv("ID_COL", "id").strip()
 
-# Rótulos canônicos de dificuldade (ordem usada em relatórios/gráficos)
-DIFFICULTY_LABELS = ["facil", "medio", "dificil"]
+# Rótulos canônicos de dificuldade (ordem usada em relatórios/gráficos).
+# Cada nível corresponde diretamente a uma nota de 1 a 5 dada pelos alunos.
+DIFFICULTY_LABELS = ["muito_facil", "facil", "medio", "dificil", "muito_dificil"]
+
+# Mapeamento nota inteira (1-5) -> rótulo canônico.
+NOTA_PARA_ROTULO = {
+    1: "muito_facil",
+    2: "facil",
+    3: "medio",
+    4: "dificil",
+    5: "muito_dificil",
+}
 
 # ----------------------------------------------------------------------------
 # Reprodutibilidade dos experimentos

@@ -1,0 +1,8 @@
+Divisão Real
+Faça um programa que calcule a divisão real entre dois números.
+Entrada:
+A entrada terá apenas um caso de teste.
+O caso de teste é composto por dois valores reais, A e B, representando o dividendo e o divisor, respectivamente. Restrições: 0 < A,B < 3.4 × 10^38.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, contendo um valor real, representando o resultado da divisão real, com precisão de duas casas decimais.
+Não se esqueça de quebrar a linha após a impressão do valor.

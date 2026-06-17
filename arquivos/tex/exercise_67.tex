@@ -1,0 +1,81 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{olymp}
+
+\setcounter{problem}{4}
+
+\begin{document}
+
+\begin{problem}{Juiz automático}{juiz}{2}
+
+Os juizes de competições de programação (e nós, professores de INF110) não conseguem corrigir todas as submissões de código em tempo real. Assim, precisamos de um script de correção automática para comparar a saída obtida pelos programas dos alunos com a saída correta. Tudo que você precisa fazer é escrever um programa que compare uma linha da saída de um programa do aluno com a linha de saída correta e escreva na tela uma das seguintes respostas: ``\texttt{Accepted}'', ``\texttt{Presentation Error}'', ou ``\texttt{Wrong Answer}'', de acordo com as seguintes regras:
+
+\begin{itemize}
+    \item Se as duas linhas são completamente iguais, a resposta deve ser ``\texttt{Accepted}''. Isto quer dizer que as duas linhas contêm exatamente os mesmos caracteres e na mesma ordem.
+    \item Se as duas linhas não são completamente iguais, mas passariam a ser iguais se removêssemos todos os espaços em branco de ambas, a resposta deve ser ``\texttt{Presentation Error}''.
+    \item Por fim, se as linhas não puderam ser classificadas em nenhuma das respostas acima, a resposta deve ser ``\texttt{Wrong Answer}''.
+\end{itemize}
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém exatamente duas linhas. A primeira indica a saída do programa do aluno, enquanto a segunda indica a saída correta. Restrições: cada linha contém no máximo 1000 caracteres.
+
+\OutputFile
+
+Seu programa deve gerar uma linha na saída contendo uma das 3 respostas possíveis, conforme regras no enunciado.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+A resposta eh : 20
+A resposta eh: 20
+}{
+Presentation Error
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+A resposta eh: 20
+A resposta eh: 30
+}{
+Wrong Answer
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+A resposta eh: 20 40
+A resposta eh: 204 0
+}{
+Presentation Error
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+Resposta: 20 30 40
+Resposta: 20 30 40
+}{
+Accepted
+}%
+\end{example}
+
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

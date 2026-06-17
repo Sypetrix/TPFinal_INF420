@@ -1,0 +1,76 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{Senha segura}{senha}{2}
+ 
+Em certa empresa, uma senha é considerada segura se tiver letras maiúsculas, minúsculas, dígitos e um caractere especial (algum que não é letra nem dígito).
+
+Por exemplo, a senha \texttt{a*D45x} seria segura, mas \texttt{R2d2} não, pois não contém caractere especial, nem \texttt{ufv\#23}, pois não contém letra maiúscula.
+
+Se a senha tiver caracteres de apenas um tipo, ela é considerada ``fraca''. Se tiver caracteres de mais de um tipo, mas não de todos, é considerada ``media''.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém apenas uma linha, contendo uma senha. A senha pode conter letras (maiúsculas ou minúsculas), dígitos (de `0' a `9') e outros caracteres, mas não contém espaços. Restrições: a senha tem no máximo 30 caracteres.
+
+\OutputFile
+
+Seu programa deve gerar uma linha na saída, contendo uma das seguintes palavras, dependendo da segurança da senha: ``\texttt{fraca}'', ``\texttt{media}'' ou ``\texttt{segura}''
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+123456
+}{
+fraca
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+a*D45x
+}{
+segura
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+R2d2
+}{
+media
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+C-3PO
+}{
+media}%
+\end{example}
+
+\begin{example}
+\exmp{
+C-3po
+}{
+segura}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

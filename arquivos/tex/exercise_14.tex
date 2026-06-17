@@ -1,0 +1,82 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{Sapiens}{sapiens}{2}
+ 
+Faça um programa para ajudar o SAPIENS a determinar a situação de um estudante (aprovado, prova final ou reprovado) na disciplina INF110 ao final do semestre. Para isso, seu programa deve analisar a nota final do estudante ($NF$), seu número de faltas em aulas teóricas ($FT$) e seu número de faltas em aulas práticas ($FP$). As regras são as seguintes:
+
+\begin{itemize}
+    \item Todo estudante que tenha mais de 15 faltas em aulas teóricas está reprovado;
+    \item Todo estudante que tenha mais de 7 faltas em aulas práticas está reprovado;
+    \item Caso não tenha sido reprovado por faltas, sua situaçao será determinada pela sua nota final:
+    \begin{itemize}
+        \item $NF < 40 \Rightarrow$ Reprovado
+        \item $40 \leq NF < 60 \Rightarrow$ Prova final
+        \item $NF \geq 60 \Rightarrow$ Aprovado
+    \end{itemize}
+\end{itemize}
+
+\Notes
+%
+Cada falta corresponde a uma aula de 1 hora de duração, ou seja, um dia de aula perdido implica em 2 faltas no SAPIENS! Aqui já será informado o total de faltas.
+
+
+\InputFile
+
+A entrada contém três valores inteiros, $NF$, $FT$ e $FP$, conforme descrito acima. Restrições: $0 \leq NF \leq 100$, $0 \leq FT \leq 60$, $0 \leq FP \leq 30$.
+
+%\Notes
+%Neste problema, é garantido que sempre haverá duas raízes reais.
+
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha na saída, contendo uma das seguintes palavras, dependendo da situação do estudante: ``\texttt{Aprovado}'', ``\texttt{Final}'' ou ``\texttt{Reprovado}''.
+
+\Example
+
+\begin{example}
+\exmp{
+100 0 8
+}{
+Reprovado
+}%
+\end{example}
+
+
+\begin{example}
+\exmp{
+60 14 6
+}{
+Aprovado
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+59 0 0
+}{
+Final
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+53 8 8
+}{
+Reprovado
+}%
+\end{example}
+
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

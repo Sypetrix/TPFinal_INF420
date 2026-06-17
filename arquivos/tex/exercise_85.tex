@@ -1,0 +1,66 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Coordenadas geográficas}{geo}{2}
+
+Coordenadas geográficas são interseções de linhas imaginárias na superfície da Terra. As linhas transversais ao eixo de rotação da Terra definem a latitude e têm como referência a linha do Equador. Latitudes positivas estão ao norte dessa linha e latitudes negativas estão ao sul. As linhas longitudinais em relação ao eixo de rotação definem a longitude e têm como referência o meridiano de Greenwich. Longitudes positivas estão a leste desse meridiano e negativas estão a oeste.
+
+Por exemplo, as coordenadas geográficas de Viçosa são $-20.753889, -42.881944$. Portanto, Viçosa está ao Sul da linha do Equador (latitude negativa, $-20.75$...) e a Oeste do meridiano de Greenwich (longitude negativa, $-42.88$...).
+
+Faça um programa para ler as coordenadas geográficas de uma cidade e informar onde ela está em relação à linha do Equador e ao meriano de Greenwich.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém dois números reais, $L_A$ e $L_O$, indicando a latitude e a longitude de uma cidade. Restrições: $-90 \leq L_A \leq 90$, $-180 \leq L_O \leq 180$. Além disso, $L_A \neq 0$ e $L_O \neq 0$ neste exercício.
+
+
+\OutputFile
+
+Seu programa deve gerar apenas uma linha de saída, contendo duas letras. A primeira deve ser `\texttt{N}' ou `\texttt{S}' indicando se a coordenada está ao norte ou ao sul da linha do Equador e a segunda deve ser `\texttt{E}' ou `\texttt{O}' indicando se está a leste ou a oeste do meridiano de Greenwich.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $20! \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+-20.753889 -42.881944
+}{
+SO
+}%
+\end{example}\\
+
+\begin{example}
+\exmp{
+48.86 2.35
+}{
+NE
+}%
+\end{example}\\
+
+\begin{example}
+\exmp{
+-17.847 -149.267
+}{
+SO
+}%
+\end{example}
+
+\textit{\small A título de curiosidade, os dois últimos exemplos são as coordenadas de Paris, sede dos jogos olímpicos que se iniciam daqui a pouco, e de Teahupo'o, Taiti, sede das provas de Surf, a 15800km de Paris!}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

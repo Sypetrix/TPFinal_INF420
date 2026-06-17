@@ -1,0 +1,16 @@
+Divisão Inteira e seu Resto
+Faça um programa que calcule a divisão inteira entre dois números inteiros e também o seu resto.
+Entrada:
+A entrada terá apenas um caso de teste.
+O caso de teste é composto por dois valores inteiros, A e B, representando o dividendo e o divisor, respectivamente. Restrições: 0 < A,B < 2^31.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, contendo dois valores inteiros separados por um espaço em branco, sendo o primeiro deles o resultado da
+divisão inteira de A por B e o segundo deles o resto dessa divisão.
+Não se esqueça de quebrar a linha após a impressão dos valores!
+Exemplos:
+9 3
+3 0
+7 2
+3 1
+13 5
+2 3

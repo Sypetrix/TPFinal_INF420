@@ -1,0 +1,6 @@
+Maior de 3
+Faça um programa para determinar o maior valor entre três números inteiros.
+Entrada:
+A entrada contém três valores inteiros, A, B e C. Restrições: -2^31≤ A,B,C < 2^31.
+Saída:
+Seu programa deve gerar apenas uma linha na saída, contendo o maior valor entre A, B e C.

@@ -1,0 +1,66 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Dividindo a conta}{divconta}{2}
+ 
+Depois de mais uma prova fácil os estudantes saíram para festejar numa lanchonete da cidade. A conta chegou e cada um pagou certo valor. Agora precisam saber quanto cada um tem de crédito (ou débito!) para ser considerado na próxima comemoração, considerando que a conta foi dividida igualmente entre todos.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada é composta por duas linhas. A primeira contém um número inteiro $N$, a quantidade de estudantes que dividiram a conta. A segunda linha contém $N$ valores inteiros, $P_1, P_2, \dots, P_N$, que indicam o valor pago por cada estudante.
+Restrições: $1 < N \leq 50$ e $0 \leq P_i \leq 100$.
+
+\OutputFile
+
+A saída do seu programa deve conter uma linha informando o valor de crédito (ou débito) de cada estudante arredondado para 2 casas decimais. Esses valores devem estar separados por espaço em branco, com quebra de linha após o último.
+
+% \Notes
+% É garantido que sempre existe uma divisão que satisfaz as condições dos reinos.
+
+\Example
+
+\begin{example}
+\exmp{
+5
+20 10 15 30 25
+}{
+0.00 -10.00 -5.00 10.00 5.00
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+4
+10 10 10 0
+}{
+2.50 2.50 2.50 -7.50
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+3
+30 30 40
+}{
+-3.33 -3.33 6.67
+}%
+\end{example}
+
+% \small \textit{Obs.: baseada na questão ``Guerra por território'' da OBI 2012} 
+
+%Comentários sobre o exemplo, se necessário.
+\small \textit{Neo primeiro exemplo, o total da conta foi 100, então cada um dos 5 estudantes deveria pagar 20. Assim, o primeiro não tem crédito nem débito, o segundo e o terceiro têm débito e os dois últimos têm crédito.}
+
+\end{problem}
+
+\end{document}

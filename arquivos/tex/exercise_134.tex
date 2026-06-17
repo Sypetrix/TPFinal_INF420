@@ -1,0 +1,90 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{0}
+
+\begin{document}
+
+\begin{problem}{Jogo da memória}{memoria}{2}
+
+O Jogo da Memória é um jogo de tabuleiro clássico focado em memorização e percepção visual.
+Um conjunto de cartas com pares idênticos é embaralhado e distribuído em uma grade, todas com a face voltada para baixo.
+A cada rodada, o jogador da vez escolhe duas cartas para desvirar:
+
+\begin{itemize}
+\vspace{-9pt}
+\item Se forem iguais, ele formou um par: elas permanecem viradas para cima e ele ganha um ponto.
+\vspace{-9pt}
+\item Se forem diferentes: as duas cartas são viradas novamente para baixo após um breve intervalo.
+\end{itemize}
+
+\vspace{-9pt}
+O jogo termina quando todos os pares forem encontrados e vence quem tiver feito mais pontos.
+
+Considere uma versão de apenas um jogador, em que o próprio jogador continua virando cartas até terminar o jogo (ou cansar de jogar).
+Faça um programa para ler suas jogadas e informar quantos pontos ele conseguiu até parar de jogar.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada começa com dois inteiros, $M$ e $N$, respectivamente o número de linhas e colunas do tabuleiro.
+Em seguida virão $M$ linhas, cada uma com $N$ caracteres, representando as cartas do jogo.
+Por fim, seguem várias linhas, uma para cada jogada, com quatro números $L_1$, $C_1$, $L_2$, $C_2$ indicando a linha e a coluna das duas cartas que o jogador selecionou na jogada.
+As jogadas terminam com uma linha contendo quatro zeros.
+Restrições: $1 \leq M, N \leq 100$, $1 \leq L_i \leq M$, $1 \leq C_i \leq N$ e o jogador não vira cartas de pares já formados.
+
+\OutputFile
+
+Seu programa deve escrever o número de pontos obtidos pelo jogador, isto é, o número de jogadas em que as duas cartas escolhidas formaram um par de mesmo valor.
+
+%\Notes
+
+\Example
+
+\begin{example}
+\exmp{
+2 3
+rua
+ura
+1 1 1 2
+2 1 1 2
+1 3 2 3
+0 0 0 0
+}{
+2
+}%
+\end{example}
+
+%Este exemplo corresponde ao da imagem mostrada acima.
+Na primeira jogada, o jogador vira as cartas `\texttt{r}' e `\texttt{u}' e então desvira as cartas.\\
+Na segunda jogada, ele vira as cartas `\texttt{u}' e `\texttt{u}', formando um par (1 ponto).\\
+Na terceira, ele vira as cartas `\texttt{a}' e `\texttt{a}', formando outro par (mais 1 ponto).\\
+Então ele para de jogar, ganhando 2 pontos no total.
+
+\begin{example}
+\exmp{
+4 4
+ave.
+kkah
+the.
+trvr
+1 1 1 2
+2 3 1 1
+2 1 2 2
+3 1 1 4
+0 0 0 0
+}{
+2
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

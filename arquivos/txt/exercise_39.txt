@@ -1,0 +1,11 @@
+Frequência
+Faça um programa que leia uma matriz de dimensões M × N e um valor V e informe quantas vezes este valor aparece em cada linha da matriz.
+Entrada:
+A primeira linha contém dois
+números inteiros M e N, indicando respectivamente o número de linhas e de colunas da matriz.
+As M linhas seguintes contêm N inteiros cada, indicando os
+elementos de cada linha da matriz.
+A última linha contém um único inteiro, o valor V.
+Restrições: 1 ≤ M,N ≤ 1000.
+Saída:
+Seu programa deve gerar M linhas na saída, uma para cada linha da matriz, informando o número de vezes que o valor V aparece naquela linha da matriz.

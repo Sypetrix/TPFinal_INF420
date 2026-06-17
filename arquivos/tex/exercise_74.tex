@@ -1,0 +1,109 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{wrapfig}
+\usepackage{olymp}
+
+\setcounter{problem}{2}
+
+\begin{document}
+
+\begin{problem}{Notas de prova}{notas}{2}
+
+Certo professor terminou de corrigir todas as provas de sua turma e está com as notas anotadas numa ordem qualquer, como mostrado no exemplo abaixo, à esquerda. Como as notas são lançadas no Sapiens em ordem de matrícula, facilitaria muito seu trabalho se a lista de notas estivesse ordenada pelo número de matrícula, como a lista da direita!\\
+
+\hspace{3cm}\begin{minipage}{.3\linewidth}
+\begin{verbatim}
+Matrícula Nota
+  60001    20
+  61234    23
+  59999    18
+  56789    19
+  66666    22
+\end{verbatim}
+\end{minipage}\hspace{3cm}
+\begin{minipage}{.3\linewidth}
+\begin{verbatim}
+Matrícula Nota
+  56789    19
+  59999    18
+  60001    20
+  61234    23
+  66666    22
+\end{verbatim}
+\end{minipage}\\
+
+Ajude o professor fazendo um programa que ordena as notas pela matrícula.
+
+
+% \Notes
+
+% Uma seleção ganha 3 pontos para cada vitória e 1 ponto para cada empate. Derrotas não alteram sua pontuação.
+
+\InputFile
+
+A entrada começa com uma linha contendo um número $T$, que é o número de alunos da turma. Em seguida vem $T$ linhas, cada uma com dois inteiros $M_i$ e $N_i$, que são o número de matrícula e a nota do $i$-ésimo aluno da lista, respectivamente. Restrições: $1 \leq T \leq 100$; $1 \leq M_i \leq 99999$; $0 \leq N_i \leq 30$. Não há número de matrícula repetido.
+
+\OutputFile
+
+Seu programa deve gerar $T$ linhas de saída, cada uma contendo o número de matrícula e a nota de um dos alunos. A saída deve estar ordenada pelo número de matrícula.
+
+% \Notes
+% Preste atenção aos tipos das variáveis, pois $F(90) \approx 2^{61}$.
+
+\Example
+
+\begin{example}
+\exmp{
+5
+60001 20
+61234 23
+59999 18
+56789 19
+66666 22
+}{
+56789 19
+59999 18
+60001 20
+61234 23
+66666 22
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+4
+20000 18
+19000 15
+18000 20
+17000 15
+}{
+17000 15
+18000 20
+19000 15
+20000 18
+}%
+\end{example}
+
+
+\begin{example}
+\exmp{
+2
+54321 9
+12345 20
+}{
+12345 20
+54321 9
+}%
+\end{example}
+
+\textbf{Dica}: crie uma \texttt{struct Aluno} com os campos matrícula e nota; armazene os dados de entrada em um vetor de \texttt{Aluno} e então ordene o vetor de acordo
+com as matrículas dos alunos.
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

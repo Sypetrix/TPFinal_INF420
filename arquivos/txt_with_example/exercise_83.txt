@@ -1,0 +1,17 @@
+Deu zica
+Pesquisadores da Universidade Chun-Li desenvolveram um poderoso veneno que prometia acabar com dengue, zika e chicungunha. O combate ao mosquito aedes aegypti foi um sucesso... para o mosquito! Uma população inicial de mosquitos que teve contato com o veneno agora consegue se reproduzir sem necessidade de água parada e nem de outros mosquitos! Ou seja, deu zica...
+Os estudos mostram que em certa região, a cada hora cada mosquito consegue gerar outros 2. Assim, partindo de apenas 1 mosquito infectado, em 1 hora serão 3 mosquitos (ele e mais dois); em 2 horas já serão 9; em 3 horas 27, e assim por diante. É possível que rapidamente a população chegue a 1.000.000.000 de mosquitos!
+Faça um programa para, sabendo o tamanho da população inicial de mosquitos que teve contato com o veneno e a força do veneno, que indica quantos mosquitos cada um consegue gerar por hora, calcule em quanto tempo a população ultrapassa 1.000.000.000 de mosquitos.
+Entrada:
+A entrada é composta por dois inteiros, P_0 e G, que representam respectivamente a população inicial de mosquitos infectados (1, no exemplo acima) e sua taxa de reprodução, ou seja, quantos mosquitos são geradas por mosquito a cada hora (2, no exemplo acima). Restrições: 1 ≤ P_0, G ≤ 1000.
+Saída:
+Seu programa deve gerar apenas uma linha de saída, contendo um único inteiro que indica quantas horas serão necessárias para a população atingir no mínimo 1.000.000.000 de mosquitos.
+Exemplos:
+1 2
+19
+1 9
+9
+3 9
+9
+6 13
+8

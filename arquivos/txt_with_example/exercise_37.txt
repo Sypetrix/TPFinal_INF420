@@ -1,0 +1,36 @@
+Campo minado
+Campo Minado é um popular jogo de computador para um único jogador. Ele é jogado em um tabuleiro M × N onde são escondidas diversas bombas, e o objetivo do jogador é descobrir onde estão escondidas todas as bombas. Ao clicar em uma casa do tabuleiro, o jogo revela para o jogador se aquela casa contém ou não uma bomba. Caso o jogador clique em uma casa com uma bomba, ele perde o jogo. 
+Para facilitar, todas as casas já reveladas pelo jogador contêm um número, que indica quantas bombas existem nas oito (ou menos, para as casas na borda do tabuleiro) casas vizinhas a esta casa. Veja a imagem abaixo, onde as posições das bombas são indicadas por bandeiras. Casas vazias indicam que não há nenhuma bomba em suas casas vizinhas.
+    < g r a p h i c s >
+Faça um programa que, dado o tamanho do tabuleiro e as posições das bombas, mostre a configuração final do jogo supondo que o jogador encontrou todas as bombas e revelou todas as demais casas do tabuleiro.
+Entrada:
+A entrada contém diversas linhas. A primeira linha contém três inteiros M, N e B, indicando respectivamente o número de linhas e colunas do tabuleiro, e o número de bombas escondidas. Em seguida virão B linhas, cada uma com dois inteiros Y_i e X_i, que indicam que a i-ésima bomba está escondida na casa que fica na linha Y_i e na coluna X_i.
+Restrições:
+  * 1 ≤ M , N ≤ 100
+  * 0≤ B ≤ M × N
+  * 1 ≤ Y_i ≤ M
+  * 1 ≤ X_i ≤ N
+Saída:
+Seu programa deve imprimir M linhas com N caracteres cada, cada caractere representando uma das casas do tabuleiro. Para casas com bombas, imprima um `'. Para casas em que não há nenhuma bomba e também não há nenhuma bomba em suas casas vizinhas, imprima um `'. Para as demais casas, imprima um número indicando o número de bombas escondidas nas casas vizinhas.
+Exemplos:
+9 9 10
+1 7
+2 3
+2 8
+4 1
+4 2
+5 4
+6 6
+6 7
+6 9
+9 7
+-111-1B21
+-1B1-12B1
+2321–111
+BB211—-
+222B22221
+–112BB2B
+—-12221
+—–111-
+—–1B1-
+Este exemplo corresponde ao da imagem mostrada acima.

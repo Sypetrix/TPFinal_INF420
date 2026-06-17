@@ -1,0 +1,13 @@
+Compactador
+Os compactadores de arquivos trabalham retirando redundância do arquivo. Por exemplo, palavras ou até partes de um texto que aparecem várias vezes podem ser escritas uma vez só, e para as demais ocorrências são gravadas apenas referências a algo que já apareceu antes. Em imagens, grandes blocos de cores iguais podem ser resumidos a uma cor e quantas vezes ela é repetida.
+Um compactador bastante simples é um que troca uma sequência de caracteres iguais por um par de valores: quantas vezes o caractere ocorre, e qual é esse caractere. Veja um exemplo:
+Arquivo original: 
+Compactado: 
+A descompactação também é simples, lê‐se um número e um caractere, e esse caractere é escrito repetidamente tal número de vezes.
+Note que esse compactador só reduz realmente o tamanho do arquivo se houver sequência com mais de 2 caracteres iguais consecutivos. De fato, quando há apenas 2 caracteres não há ganho algum (como na primeira sequência de ’s, onde  é substituído por ). E quando não há repetição, a compactação na verdade aumenta o tamanho (como na segunda sequência de , onde  é substituído por ).
+Você deve criar um programa para fazer a compactação de um arquivo como mostrado acima. O “arquivo”, na verdade, é uma sequência de letras lidas como entrada do programa, contendo um flag no final para sinalizar o fim da sequência (um caractere ‘.’). 
+Entrada:
+A entrada é formada por uma única linha, que contém uma sequência de letras, maiúsculas e/ou minúsculas. A linha é terminada por um caractere `' (ponto), usado como flag para indicar o fim da entrada e que não deve ser compactado.
+Restrição: não há limite para a quantidade total de letras mas nenhuma sequência tem mais de 1000 letras iguais seguidas.
+Saída:
+Seu programa deve gerar apenas uma linha na saída, contendo o resultado da compactação da entrada. Imprima ainda um `' (zero) após o final da sequência compactada.

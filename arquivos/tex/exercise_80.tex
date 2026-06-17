@@ -1,0 +1,78 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+
+\setcounter{problem}{2}
+
+\begin{document}
+
+\begin{problem}{Guerra dos Tronos}{guerra}{2}
+ 
+Capivarus e Canideus travaram uma guerra durante 50 anos. O motivo da guerra era o tamanho do território de cada reino. Pelo bem da população dos dois reinos, os governantes de seus tronos resolveram fazer um tratado para finalizar a guerra. O tratado consiste em fazer um divisão justa, e certamente contínua, do território. Eles resolveram pedir sua ajuda para calcular o ponto de divisão do território. Depois de tantos anos de guerra, os reinos não podem lhe pagar uma viagem para ver previamente o território que será dividido. Ao invés disso, eles prepararam uma lista $a_1, a_2, \dots, a_N$ de inteiros que indicam o tamanho de cada seção do território. A seção $a_1$ é vizinha da seção $a_2$ que por sua vez é vizinha da seção $a_3$; e assim por diante. Os reinos querem uma divisão em uma seção $k$ de tal forma que $a_1 + a_2 + \dots + a_k = a_{k+1} + a_{k+2} + \dots + a_N$.
+
+%%% Acrescentado, não havia no texto da OBI
+%%%-----------
+Como exemplo, considere o território da figura abaixo, que contém 4 seções, de tamanhos 5, 3, 2 e 10, nesta ordem.
+
+\vspace{-21pt}
+\begin{center}
+\includegraphics[scale=0.3]{images/exercise_80_0.png}
+\end{center}
+\vspace{-21pt}
+
+A solução é dividir o território após a seção 3, conforme figura abaixo. Assim, Capivarus fica com 10 de território e Canideus também.
+
+\vspace{-21pt}
+\begin{center}
+\includegraphics[scale=0.3]{images/exercise_80_1.png}
+\end{center}
+\vspace{-21pt}
+
+%%%------------
+
+Sua tarefa é, dada uma lista de inteiros positivos $a_1, a_2, \dots, a_N$, determinar a seção $k$ tal que a soma dos comprimentos das seções $a_1$ até $a_k$ seja igual à soma dos comprimentos das seções $a_{k+1}$ até $a_N$.
+
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada é composta por duas linhas. A primeira contém um valor inteiro $N$, que indica o número de seções do território. A segunda linha contém $N$ valores inteiros  $a_1, a_2, \dots, a_N$ indicando os comprimentos das seções. Restrições: $1 < N \leq 10^5$; $1 \leq a_i \leq 100, \forall i=1\dots N$.
+
+\OutputFile
+
+Seu programa deve imprimir uma única linha contendo um inteiro que indica a seção do território onde acontecerá a divisão.
+
+\Notes
+É garantido que sempre existe uma divisão que satisfaz as condições dos reinos.
+
+\Example
+
+\begin{example}
+\exmp{
+4
+5 3 2 10
+}{
+3
+}%
+\end{example}
+
+\begin{example}
+\exmp{
+9
+2 8 2 8 4 4 4 4 4
+}{
+4
+}%
+\end{example}
+
+\small \textit{Obs.: baseada na questão ``Guerra por território'' da OBI 2012} 
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}

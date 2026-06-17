@@ -1,0 +1,10 @@
+Elemento repetido
+Dado um conjunto de listas, sua tarefa é deve determinar se há um elemento
+repetido dentro de cada lista. Caso haja, indicar também qual é este elemento.
+Entrada:
+A primeira linha da entrada contém um inteiro T representando o total de listas que serão informadas. A seguir, virão T linhas. Cada linha
+inicia com um inteiro N indicando o tamanho da lista informada nesta linha. Em seguida, na mesma linha, virão os N valores V_i da lista, todos inteiros.
+Restrições: 1 ≤ T, N ≤ 1000; -10^6 ≤ V_i ≤ 10^6.
+Saída:
+Seu programa deve gerar T linhas de saída, uma para cada lista da entrada, contendo: “ ”, caso não haja elemento repetido na lista; ou “ X”, caso X seja o elemento repetido. 
+É garantido que, se houver repetição, apenas um elemento se repete.

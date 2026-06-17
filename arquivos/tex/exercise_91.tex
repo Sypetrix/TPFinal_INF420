@@ -1,0 +1,73 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{olymp}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+
+\setcounter{problem}{1}
+
+\begin{document}
+
+\begin{problem}{Números de Catalan}{catalan}{2}
+ 
+Os números de Catalan formam uma sequência de números naturais que
+aparecem em vários problemas de contagem, geralmente envolvendo objetos
+definidos recursivamente. Os primeiros números da série, para $n = 0, 1, 2, 3, \dots$ são $1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796, 58786, \dots$
+
+O $n$-ésimo número da série é denotado por $C_n$ e pode ser calculado de diversas formas. Uma delas é a seguinte:
+
+\begin{equation}
+C_n = \frac{4n-2}{n+1}C_{n-1}\notag
+\end{equation}
+
+com $C_0=1$.
+
+A sequência foi descoberta por Euler quando contava o número de maneiras que um polígono podia ser dividido em triângulos. O nome é uma homenagem ao matemático Eugène Catalan, que descobriu a conexão da sequência com
+expressões entre parênteses.
+
+Implemente uma função recursiva para calcular o $n$-ésimo termo da série.
+
+%\Notes
+%
+%Observações, se tiver.
+
+\InputFile
+
+A entrada contém vários casos de teste. Cada caso de teste é uma linha contendo um número inteiro $n$. Restrição: $0 \leq n \leq 15$.
+
+ O valor $-1$ encerra a lista de casos de teste e não deve ser processado.
+
+\OutputFile
+
+Seu programa deve gerar uma linha de saída para cada caso de teste, contendo o valor de $C_n$.
+
+%\Notes
+%Nesta questão, seu programa deve usar a função \texttt{fatorial} dada %acima exatamente como está, não a modifique! Sua
+%tarefa é apenas criar o programa com a função \texttt{main}.
+
+\Example
+
+\begin{example}
+\exmp{
+1
+0
+3
+5
+10
+-1
+}{
+1
+1
+5
+42
+16796
+}%
+\end{example}
+
+%Comentários sobre o exemplo, se necessário.
+
+\end{problem}
+
+\end{document}
