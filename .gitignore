@@ -40,3 +40,8 @@ Thumbs.db
 *.synctex.gz
 *.fls
 *.fdb_latexmk
+*.bbl
+*.blg
+
+# ---- Modelo/base de exemplo do professor (mantido localmente, não versionado) ----
+sample/

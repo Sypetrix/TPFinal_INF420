@@ -116,6 +116,18 @@ NOTA_PARA_ROTULO = {
 # Inverso: rótulo canônico -> nota inteira (1-5).
 ROTULO_PARA_NOTA = {rotulo: nota for nota, rotulo in NOTA_PARA_ROTULO.items()}
 
+# Escala reduzida de 3 níveis (fácil/médio/difícil), usada na análise
+# complementar de granularidade. Mapeia os 5 níveis para os 3 e dá a ordem
+# canônica dessa escala.
+DIFFICULTY_LABELS_3 = ["facil", "medio", "dificil"]
+COLLAPSE_5_TO_3 = {
+    "muito_facil": "facil",
+    "facil": "facil",
+    "medio": "medio",
+    "dificil": "dificil",
+    "muito_dificil": "dificil",
+}
+
 # Fontes que já trazem a dificuldade rotulada pelo juiz (formato "judge_json"),
 # sem notas de alunos para agregar. Mapeia o rótulo do juiz para a escala
 # canônica de 5 níveis. Chaves normalizadas (minúsculas, sem acento) — o casamento
@@ -129,10 +141,22 @@ NEPS_DIFFICULTY_MAP = {
 }
 
 # ----------------------------------------------------------------------------
+# Vetorização TF-IDF (compartilhada por preprocess, train_ml e evaluate, para
+# que todas as etapas usem exatamente a mesma configuração de features)
+# ----------------------------------------------------------------------------
+TFIDF_MAX_FEATURES = int(os.getenv("TFIDF_MAX_FEATURES", "5000"))
+TFIDF_NGRAM_MAX = int(os.getenv("TFIDF_NGRAM_MAX", "2"))
+TFIDF_MIN_DF = int(os.getenv("TFIDF_MIN_DF", "2"))
+
+# ----------------------------------------------------------------------------
 # Reprodutibilidade dos experimentos
 # ----------------------------------------------------------------------------
 RANDOM_SEED = int(os.getenv("RANDOM_SEED", "42"))
 TEST_SIZE = float(os.getenv("TEST_SIZE", "0.2"))
+
+# Nº de folds da validação cruzada usada na avaliação dos modelos (Etapa 3).
+# É automaticamente reduzido se a menor classe tiver menos exemplos que isso.
+CV_FOLDS = int(os.getenv("CV_FOLDS", "5"))
 
 # Garante que as pastas de saída existam
 for _d in (RAW_DIR, PROCESSED_DIR, MODELS_DIR):

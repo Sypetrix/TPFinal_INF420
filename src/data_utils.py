@@ -11,7 +11,8 @@ from functools import lru_cache
 from pathlib import Path
 
 import pandas as pd
-from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import KFold, StratifiedKFold, train_test_split
 
 from . import config
 
@@ -74,6 +75,62 @@ def check_columns(df: pd.DataFrame, columns: list[str]) -> None:
             f"Colunas disponíveis: {list(df.columns)}. "
             "Ajuste TEXT_COL/LABEL_COL/ID_COL no .env."
         )
+
+
+def build_vectorizer(
+    max_features: int | None = None,
+    ngram_max: int | None = None,
+    min_df: int | None = None,
+) -> TfidfVectorizer:
+    """Cria um TF-IDF com os hiperparâmetros padrão do projeto (config).
+
+    Centralizado aqui para que pré-processamento, treino e avaliação usem
+    exatamente a mesma configuração de vetorização. Em ``train_ml`` ele entra
+    dentro de um ``Pipeline`` e é reajustado a cada fold da validação cruzada,
+    evitando vazamento de informação do conjunto de teste.
+    """
+    return TfidfVectorizer(
+        max_features=config.TFIDF_MAX_FEATURES if max_features is None else max_features,
+        ngram_range=(1, config.TFIDF_NGRAM_MAX if ngram_max is None else ngram_max),
+        min_df=config.TFIDF_MIN_DF if min_df is None else min_df,
+    )
+
+
+def collapse_to_3(y) -> pd.Series:
+    """Colapsa os 5 níveis na escala reduzida de 3 (fácil/médio/difícil).
+
+    Usado na análise complementar de granularidade: junta muito_facil+facil e
+    dificil+muito_dificil, mantendo medio. Reduz o desbalanceamento das pontas.
+    """
+    return pd.Series(list(y)).map(config.COLLAPSE_5_TO_3)
+
+
+def make_cv(y, n_splits: int | None = None):
+    """Cria um divisor de validação cruzada robusto a classes raras.
+
+    Usa ``StratifiedKFold`` quando possível. O nº de folds é limitado pelo
+    tamanho da menor classe (não dá para estratificar em k folds se uma classe
+    tem menos de k exemplos). Se alguma classe tiver só 1 exemplo, a
+    estratificação é impossível e caímos para ``KFold`` simples (com aviso),
+    espelhando a lógica de ``split_train_test``.
+    """
+    contagem = pd.Series(list(y)).value_counts()
+    menor = int(contagem.min()) if len(contagem) else 0
+    desejado = config.CV_FOLDS if n_splits is None else n_splits
+
+    if menor < 2:
+        raros = contagem[contagem < 2].index.tolist()
+        k = max(2, min(desejado, max(2, len(contagem))))
+        print(
+            f"[aviso] validação cruzada SEM estratificação: classes com <2 "
+            f"exemplos ({raros}). Usando KFold com k={k}."
+        )
+        return KFold(n_splits=k, shuffle=True, random_state=config.RANDOM_SEED)
+
+    k = max(2, min(desejado, menor))
+    if k < desejado:
+        print(f"[aviso] nº de folds reduzido para {k} (menor classe = {menor}).")
+    return StratifiedKFold(n_splits=k, shuffle=True, random_state=config.RANDOM_SEED)
 
 
 def split_train_test(df: pd.DataFrame):

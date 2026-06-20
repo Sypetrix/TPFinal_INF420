@@ -128,7 +128,7 @@ def run(n: int = 30, few_shot: bool = False, sleep: float = 0.0) -> None:
     if config.LABEL_COL in amostra.columns:
         y_true = amostra[config.LABEL_COL].astype(str).str.lower()
         acc = accuracy_score(y_true, preds)
-        f1 = f1_score(y_true, preds, average="macro")
+        f1 = f1_score(y_true, preds, average="macro", zero_division=0)
         print(f"\nAcurácia: {acc:.3f} | F1 macro: {f1:.3f}\n")
         print(classification_report(y_true, preds, zero_division=0))
 

@@ -66,7 +66,7 @@ TP_Final_INF420/
 │   ├── gemini_client.py# cliente do Google Gemini
 │   ├── ingest.py       # Etapa 1: arquivos/ -> data/raw/questoes.csv
 │   ├── preprocess.py   # Etapa 2: limpeza + TF-IDF
-│   ├── train_ml.py     # Etapa 3: LogReg, KNN, SVM, Random Forest
+│   ├── train_ml.py     # Etapa 3: LogReg, KNN, SVM, RF (validação cruzada)
 │   ├── llm_baseline.py # Etapa 4: classificação direta via Gemini
 │   ├── llm_features.py # Etapa 5: Gemini como extrator de conceitos
 │   ├── llm_explain.py  # Etapa 6: Gemini como explicador
@@ -84,7 +84,7 @@ TP_Final_INF420/
 | 1. Ingestão | Lê `arquivos/INF110/` (enunciados + feedbacks) → `questoes.csv` | `python -m src.ingest` |
 | 1b. EDA | Distribuição das classes, tamanho dos enunciados | abrir `notebook/exploracao.ipynb` |
 | 2. Pré-processamento | Limpeza de texto + vetorização TF-IDF | `python -m src.preprocess` |
-| 3. Modelos tradicionais | LogReg, KNN, SVM, Random Forest (F1-score) | `python -m src.train_ml` |
+| 3. Modelos tradicionais | LogReg, KNN, SVM, RF — validação cruzada + tuning | `python -m src.train_ml` |
 | 4. Baseline LLM | Gemini classifica direto (zero-/few-shot) | `python -m src.llm_baseline --n 30 --few-shot` |
 | 5. LLM extrator de features | Gemini identifica conceitos (DP, grafos…) | `python -m src.llm_features` |
 | 6. LLM explicador | Gera justificativas das classificações | `python -m src.llm_explain --n 5` |
@@ -102,6 +102,29 @@ TP_Final_INF420/
 > `python -m src.evaluate --no-llm` (compara só ML puro vs ML+features). A camada
 > gratuita do Google AI Studio tem limite por minuto — o cliente já refaz
 > tentativas, e a Etapa 5 tem retomada (não refaz linhas já processadas).
+
+> **Metodologia de avaliação (Etapa 3).** Como a base rotulada é pequena, a
+> comparação entre os modelos usa **validação cruzada estratificada** (não um
+> único holdout), reportando **acurácia, F1-macro e F1-ponderado** como
+> média ± desvio entre os folds, além de uma **matriz de confusão** e um
+> relatório por classe com predições *out-of-fold*. O **TF-IDF é reajustado
+> dentro de cada fold** (via `Pipeline`), nunca vendo o conjunto de teste —
+> evitando vazamento de informação. Cada família passa por uma pequena busca de
+> hiperparâmetros (`GridSearchCV`), e o melhor modelo (por F1-macro) é reajustado
+> em toda a base e salvo como um `Pipeline` autossuficiente (TF-IDF + classificador).
+> O nº de folds (`CV_FOLDS`, padrão 5) é reduzido automaticamente quando uma
+> classe é muito rara (ex.: `muito_dificil` com 1 questão). Inclui um *baseline*
+> de classe majoritária como piso de comparação.
+
+> **Análise de granularidade e figuras (relatório).** `python -m src.train_ml
+> --niveis 3` repete a avaliação colapsando a escala para 3 níveis
+> (fácil/médio/difícil) — sem sobrescrever os artefatos de 5 níveis — gerando
+> `ml_metrics_3niveis.csv` e `matriz_confusao_3niveis.csv`. Depois,
+> `python -m src.figuras` gera as figuras do artigo em `figuras/` (mapa de calor
+> da matriz de confusão e comparação de F1-macro 5 × 3 níveis). O relatório final
+> está em `main.tex` (classe `webmedia`, bibliografia em `referencias.bib`); para
+> compilar, é preciso o `webmedia.cls` (fornecido pelo professor em `sample/`, que
+> não é versionado).
 
 ## 4. Como os dados são consolidados (Etapa 1)
 

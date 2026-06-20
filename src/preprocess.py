@@ -5,6 +5,12 @@ Lê a base bruta de data/raw/, limpa os enunciados, ajusta um TF-IDF e salva:
   - models/tfidf_vectorizer.joblib    (vetorizador ajustado)
   - models/tfidf_matrix.joblib        (matriz esparsa X)
 
+O ``dataset_limpo.csv`` é o insumo central das etapas seguintes (treino e
+avaliação). O vetorizador/matriz salvos aqui são ajustados sobre TODA a base e
+servem para EDA e para o recomendador; a avaliação supervisionada (``train_ml``,
+``evaluate``) NÃO os reutiliza — lá o TF-IDF é reajustado só com os dados de
+treino de cada fold, para não vazar informação do teste.
+
 Uso:
     python -m src.preprocess
     python -m src.preprocess --max-features 8000 --ngram 2
@@ -14,12 +20,12 @@ from __future__ import annotations
 import argparse
 
 import joblib
-from sklearn.feature_extraction.text import TfidfVectorizer
 
 from . import config, data_utils, ingest
 
 
-def run(max_features: int = 5000, ngram_max: int = 2, min_df: int = 2) -> None:
+def run(max_features: int | None = None, ngram_max: int | None = None,
+        min_df: int | None = None) -> None:
     # Etapa 1: garante que data/raw/questoes.csv exista (gera de arquivos/ se faltar).
     ingest.ensure_dataset()
 
@@ -38,11 +44,10 @@ def run(max_features: int = 5000, ngram_max: int = 2, min_df: int = 2) -> None:
     # Descarta enunciados que ficaram vazios após a limpeza.
     df = df[df["texto_limpo"].str.len() > 0].reset_index(drop=True)
 
-    print(f"Ajustando TF-IDF (max_features={max_features}, ngram=(1,{ngram_max}))...")
-    vectorizer = TfidfVectorizer(
-        max_features=max_features,
-        ngram_range=(1, ngram_max),
-        min_df=min_df,
+    vectorizer = data_utils.build_vectorizer(max_features, ngram_max, min_df)
+    print(
+        f"Ajustando TF-IDF (max_features={vectorizer.max_features}, "
+        f"ngram={vectorizer.ngram_range}, min_df={vectorizer.min_df})..."
     )
     X = vectorizer.fit_transform(df["texto_limpo"])
 
@@ -65,9 +70,12 @@ def run(max_features: int = 5000, ngram_max: int = 2, min_df: int = 2) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Etapa 2 - Pré-processamento e TF-IDF")
-    parser.add_argument("--max-features", type=int, default=5000)
-    parser.add_argument("--ngram", type=int, default=2, help="n-grama máximo (1..n)")
-    parser.add_argument("--min-df", type=int, default=2)
+    parser.add_argument("--max-features", type=int, default=None,
+                        help=f"padrão: config.TFIDF_MAX_FEATURES ({config.TFIDF_MAX_FEATURES})")
+    parser.add_argument("--ngram", type=int, default=None,
+                        help=f"n-grama máximo (1..n); padrão: {config.TFIDF_NGRAM_MAX}")
+    parser.add_argument("--min-df", type=int, default=None,
+                        help=f"padrão: config.TFIDF_MIN_DF ({config.TFIDF_MIN_DF})")
     args = parser.parse_args()
     run(max_features=args.max_features, ngram_max=args.ngram, min_df=args.min_df)
 

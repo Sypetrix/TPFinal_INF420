@@ -8,6 +8,11 @@ Compara, sobre a MESMA amostra de teste, três abordagens:
 Para (A) e (C) usa-se o mesmo estimador (Regressão Logística), de modo que a
 única diferença seja o conjunto de features — tornando a comparação justa.
 
+O TF-IDF é ajustado **apenas com o conjunto de treino** (não o vetorizador salvo
+pela Etapa 2, que vê toda a base), para que a comparação não sofra vazamento de
+informação do teste. A amostra de teste é fixa porque a abordagem (B) chama a
+API do Gemini e tem custo — daí não usar validação cruzada aqui.
+
 Pré-requisitos:
   - python -m src.preprocess        (sempre)
   - python -m src.llm_features      (necessário para a abordagem C)
@@ -22,7 +27,6 @@ from __future__ import annotations
 import argparse
 
 import joblib
-import numpy as np
 import pandas as pd
 from scipy.sparse import csr_matrix, hstack
 from sklearn.linear_model import LogisticRegression
@@ -35,7 +39,8 @@ from .llm_features import CONCEITOS, ROW_KEY
 def _metricas(y_true, y_pred) -> dict:
     return {
         "acuracia": accuracy_score(y_true, y_pred),
-        "f1_macro": f1_score(y_true, y_pred, average="macro"),
+        "f1_macro": f1_score(y_true, y_pred, average="macro", zero_division=0),
+        "f1_ponderado": f1_score(y_true, y_pred, average="weighted", zero_division=0),
     }
 
 
@@ -56,7 +61,6 @@ def run(n_sample: int = 40, usar_llm: bool = True) -> None:
             "dataset_limpo.csv não encontrado. Rode antes: python -m src.preprocess"
         )
 
-    vectorizer = joblib.load(config.TFIDF_VECTORIZER)
     df = pd.read_csv(config.CLEAN_DATASET)
     df = df.dropna(subset=["texto_limpo", config.LABEL_COL]).reset_index(drop=True)
     df[ROW_KEY] = df.index
@@ -67,7 +71,9 @@ def run(n_sample: int = 40, usar_llm: bool = True) -> None:
     y_train = df_train[config.LABEL_COL].astype(str).str.lower()
     y_eval = amostra[config.LABEL_COL].astype(str).str.lower()
 
-    Xtr = vectorizer.transform(df_train["texto_limpo"].astype(str))
+    # TF-IDF ajustado SÓ no treino (evita vazamento de informação do teste).
+    vectorizer = data_utils.build_vectorizer()
+    Xtr = vectorizer.fit_transform(df_train["texto_limpo"].astype(str))
     Xev = vectorizer.transform(amostra["texto_limpo"].astype(str))
 
     resultados: list[dict] = []
