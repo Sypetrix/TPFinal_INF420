@@ -151,6 +151,31 @@ A etapa 5 (`llm_features`) tem **retomada**: não refaz linhas já gravadas em
 `llm_features.csv`, então dá para processar a base aos poucos ao longo de vários
 dias sem perder o progresso.
 
+#### Lotes (prompt packing): menos chamadas para a mesma tarefa
+
+Para gastar menos cota, as etapas **4, 5 e 7** aceitam `--lote N`, que envia
+**N enunciados em uma única requisição** (em vez de uma por item), reduzindo o
+número de chamadas em ~N×:
+
+```bash
+python -m src.llm_baseline --n 40 --few-shot --lote 10   # ~4 chamadas em vez de 40
+python -m src.llm_features  --lote 10                     # base toda em ~14 chamadas
+python -m src.evaluate      --n 40 --lote 10             # baseline LLM em lotes
+```
+
+A resposta é casada por `id`; se algum item não voltar, ele é reprocessado
+sozinho — o resultado tem sempre o mesmo tamanho e a mesma corretude do modo
+item-a-item. Comece com `--lote 5`–`10`: lotes muito grandes podem confundir o
+modelo e estourar o limite de *tokens* por requisição.
+
+> **E a "Batch API" oficial do Gemini?** Existe um modo de lote assíncrono
+> (`client.batches`) que processa milhares de pedidos em até 24 h por **~50% do
+> preço**. Mas isso é otimização de **custo em dinheiro**, que faz sentido no
+> tier **pago**. No **free tier** vocês não pagam em dinheiro — o gargalo é a
+> **cota** (RPM/RPD), e o que a economiza é reduzir o nº de requisições, que é
+> exatamente o que o `--lote` (prompt packing) faz. Por isso adotamos essa
+> abordagem em vez da Batch API.
+
 #### "Bati no limite diário quase de imediato" — o que está acontecendo?
 
 Quase sempre é a **cota diária (RPD) do modelo** (não um problema da sua conta).

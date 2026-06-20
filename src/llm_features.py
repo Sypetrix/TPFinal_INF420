@@ -68,12 +68,54 @@ def _build_prompt(statement: str) -> str:
     )
 
 
+def _vetor_conceitos(brutos) -> dict[str, int]:
+    """Converte uma lista de conceitos crus em {conceito: 0/1} na taxonomia."""
+    encontrados = {_norm(c) for c in brutos} if isinstance(brutos, list) else set()
+    return {c: int(c in encontrados) for c in CONCEITOS}
+
+
 def extract_one(statement: str) -> dict[str, int]:
     """Retorna {conceito: 0/1} para um enunciado."""
     data = gemini_client.generate_json(_build_prompt(statement), SYSTEM)
     brutos = data.get("conceitos", []) if isinstance(data, dict) else data
-    encontrados = {_norm(c) for c in brutos} if isinstance(brutos, list) else set()
-    return {c: int(c in encontrados) for c in CONCEITOS}
+    return _vetor_conceitos(brutos)
+
+
+def _build_prompt_lote(statements: list[str], max_chars: int = 1500) -> str:
+    """Monta um prompt que extrai conceitos de VÁRIOS enunciados de uma vez."""
+    lista = ", ".join(CONCEITOS)
+    partes = [
+        "Para CADA enunciado abaixo, identifique os conceitos/algoritmos "
+        f"necessários para resolvê-lo, usando APENAS nomes desta lista: {lista}.",
+        "Responda APENAS em JSON: um array com um objeto por enunciado, no "
+        'formato [{"id": <numero>, "conceitos": ["nome1", "nome2"]}]. '
+        "Inclua TODOS os ids e nada fora do JSON.",
+    ]
+    for i, texto in enumerate(statements, 1):
+        partes.append(f"\nEnunciado {i}:\n{str(texto)[:max_chars]}")
+    return "\n".join(partes)
+
+
+def extract_batch(statements: list[str]) -> list[dict[str, int]]:
+    """Extrai conceitos de vários enunciados em UMA chamada (economiza cota).
+
+    Casa a resposta por ``id``; itens não cobertos são reprocessados
+    individualmente, preservando tamanho e corretude do resultado.
+    """
+    data = gemini_client.generate_json(_build_prompt_lote(statements), SYSTEM)
+    por_id: dict[int, dict[str, int]] = {}
+    if isinstance(data, list):
+        for item in data:
+            if isinstance(item, dict) and "id" in item:
+                try:
+                    idx = int(item["id"])
+                except (TypeError, ValueError):
+                    continue
+                por_id[idx] = _vetor_conceitos(item.get("conceitos", []))
+    return [
+        por_id.get(i) or extract_one(str(statements[i - 1]))
+        for i in range(1, len(statements) + 1)
+    ]
 
 
 def _load_cache() -> pd.DataFrame:
@@ -82,7 +124,7 @@ def _load_cache() -> pd.DataFrame:
     return pd.DataFrame(columns=[ROW_KEY, *CONCEITOS])
 
 
-def run(n: int | None = None, sleep: float = 0.0) -> None:
+def run(n: int | None = None, sleep: float = 0.0, lote: int = 1) -> None:
     config.require_api_key()
     if not config.CLEAN_DATASET.exists():
         raise FileNotFoundError(
@@ -103,13 +145,27 @@ def run(n: int | None = None, sleep: float = 0.0) -> None:
         return
 
     print(f"Extraindo conceitos de {len(pendentes)} enunciado(s) via Gemini...")
+    if lote > 1:
+        print(f"Lote (prompt packing): {lote} enunciados por requisição.")
+    registros = pendentes.to_dict("records")
     novas = []
-    for _, row in tqdm(pendentes.iterrows(), total=len(pendentes), desc="Gemini (features)"):
-        feats = extract_one(str(row[config.TEXT_COL]))
-        feats[ROW_KEY] = int(row[ROW_KEY])
-        novas.append(feats)
-        if sleep:
-            time.sleep(sleep)
+    if lote and lote > 1:
+        grupos = [registros[i:i + lote] for i in range(0, len(registros), lote)]
+        for grupo in tqdm(grupos, total=len(grupos), desc=f"Gemini (features, lote={lote})"):
+            vetores = extract_batch([str(r[config.TEXT_COL]) for r in grupo])
+            for r, feats in zip(grupo, vetores):
+                feats = dict(feats)
+                feats[ROW_KEY] = int(r[ROW_KEY])
+                novas.append(feats)
+            if sleep:
+                time.sleep(sleep)
+    else:
+        for r in tqdm(registros, total=len(registros), desc="Gemini (features)"):
+            feats = extract_one(str(r[config.TEXT_COL]))
+            feats[ROW_KEY] = int(r[ROW_KEY])
+            novas.append(feats)
+            if sleep:
+                time.sleep(sleep)
 
     resultado = pd.concat([cache, pd.DataFrame(novas)], ignore_index=True)
     resultado = resultado.sort_values(ROW_KEY)[[ROW_KEY, *CONCEITOS]]
@@ -124,8 +180,10 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Etapa 5 - Extração de conceitos com Gemini")
     parser.add_argument("--n", type=int, default=None, help="limita qtd. de linhas pendentes")
     parser.add_argument("--sleep", type=float, default=0.0, help="pausa entre chamadas (s)")
+    parser.add_argument("--lote", type=int, default=1,
+                        help="enunciados por requisição (prompt packing; >1 economiza cota)")
     args = parser.parse_args()
-    run(n=args.n, sleep=args.sleep)
+    run(n=args.n, sleep=args.sleep, lote=args.lote)
 
 
 if __name__ == "__main__":

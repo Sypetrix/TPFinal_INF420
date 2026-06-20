@@ -82,6 +82,55 @@ def classify_one(statement: str, examples: list[tuple[str, str]] | None = None) 
     return _normalize(str(data))
 
 
+def _build_prompt_lote(
+    statements: list[str],
+    examples: list[tuple[str, str]] | None = None,
+    max_chars: int = 1500,
+) -> str:
+    """Monta um prompt que classifica VÁRIOS enunciados de uma só vez."""
+    partes: list[str] = []
+    if examples:
+        partes.append("Exemplos de referência (enunciado -> dificuldade):")
+        for texto, rotulo in examples:
+            partes.append(f'- "{texto[:300]}" -> {rotulo}')
+        partes.append("")
+    niveis = ", ".join(config.DIFFICULTY_LABELS)
+    partes.append(
+        f"Classifique a dificuldade de CADA enunciado abaixo em exatamente um "
+        f"nível entre: {niveis}.\n"
+        "Responda APENAS em JSON: um array com um objeto por enunciado, no "
+        'formato [{"id": <numero>, "dificuldade": "<nivel>"}]. '
+        "Inclua TODOS os ids e nada fora do JSON."
+    )
+    for i, texto in enumerate(statements, 1):
+        partes.append(f"\nEnunciado {i}:\n{str(texto)[:max_chars]}")
+    return "\n".join(partes)
+
+
+def classify_batch(statements: list[str], examples: list[tuple[str, str]] | None = None) -> list[str]:
+    """Classifica vários enunciados em UMA chamada à API (economiza cota).
+
+    A resposta é casada por ``id``. Qualquer item que a resposta não cobrir
+    (id ausente/ilegível) é reclassificado individualmente, garantindo que o
+    resultado tenha o mesmo tamanho e a mesma corretude do modo item-a-item.
+    """
+    data = gemini_client.generate_json(_build_prompt_lote(statements, examples), SYSTEM)
+    por_id: dict[int, str] = {}
+    if isinstance(data, list):
+        for item in data:
+            if isinstance(item, dict) and "id" in item:
+                try:
+                    idx = int(item["id"])
+                except (TypeError, ValueError):
+                    continue
+                por_id[idx] = _normalize(item.get("dificuldade", ""))
+    preds: list[str] = []
+    for i in range(1, len(statements) + 1):
+        rotulo = por_id.get(i)
+        preds.append(rotulo if rotulo else classify_one(str(statements[i - 1]), examples))
+    return preds
+
+
 def few_shot_examples(df: pd.DataFrame, por_classe: int = 1) -> list[tuple[str, str]]:
     """Sorteia exemplos rotulados (um ou mais por classe) para o few-shot."""
     exemplos: list[tuple[str, str]] = []
@@ -94,17 +143,30 @@ def few_shot_examples(df: pd.DataFrame, por_classe: int = 1) -> list[tuple[str, 
     return exemplos
 
 
-def classify_series(textos, examples=None, sleep: float = 0.0) -> list[str]:
-    """Classifica uma sequência de enunciados (com barra de progresso)."""
-    preds: list[str] = []
-    for texto in tqdm(list(textos), desc="Gemini (baseline)"):
-        preds.append(classify_one(str(texto), examples))
+def classify_series(textos, examples=None, sleep: float = 0.0, lote: int = 1) -> list[str]:
+    """Classifica uma sequência de enunciados (com barra de progresso).
+
+    ``lote`` > 1 agrupa os enunciados em lotes de ``lote`` por requisição
+    (prompt packing), reduzindo o nº de chamadas à API ~``lote`` vezes.
+    """
+    textos = [str(t) for t in textos]
+    if lote and lote > 1:
+        preds: list[str] = []
+        grupos = [textos[i:i + lote] for i in range(0, len(textos), lote)]
+        for grupo in tqdm(grupos, desc=f"Gemini (baseline, lote={lote})"):
+            preds.extend(classify_batch(grupo, examples))
+            if sleep:
+                time.sleep(sleep)
+        return preds
+    preds = []
+    for texto in tqdm(textos, desc="Gemini (baseline)"):
+        preds.append(classify_one(texto, examples))
         if sleep:
             time.sleep(sleep)
     return preds
 
 
-def run(n: int = 30, few_shot: bool = False, sleep: float = 0.0) -> None:
+def run(n: int = 30, few_shot: bool = False, sleep: float = 0.0, lote: int = 1) -> None:
     config.require_api_key()
     if not config.CLEAN_DATASET.exists():
         raise FileNotFoundError(
@@ -118,8 +180,10 @@ def run(n: int = 30, few_shot: bool = False, sleep: float = 0.0) -> None:
     exemplos = few_shot_examples(df, por_classe=1) if few_shot else None
     if exemplos:
         print(f"Few-shot com {len(exemplos)} exemplo(s).")
+    if lote > 1:
+        print(f"Lote (prompt packing): {lote} enunciados por requisição.")
 
-    preds = classify_series(amostra[config.TEXT_COL], exemplos, sleep=sleep)
+    preds = classify_series(amostra[config.TEXT_COL], exemplos, sleep=sleep, lote=lote)
     amostra = amostra.copy()
     amostra["pred_llm"] = preds
     amostra.to_csv(config.LLM_BASELINE_PREDS, index=False)
@@ -138,8 +202,10 @@ def main() -> None:
     parser.add_argument("--n", type=int, default=30, help="qtd. de exemplos do teste")
     parser.add_argument("--few-shot", action="store_true", help="inclui exemplos no prompt")
     parser.add_argument("--sleep", type=float, default=0.0, help="pausa entre chamadas (s)")
+    parser.add_argument("--lote", type=int, default=1,
+                        help="enunciados por requisição (prompt packing; >1 economiza cota)")
     args = parser.parse_args()
-    run(n=args.n, few_shot=args.few_shot, sleep=args.sleep)
+    run(n=args.n, few_shot=args.few_shot, sleep=args.sleep, lote=args.lote)
 
 
 if __name__ == "__main__":

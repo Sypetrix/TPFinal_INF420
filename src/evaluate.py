@@ -55,7 +55,7 @@ def _matriz_conceitos(df_sub: pd.DataFrame, feats: pd.DataFrame) -> csr_matrix:
     return csr_matrix(alinhado)
 
 
-def run(n_sample: int = 40, usar_llm: bool = True) -> None:
+def run(n_sample: int = 40, usar_llm: bool = True, lote: int = 1) -> None:
     if not config.CLEAN_DATASET.exists():
         raise FileNotFoundError(
             "dataset_limpo.csv não encontrado. Rode antes: python -m src.preprocess"
@@ -105,7 +105,7 @@ def run(n_sample: int = 40, usar_llm: bool = True) -> None:
         from . import llm_baseline   # import preguiçoso (depende de google-genai)
 
         exemplos = llm_baseline.few_shot_examples(df_train, por_classe=1)
-        pred_b = llm_baseline.classify_series(amostra[config.TEXT_COL], exemplos)
+        pred_b = llm_baseline.classify_series(amostra[config.TEXT_COL], exemplos, lote=lote)
         resultados.append({"abordagem": "B) LLM puro (Gemini)", **_metricas(y_eval, pred_b)})
     else:
         print("[B] pulada: execução com --no-llm.\n")
@@ -124,8 +124,10 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Etapa 7 - Avaliação final comparativa")
     parser.add_argument("--n", type=int, default=40, help="tamanho da amostra de teste")
     parser.add_argument("--no-llm", action="store_true", help="não chama a API do Gemini (pula B)")
+    parser.add_argument("--lote", type=int, default=1,
+                        help="enunciados por requisição no baseline LLM (prompt packing)")
     args = parser.parse_args()
-    run(n_sample=args.n, usar_llm=not args.no_llm)
+    run(n_sample=args.n, usar_llm=not args.no_llm, lote=args.lote)
 
 
 if __name__ == "__main__":
