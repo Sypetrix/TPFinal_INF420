@@ -41,6 +41,36 @@ def get_client() -> "genai.Client":
     return _client
 
 
+def _codigo_http(err: Exception) -> int | None:
+    """Tenta extrair o código HTTP do erro do SDK (429, 404, ...)."""
+    for attr in ("code", "status_code"):
+        v = getattr(err, attr, None)
+        if isinstance(v, int):
+            return v
+    return None
+
+
+def _eh_cota_diaria(err: Exception) -> bool:
+    """True se o erro é estouro da cota DIÁRIA (RPD) — repetir hoje não ajuda.
+
+    Distinto do limite por minuto (RPM), esse sim recuperável com espera.
+    """
+    texto = str(err).lower()
+    eh_429 = _codigo_http(err) == 429 or "resource_exhausted" in texto or "429" in texto
+    return eh_429 and any(s in texto for s in ("per day", "perday", "daily", "requests per day"))
+
+
+def _nao_retentavel(err: Exception) -> bool:
+    """True para erros de configuração (chave/modelo/permissão): repetir é inútil."""
+    if _codigo_http(err) in (400, 401, 403, 404):
+        return True
+    texto = str(err).lower()
+    return any(s in texto for s in (
+        "api key not valid", "api_key_invalid", "unauthenticated",
+        "permission", "not found", "is not supported",
+    ))
+
+
 def generate(
     prompt: str,
     system_instruction: str | None = None,
@@ -52,8 +82,10 @@ def generate(
 ) -> str:
     """Envia um prompt ao Gemini e retorna o texto da resposta.
 
-    Faz novas tentativas com backoff exponencial em caso de erro de API
-    (ex.: estouro do limite de requisições por minuto).
+    Repete com backoff exponencial em erros transitórios (ex.: limite por
+    MINUTO/RPM, instabilidade). Já em erros de **cota diária (RPD)** ou de
+    **configuração** (chave/modelo inválidos), falha imediatamente com mensagem
+    clara — repetir nesses casos só gastaria mais cota à toa.
     """
     client = get_client()
     cfg = types.GenerateContentConfig(
@@ -75,12 +107,30 @@ def generate(
             return (resp.text or "").strip()
         except Exception as err:  # a API pode lançar vários tipos de exceção
             last_err = err
+            if _eh_cota_diaria(err):
+                raise RuntimeError(
+                    "Limite DIÁRIO de requisições da API do Gemini atingido "
+                    f"(modelo '{config.GEMINI_MODEL}'). Opções: (1) troque "
+                    "GEMINI_MODEL no .env por um modelo com cota gratuita maior "
+                    "(ex.: gemini-2.0-flash ou gemini-2.5-flash-lite); (2) reduza "
+                    "a amostra com --n; (3) habilite faturamento no Google AI "
+                    "Studio; ou (4) tente de novo amanhã. Veja os limites em "
+                    "https://ai.google.dev/gemini-api/docs/rate-limits . "
+                    f"Detalhe da API: {err}"
+                ) from err
+            if _nao_retentavel(err):
+                raise RuntimeError(
+                    "Erro de configuração da API do Gemini (chave inválida, "
+                    "modelo inexistente ou sem permissão). Confira GEMINI_API_KEY "
+                    f"e GEMINI_MODEL no .env. Detalhe da API: {err}"
+                ) from err
             if attempt == max_retries:
                 break
             time.sleep(delay)
             delay = min(delay * 2, 60)
     raise RuntimeError(
-        f"Falha ao chamar o Gemini após {max_retries} tentativas: {last_err}"
+        f"Falha ao chamar o Gemini após {max_retries} tentativas "
+        f"(modelo '{config.GEMINI_MODEL}'): {last_err}"
     )
 
 

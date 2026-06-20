@@ -21,7 +21,9 @@ load_dotenv(ROOT_DIR / ".env")
 # Google Gemini (Google AI Studio)
 # ----------------------------------------------------------------------------
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash").strip()
+# Default em um modelo com cota gratuita mais generosa (ver comentário no
+# .env.example). Troque por GEMINI_MODEL no .env se preferir outro.
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash").strip()
 
 # ----------------------------------------------------------------------------
 # Caminhos

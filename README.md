@@ -85,23 +85,20 @@ TP_Final_INF420/
 | 1b. EDA | Distribuição das classes, tamanho dos enunciados | abrir `notebook/exploracao.ipynb` |
 | 2. Pré-processamento | Limpeza de texto + vetorização TF-IDF | `python -m src.preprocess` |
 | 3. Modelos tradicionais | LogReg, KNN, SVM, RF — validação cruzada + tuning | `python -m src.train_ml` |
-| 4. Baseline LLM | Gemini classifica direto (zero-/few-shot) | `python -m src.llm_baseline --n 30 --few-shot` |
-| 5. LLM extrator de features | Gemini identifica conceitos (DP, grafos…) | `python -m src.llm_features` |
-| 6. LLM explicador | Gera justificativas das classificações | `python -m src.llm_explain --n 5` |
-| 7. Avaliação final | Compara ML puro vs LLM vs ML+features LLM | `python -m src.evaluate --n 40` |
+| 4. Baseline LLM | Gemini classifica direto (zero-/few-shot) | `python -m src.llm_baseline --n 10 --few-shot` |
+| 5. LLM extrator de features | Gemini identifica conceitos (DP, grafos…) | `python -m src.llm_features --n 10` |
+| 6. LLM explicador | Gera justificativas das classificações | `python -m src.llm_explain --n 3` |
+| 7. Avaliação final | Compara ML puro vs LLM vs ML+features LLM | `python -m src.evaluate --n 20` (ou `--no-llm`) |
 | ➕ Recomendação | Sugere exercícios ao aluno (catálogo multi-fonte, §5) | `python -m src.recommend` |
 
-> **Etapa 1 automática:** rodar a Etapa 2 (`src.preprocess`) já dispara a Etapa 1
-> sozinha se `data/raw/questoes.csv` ainda não existir — então o mínimo para
-> treinar os modelos de ML é `python -m src.preprocess` seguido de
-> `python -m src.train_ml`.
+> ⚠️ Os comandos das etapas 4–7 acima usam amostras **pequenas** de propósito —
+> cada item vira uma chamada à API do Gemini, que tem cota gratuita limitada.
+> **Aumente o `--n` aos poucos.** Detalhes e solução de problemas de cota em §3.1.
 
-> **Dica de custo de API:** as etapas 4, 5, 6 e a parte LLM da 7 chamam o
-> Gemini e exigem `GEMINI_API_KEY` no `.env`. Comece com amostras pequenas
-> (`--n`). Para rodar a avaliação final **sem** chamar a API, use
-> `python -m src.evaluate --no-llm` (compara só ML puro vs ML+features). A camada
-> gratuita do Google AI Studio tem limite por minuto — o cliente já refaz
-> tentativas, e a Etapa 5 tem retomada (não refaz linhas já processadas).
+> **Etapa 1 automática:** rodar a Etapa 2 (`src.preprocess`) já dispara a Etapa 1
+> sozinha se `data/raw/<DATASET>/questoes.csv` ainda não existir — então o mínimo
+> para treinar os modelos de ML é `python -m src.preprocess` seguido de
+> `python -m src.train_ml`. **Nada disso usa a API** (ver §3.1).
 
 > **Metodologia de avaliação (Etapa 3).** Como a base rotulada é pequena, a
 > comparação entre os modelos usa **validação cruzada estratificada** (não um
@@ -125,6 +122,55 @@ TP_Final_INF420/
 > está em `main.tex` (classe `webmedia`, bibliografia em `referencias.bib`); para
 > compilar, é preciso o `webmedia.cls` (fornecido pelo professor em `sample/`, que
 > não é versionado).
+
+### 3.1 Etapas com LLM (Gemini): chave, custo e limites da API
+
+As etapas **4, 5, 6 e a parte LLM da 7** chamam a API do Gemini e exigem
+`GEMINI_API_KEY` no `.env` (crie a chave em <https://aistudio.google.com/app/apikey>).
+Já as etapas **1, 2, 3 e as figuras NÃO usam a API** — todo o resultado do
+classificador que aparece no relatório é reproduzível **offline** (use `--no-llm`
+na etapa 7). Ou seja: a nota do trabalho não depende de ter cota de API sobrando.
+
+**Comece pequeno** — cada item vira **uma** chamada à API:
+
+```bash
+python -m src.llm_baseline --n 5 --few-shot   # 5 chamadas
+python -m src.llm_features  --n 5              # 5 chamadas (tem retomada)
+python -m src.llm_explain   --n 3             # 3 chamadas
+python -m src.evaluate      --n 10            # ~10 chamadas (abordagem LLM)
+python -m src.evaluate      --no-llm          # 0 chamadas (só ML)
+```
+
+**A cota gratuita (free tier) tem dois limites distintos:**
+- **RPM** (requisições por *minuto*): rajadas rápidas estouram → espace as
+  chamadas com `--sleep 4` (disponível em `llm_baseline` e `llm_features`).
+- **RPD** (requisições por *dia*): teto **diário** por modelo; ao acabar, só
+  renova no dia seguinte.
+
+A etapa 5 (`llm_features`) tem **retomada**: não refaz linhas já gravadas em
+`llm_features.csv`, então dá para processar a base aos poucos ao longo de vários
+dias sem perder o progresso.
+
+#### "Bati no limite diário quase de imediato" — o que está acontecendo?
+
+Quase sempre é a **cota diária (RPD) do modelo** (não um problema da sua conta).
+Causas prováveis e como resolver:
+
+1. **Modelo com cota pequena.** Modelos `2.5`/`pro` têm RPD baixo no free tier e
+   estouram rápido. Troque `GEMINI_MODEL` no `.env` por um mais generoso — ex.:
+   `gemini-2.0-flash` (padrão atual) ou `gemini-2.0-flash-lite`. Limites oficiais
+   por modelo: <https://ai.google.dev/gemini-api/docs/rate-limits>.
+2. **Job grande de uma vez.** Rodar `llm_features` sobre a base inteira (138
+   itens) ou `evaluate --n 40` pode passar do teto diário. Use `--n` pequeno e
+   aproveite a retomada da etapa 5.
+3. **Repetições gastando cota.** *(já corrigido)* o cliente agora **para na hora**
+   ao detectar estouro de cota diária ou erro de configuração (chave/modelo
+   inválidos), em vez de repetir 5× e gastar mais cota à toa.
+4. **Cota já consumida no dia.** Se a mesma chave foi usada em outro lugar, a cota
+   diária pode já estar esgotada — ela renova por volta da meia-noite no fuso do
+   Pacífico (PT).
+
+Para acompanhar uso, chave e limites: <https://aistudio.google.com/>.
 
 ## 4. Como os dados são consolidados (Etapa 1)
 
