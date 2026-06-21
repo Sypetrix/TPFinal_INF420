@@ -1,43 +1,41 @@
-"""Recomendação personalizada de exercícios (baseada em conteúdo).
+"""Recomendação de exercícios (por conceitos + dificuldade).
 
-Recomenda novas questões a partir do histórico do aluno (questões já resolvidas)
-e, opcionalmente, do nível de dificuldade desejado: o perfil do aluno é o
-centroide dos vetores TF-IDF das questões que ele resolveu, e recomendamos as
-questões não resolvidas mais similares (similaridade do cosseno).
+Conforme o contexto do projeto, a recomendação parte das questões avaliadas e
+busca, no catálogo (a "base de recomendação"), questões **com conceitos em comum**
+e **dificuldade compatível** (mesmo nível ou um acima/abaixo).
 
-Por ser baseado em **conteúdo** (e não em rótulo), o recomendador combina várias
-fontes num só catálogo — inclusive as **não rotuladas** (SPOJ, OBI), que não
-servem ao classificador mas são candidatas válidas aqui. As fontes vêm de
-``config.RECOMMENDER_SOURCES`` (no ``.env``); vazio -> usa só a fonte ativa.
-O filtro por nível só se aplica às questões rotuladas (INF110, Neps).
+Pontos-chave:
+  * **Critério de similaridade = conceitos** (extraídos pela LLM, ver
+    ``llm_concepts``). Quando os conceitos do catálogo não estão disponíveis, o
+    recomendador **cai para similaridade TF-IDF** do enunciado (degradação suave).
+  * **Toda a base ganha uma dificuldade**: questões sem rótulo têm a dificuldade
+    **predita pelo modelo de ML treinado** (na fonte ativa, ``DATASET``), para que
+    o filtro por nível valha para o catálogo inteiro (contexto.md).
+  * Opera em **3 níveis** (padrão, fácil/médio/difícil) ou **5 níveis**.
 
-Pré-requisito: cada fonte usada precisa ter sido consolidada antes pela Etapa 1
-(``DATASET=<fonte> python -m src.ingest``).
+Catálogo combinado a partir de ``config.RECOMMENDER_SOURCES`` (no ``.env``); cada
+fonte precisa ter sido consolidada antes (``DATASET=<fonte> python -m src.ingest``).
 
-Uso (demonstração):
+Uso (demonstração com histórico de aluno):
     python -m src.recommend
-    RECOMMENDER_SOURCES=INF110,Neps,SPOJ,OBI python -m src.recommend
+    python -m src.recommend --niveis 5
 """
 from __future__ import annotations
 
 import argparse
 import unicodedata
 
+import joblib
 import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-from . import config, data_utils
+from . import config, data_utils, llm_concepts
 
-# Progressão sugerida de nível (para recomendar o "próximo passo").
-PROXIMO_NIVEL = {
-    "muito_facil": "facil",
-    "facil": "medio",
-    "medio": "dificil",
-    "dificil": "muito_dificil",
-    "muito_dificil": "muito_dificil",
-}
+# Peso dos conceitos no escore combinado (o restante vai para o TF-IDF). Os
+# conceitos são o critério principal; o TF-IDF desempata e cobre quando faltam.
+PESO_CONCEITOS = 0.7
 
 
 def _norm_nivel(nivel: str) -> str:
@@ -46,36 +44,53 @@ def _norm_nivel(nivel: str) -> str:
 
 
 class RecomendadorConteudo:
-    """Recomendador baseado em conteúdo (TF-IDF + similaridade do cosseno).
-
-    Combina as fontes em ``fontes`` (padrão: ``config.RECOMMENDER_SOURCES`` ou,
-    se vazio, só a fonte ativa) num catálogo único e ajusta um TF-IDF sobre todo
-    ele, de modo que questões de qualquer fonte possam ser recomendadas.
-    """
+    """Recomendador por conceitos + dificuldade (com fallback TF-IDF)."""
 
     def __init__(
         self,
         fontes: list[str] | None = None,
+        niveis: int = 3,
+        prever_dificuldade: bool = True,
         max_features: int = 5000,
         ngram_max: int = 2,
         min_df: int = 2,
     ) -> None:
         self.fontes = fontes or config.RECOMMENDER_SOURCES or [config.DATASET]
-        self.df = self._carregar_catalogo(self.fontes)
+        self.niveis = niveis
+        self.ordem = config.DIFFICULTY_LABELS_3 if niveis == 3 else config.DIFFICULTY_LABELS
+        self.idx_nivel = {n: i for i, n in enumerate(self.ordem)}
 
-        # Mesma limpeza usada no pré-processamento, para consistência.
+        self.df = self._carregar_catalogo(self.fontes)
         self.df["texto_limpo"] = self.df[config.TEXT_COL].astype(str).map(data_utils.clean_text)
         self.df = self.df[self.df["texto_limpo"].str.len() > 0].reset_index(drop=True)
 
-        # TF-IDF ajustado sobre o catálogo combinado (vocabulário cobre todas as
-        # fontes). É independente do vetorizador do classificador.
+        # Rótulo na escala escolhida (5 níveis -> colapsa para 3 quando niveis=3).
+        rot = self.df[config.LABEL_COL].astype("string").str.lower()
+        if niveis == 3:
+            rot = rot.map(lambda v: config.COLLAPSE_5_TO_3.get(v, v) if pd.notna(v) else v)
+        self.df[config.LABEL_COL] = rot
+
+        # TF-IDF do catálogo combinado (fallback de similaridade).
         self.vectorizer = TfidfVectorizer(
             max_features=max_features, ngram_range=(1, ngram_max), min_df=min_df
         )
         self.X = self.vectorizer.fit_transform(self.df["texto_limpo"])
 
+        # Conceitos por questão (critério principal), se houver cache por fonte.
+        mapa = llm_concepts.carregar_conceitos(self.fontes)
+        self.tem_conceitos = bool(mapa)
+        self.conceitos = [
+            mapa.get((row["fonte"], str(row[config.ID_COL])), set())
+            for _, row in self.df.iterrows()
+        ]
+
+        # Dificuldade efetiva: rótulo quando existe; senão, predita pelo modelo de ML.
+        self.df["dificuldade_efetiva"] = self.df[config.LABEL_COL]
+        if prever_dificuldade:
+            self._preencher_dificuldade_predita()
+
+    # ------------------------------------------------------------------ catálogo
     def _carregar_catalogo(self, fontes: list[str]) -> pd.DataFrame:
-        """Lê e concatena o questoes.csv de cada fonte, marcando a origem."""
         partes: list[pd.DataFrame] = []
         for fonte in fontes:
             csv = config.questoes_csv_for(fonte)
@@ -96,127 +111,156 @@ class RecomendadorConteudo:
         print(f"Catálogo combinado: {len(catalogo)} questões de {len(fontes)} fonte(s)\n")
         return catalogo
 
-    def recomendar(
-        self,
-        resolvidos_idx: list[int],
-        nivel_alvo: str | None = None,
-        top_k: int = 5,
-    ) -> pd.DataFrame:
-        """Recomenda até top_k questões não resolvidas.
+    def _modelo_path(self):
+        nome = "best_ml_model_3niveis.joblib" if self.niveis == 3 else "best_ml_model.joblib"
+        return config.MODELS_DIR / nome
 
-        resolvidos_idx : índices (linhas do catálogo) já resolvidos pelo aluno.
-        nivel_alvo     : se informado, filtra por esse nível (ex.: 'medio'); as
-                         questões sem rótulo (SPOJ/OBI) ficam de fora do filtro.
-        """
-        df = self.df.copy()
+    def _preencher_dificuldade_predita(self) -> None:
+        """Prediz a dificuldade das questões SEM rótulo com o modelo treinado."""
+        sem_rotulo = self.df["dificuldade_efetiva"].isna()
+        if not sem_rotulo.any():
+            return
+        modelo_path = self._modelo_path()
+        if not modelo_path.exists():
+            print(
+                f"[aviso] modelo {modelo_path.name} não encontrado em {config.MODELS_DIR}; "
+                "questões sem rótulo ficam sem dificuldade (treine com "
+                f"python -m src.train_ml{' --niveis 3' if self.niveis == 3 else ''})."
+            )
+            return
+        modelo = joblib.load(modelo_path)
+        preds = modelo.predict(self.df.loc[sem_rotulo, "texto_limpo"].astype(str))
+        self.df.loc[sem_rotulo, "dificuldade_efetiva"] = [str(p) for p in preds]
+        print(f"Dificuldade predita para {int(sem_rotulo.sum())} questão(ões) sem rótulo "
+              f"(modelo {modelo_path.name}).")
 
-        if resolvidos_idx:
-            perfil = np.asarray(self.X[resolvidos_idx].mean(axis=0)).reshape(1, -1)
-            df["similaridade"] = cosine_similarity(perfil, self.X).ravel()
-        else:
-            # Aluno sem histórico: recomenda por nível, sem ranqueamento de similaridade.
-            df["similaridade"] = 0.0
+    # ------------------------------------------------------------------ scores
+    def _niveis_aceitos(self, nivel_alvo: str | None, janela: int) -> set[str] | None:
+        """Conjunto de níveis dentro de ±janela do alvo (None = sem filtro)."""
+        if not nivel_alvo:
+            return None
+        i = self.idx_nivel.get(_norm_nivel(nivel_alvo))
+        if i is None:
+            return None
+        return {self.ordem[j] for j in range(max(0, i - janela), min(len(self.ordem), i + janela + 1))}
 
-        mask = ~df.index.isin(resolvidos_idx)
-        if nivel_alvo and config.LABEL_COL in df.columns:
-            alvo = _norm_nivel(nivel_alvo)
-            mask &= df[config.LABEL_COL].map(_norm_nivel) == alvo
+    def _cosseno(self, vetor_tfidf) -> np.ndarray:
+        return cosine_similarity(vetor_tfidf, self.X).ravel()
 
-        colunas = [c for c in (config.ID_COL, "fonte", config.TEXT_COL, config.LABEL_COL) if c in df.columns]
-        colunas.append("similaridade")
-        return (
-            df[mask]
-            .sort_values("similaridade", ascending=False)
-            .head(top_k)[colunas]
-            .reset_index(names="indice")
-        )
+    def _score_vec(self, cos: np.ndarray, conceitos_query: set[str] | None) -> np.ndarray:
+        """Escore por linha a partir do cosseno TF-IDF + conceitos (principal)."""
+        if self.tem_conceitos and conceitos_query:
+            jac = np.array([
+                (len(conceitos_query & c) / len(conceitos_query | c)) if (conceitos_query | c) else 0.0
+                for c in self.conceitos
+            ])
+            return PESO_CONCEITOS * jac + (1 - PESO_CONCEITOS) * cos
+        return cos
 
+    def _saida(self, df: pd.DataFrame, top_k: int) -> pd.DataFrame:
+        cols = [config.ID_COL, "fonte", config.TEXT_COL, "dificuldade_efetiva", "score"]
+        out = df.sort_values("score", ascending=False).head(top_k)[cols].reset_index(names="indice")
+        out["conceitos"] = [
+            ", ".join(sorted(self.conceitos[i])) for i in out["indice"]
+        ]
+        return out
+
+    # ------------------------------------------------------------------ APIs
     def recomendar_por_texto(
         self,
         texto: str,
+        conceitos: set[str] | None = None,
         nivel_alvo: str | None = None,
         top_k: int = 5,
         excluir_idx: list[int] | None = None,
+        janela_nivel: int = 1,
+        dup_threshold: float | None = 0.95,
     ) -> pd.DataFrame:
-        """Recomenda questões do catálogo mais similares a um TEXTO arbitrário.
+        """Recomenda questões do catálogo semelhantes a um enunciado.
 
-        Diferente de ``recomendar`` (que parte de índices já no catálogo), aqui o
-        enunciado pode ser de uma questão NOVA (ex.: a questão que o professor
-        quer avaliar). O texto é limpo e projetado no mesmo espaço TF-IDF do
-        catálogo; recomendamos as questões mais similares (cosseno).
+        Similaridade por conceitos (principal) + TF-IDF; filtra por dificuldade
+        dentro de ±``janela_nivel`` do ``nivel_alvo`` (a dificuldade prevista da
+        questão). É o caminho usado para questões novas (uso-fim da ferramenta).
 
-        excluir_idx : índices do catálogo a omitir (ex.: a própria questão, se ela
-                      já estiver no catálogo, para não se recomendar a si mesma).
+        ``dup_threshold``: descarta candidatas com cosseno TF-IDF acima desse
+        valor (a MESMA questão, quase idêntica) — útil quando a base tem
+        duplicatas entre fontes. Use ``None`` para manter as quase-idênticas.
         """
         vetor = self.vectorizer.transform([data_utils.clean_text(str(texto))])
+        cos = self._cosseno(vetor)
         df = self.df.copy()
-        df["similaridade"] = cosine_similarity(vetor, self.X).ravel()
+        df["score"] = self._score_vec(cos, conceitos)
 
         mask = pd.Series(True, index=df.index)
         if excluir_idx:
             mask &= ~df.index.isin(excluir_idx)
-        if nivel_alvo and config.LABEL_COL in df.columns:
-            alvo = _norm_nivel(nivel_alvo)
-            mask &= df[config.LABEL_COL].map(_norm_nivel) == alvo
+        if dup_threshold is not None:
+            mask &= cos < dup_threshold
+        aceitos = self._niveis_aceitos(nivel_alvo, janela_nivel)
+        if aceitos is not None:
+            mask &= df["dificuldade_efetiva"].map(_norm_nivel).isin(aceitos)
+        return self._saida(df[mask], top_k)
 
-        colunas = [c for c in (config.ID_COL, "fonte", config.TEXT_COL, config.LABEL_COL) if c in df.columns]
-        colunas.append("similaridade")
-        return (
-            df[mask]
-            .sort_values("similaridade", ascending=False)
-            .head(top_k)[colunas]
-            .reset_index(names="indice")
-        )
+    def recomendar(self, resolvidos_idx, nivel_alvo=None, top_k: int = 5, janela_nivel: int = 1) -> pd.DataFrame:
+        """Recomenda a partir do histórico do aluno (centroide das resolvidas)."""
+        df = self.df.copy()
+        if resolvidos_idx:
+            perfil = np.asarray(self.X[resolvidos_idx].mean(axis=0)).reshape(1, -1)
+            conceitos_perfil: set[str] = set().union(*[self.conceitos[i] for i in resolvidos_idx]) \
+                if self.tem_conceitos else set()
+            df["score"] = self._score_vec(self._cosseno(perfil), conceitos_perfil or None)
+        else:
+            df["score"] = 0.0
 
-    def recomendar_proximo_nivel(self, resolvidos_idx: list[int], top_k: int = 5) -> pd.DataFrame:
-        """Recomenda no nível imediatamente acima do que o aluno mais resolveu."""
-        if not resolvidos_idx or config.LABEL_COL not in self.df.columns:
+        mask = ~df.index.isin(resolvidos_idx)
+        aceitos = self._niveis_aceitos(nivel_alvo, janela_nivel)
+        if aceitos is not None:
+            mask &= df["dificuldade_efetiva"].map(_norm_nivel).isin(aceitos)
+        return self._saida(df[mask], top_k)
+
+    def recomendar_proximo_nivel(self, resolvidos_idx, top_k: int = 5) -> pd.DataFrame:
+        """Recomenda no nível do que o aluno mais resolveu (e adjacentes)."""
+        if not resolvidos_idx:
             return self.recomendar(resolvidos_idx, top_k=top_k)
-        niveis = self.df.loc[resolvidos_idx, config.LABEL_COL].map(_norm_nivel)
-        niveis = niveis[niveis != "nan"]
-        nivel_atual = niveis.mode().iloc[0] if len(niveis) else "facil"
-        alvo = PROXIMO_NIVEL.get(nivel_atual, nivel_atual)
-        print(f"Nível predominante do aluno: {nivel_atual} -> recomendando: {alvo}")
-        return self.recomendar(resolvidos_idx, nivel_alvo=alvo, top_k=top_k)
+        niveis = self.df.loc[resolvidos_idx, "dificuldade_efetiva"].map(_norm_nivel)
+        niveis = niveis[niveis.isin(self.ordem)]
+        nivel_atual = niveis.mode().iloc[0] if len(niveis) else self.ordem[0]
+        print(f"Nível predominante do aluno: {nivel_atual}")
+        return self.recomendar(resolvidos_idx, nivel_alvo=nivel_atual, top_k=top_k)
 
 
-def _resumo_enunciado(texto: str, n: int = 80) -> str:
+def _resumo_enunciado(texto: str, n: int = 70) -> str:
     txt = " ".join(str(texto).split())
     return txt[:n] + ("…" if len(txt) > n else "")
 
 
-def run(top_k: int = 5) -> None:
-    rec = RecomendadorConteudo()
-    print(f"Fontes no catálogo: {', '.join(rec.fontes)}\n")
+def run(top_k: int = 5, niveis: int = 3) -> None:
+    rec = RecomendadorConteudo(niveis=niveis)
+    print(f"Fontes: {', '.join(rec.fontes)} | níveis: {niveis} | "
+          f"conceitos: {'sim' if rec.tem_conceitos else 'não (fallback TF-IDF)'}\n")
 
-    # Demonstração: simula um aluno que resolveu algumas questões fáceis.
-    if config.LABEL_COL in rec.df.columns and rec.df[config.LABEL_COL].notna().any():
-        faceis = rec.df[rec.df[config.LABEL_COL].map(_norm_nivel) == "facil"]
-        resolvidos = faceis.sample(min(3, len(faceis)), random_state=config.RANDOM_SEED).index.tolist()
+    rotuladas = rec.df[rec.df["dificuldade_efetiva"].map(_norm_nivel) == rec.ordem[0]]
+    if len(rotuladas):
+        resolvidos = rotuladas.sample(min(3, len(rotuladas)), random_state=config.RANDOM_SEED).index.tolist()
     else:
         resolvidos = rec.df.sample(min(3, len(rec.df)), random_state=config.RANDOM_SEED).index.tolist()
-
     print(f"Aluno (demo) resolveu os índices: {resolvidos}\n")
 
     def _mostrar(df: pd.DataFrame) -> None:
-        if config.TEXT_COL in df.columns:
-            df = df.assign(**{config.TEXT_COL: df[config.TEXT_COL].map(_resumo_enunciado)})
-        print(df.to_string(index=False))
+        d = df.assign(**{config.TEXT_COL: df[config.TEXT_COL].map(_resumo_enunciado)})
+        print(d.to_string(index=False))
 
-    print(f"=== Recomendações por nível (próximo passo, top {top_k}) ===")
+    print(f"=== Recomendações (nível do aluno e adjacentes, top {top_k}) ===")
     _mostrar(rec.recomendar_proximo_nivel(resolvidos, top_k=top_k))
-
-    # Sem filtro de nível: percorre todo o catálogo, então questões sem rótulo
-    # (SPOJ, OBI) também podem aparecer.
-    print(f"\n=== Recomendações por conteúdo (qualquer fonte, top {top_k}) ===")
-    _mostrar(rec.recomendar(resolvidos, top_k=top_k))
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Recomendador de exercícios (demo)")
     parser.add_argument("--top-k", type=int, default=5)
+    parser.add_argument("--niveis", type=int, choices=[5, 3], default=3,
+                        help="granularidade da dificuldade (padrão 3)")
     args = parser.parse_args()
-    run(top_k=args.top_k)
+    run(top_k=args.top_k, niveis=args.niveis)
 
 
 if __name__ == "__main__":

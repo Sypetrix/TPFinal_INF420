@@ -1,17 +1,23 @@
-"""Etapa 5 — LLM como extrator de características.
+"""Extração de conceitos via LLM (função central do pipeline).
 
-Pede ao LLM (Groq/Llama) para identificar quais conceitos/algoritmos aparecem em
-cada enunciado (recursão, programação dinâmica, grafos, etc.) e gera colunas
-binárias que podem ser combinadas com as features TF-IDF (ver src.evaluate).
+Pede ao LLM (provedor configurável, padrão Groq/Llama) para identificar quais
+conceitos/algoritmos aparecem em cada enunciado (recursão, programação dinâmica,
+grafos, etc.). A saída estruturada (JSON) é usada em dois lugares:
 
-Tem retomada automática: linhas já processadas em data/processed/llm_features.csv
-são puladas, permitindo rodar aos poucos sem refazer chamadas.
+  * como **feature adicional** dos modelos de ML (junto ao TF-IDF) — base de
+    treino, cacheada em data/processed/<DATASET>/llm_features.csv (ver evaluate);
+  * como **critério de similaridade** do recomendador — base de recomendação,
+    cacheada por fonte em data/processed/<fonte>/conceitos.csv.
 
-Pré-requisito: GROQ_API_KEY no .env e dataset_limpo.csv.
+Tem retomada automática (não refaz itens já no cache).
+
+Pré-requisito: chave do provedor de LLM no .env (LLM_PROVIDER) e, no modo base de
+treino, dataset_limpo.csv.
 
 Uso:
-    python -m src.llm_features            # processa toda a base
-    python -m src.llm_features --n 50     # processa só as 50 primeiras pendentes
+    python -m src.llm_concepts                 # base de treino (toda)
+    python -m src.llm_concepts --n 50          # base de treino (50 pendentes)
+    python -m src.llm_concepts --fonte SPOJ --lote 10   # base de recomendação (1 fonte)
 """
 from __future__ import annotations
 
@@ -124,6 +130,85 @@ def _load_cache() -> pd.DataFrame:
     return pd.DataFrame(columns=[ROW_KEY, *CONCEITOS])
 
 
+# ----------------------------------------------------------------------------
+# Conceitos para a BASE DE RECOMENDAÇÃO (por fonte, com cache/retomada)
+# ----------------------------------------------------------------------------
+def _conceitos_csv(fonte: str):
+    """Caminho do cache de conceitos de uma fonte do recomendador."""
+    return config.DATA_DIR / "processed" / fonte.strip() / "conceitos.csv"
+
+
+def extrair_conceitos_fonte(fonte: str, n: int | None = None, lote: int = 1,
+                            sleep: float = 0.0):
+    """Extrai e cacheia os conceitos das questões de uma fonte (recomendador).
+
+    Lê data/raw/<fonte>/questoes.csv e grava data/processed/<fonte>/conceitos.csv
+    (colunas: id + um 0/1 por conceito). Tem retomada (não refaz ids já no cache).
+    """
+    config.require_api_key()
+    csv_q = config.questoes_csv_for(fonte)
+    if not csv_q.exists():
+        raise FileNotFoundError(
+            f"Base da fonte '{fonte}' não encontrada em {csv_q}. "
+            f"Rode antes: DATASET={fonte} python -m src.ingest"
+        )
+    df = pd.read_csv(csv_q).dropna(subset=[config.TEXT_COL])
+    saida = _conceitos_csv(fonte)
+    saida.parent.mkdir(parents=True, exist_ok=True)
+    cache = (pd.read_csv(saida) if saida.exists()
+             else pd.DataFrame(columns=[config.ID_COL, *CONCEITOS]))
+    feitos = set(cache[config.ID_COL].astype(str)) if len(cache) else set()
+    pend = df[~df[config.ID_COL].astype(str).isin(feitos)]
+    if n is not None:
+        pend = pend.head(n)
+    if pend.empty:
+        print(f"[{fonte}] conceitos já em cache — nada a fazer.")
+        return saida
+
+    registros = pend.to_dict("records")
+    novas: list[dict] = []
+    print(f"[{fonte}] extraindo conceitos de {len(registros)} questão(ões) via LLM...")
+    if lote and lote > 1:
+        grupos = [registros[i:i + lote] for i in range(0, len(registros), lote)]
+        for grupo in tqdm(grupos, desc=f"conceitos {fonte} (lote={lote})"):
+            vetores = extract_batch([str(r[config.TEXT_COL]) for r in grupo])
+            for r, feats in zip(grupo, vetores):
+                linha = dict(feats); linha[config.ID_COL] = r[config.ID_COL]
+                novas.append(linha)
+            if sleep:
+                time.sleep(sleep)
+    else:
+        for r in tqdm(registros, desc=f"conceitos {fonte}"):
+            linha = dict(extract_one(str(r[config.TEXT_COL])))
+            linha[config.ID_COL] = r[config.ID_COL]
+            novas.append(linha)
+            if sleep:
+                time.sleep(sleep)
+
+    res = pd.concat([cache, pd.DataFrame(novas)], ignore_index=True)[[config.ID_COL, *CONCEITOS]]
+    res.to_csv(saida, index=False)
+    print(f"[{fonte}] conceitos salvos em {saida} ({len(res)} linhas)")
+    return saida
+
+
+def carregar_conceitos(fontes) -> dict[tuple[str, str], set[str]]:
+    """Carrega os conceitos cacheados de várias fontes do recomendador.
+
+    Retorna ``{(fonte, str(id)): {conceitos}}``. Fontes sem cache são ignoradas
+    (o recomendador cai para similaridade TF-IDF quando não há conceitos).
+    """
+    mapa: dict[tuple[str, str], set[str]] = {}
+    for fonte in fontes:
+        csv = _conceitos_csv(fonte)
+        if not csv.exists():
+            continue
+        df = pd.read_csv(csv)
+        for _, row in df.iterrows():
+            conjunto = {c for c in CONCEITOS if int(row.get(c, 0) or 0) == 1}
+            mapa[(fonte, str(row[config.ID_COL]))] = conjunto
+    return mapa
+
+
 def run(n: int | None = None, sleep: float = 0.0, lote: int = 1) -> None:
     config.require_api_key()
     if not config.CLEAN_DATASET.exists():
@@ -177,13 +262,19 @@ def run(n: int | None = None, sleep: float = 0.0, lote: int = 1) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Etapa 5 - Extração de conceitos com LLM (Groq)")
-    parser.add_argument("--n", type=int, default=None, help="limita qtd. de linhas pendentes")
+    parser = argparse.ArgumentParser(description="Extração de conceitos com LLM (provedor configurável)")
+    parser.add_argument("--fonte", type=str, default=None,
+                        help="extrai conceitos da base de uma fonte do recomendador "
+                             "(data/raw/<fonte>/) em vez da base de treino")
+    parser.add_argument("--n", type=int, default=None, help="limita qtd. de itens pendentes")
     parser.add_argument("--sleep", type=float, default=0.0, help="pausa entre chamadas (s)")
     parser.add_argument("--lote", type=int, default=1,
                         help="enunciados por requisição (prompt packing; >1 economiza cota)")
     args = parser.parse_args()
-    run(n=args.n, sleep=args.sleep, lote=args.lote)
+    if args.fonte:
+        extrair_conceitos_fonte(args.fonte, n=args.n, lote=args.lote, sleep=args.sleep)
+    else:
+        run(n=args.n, sleep=args.sleep, lote=args.lote)
 
 
 if __name__ == "__main__":

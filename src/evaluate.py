@@ -15,7 +15,7 @@ API do LLM e tem custo (cota) — daí não usar validação cruzada aqui.
 
 Pré-requisitos:
   - python -m src.preprocess        (sempre)
-  - python -m src.llm_features      (necessário para a abordagem C)
+  - python -m src.llm_concepts      (necessário para a abordagem C)
   - GROQ_API_KEY no .env            (necessário para a abordagem B)
 
 Uso:
@@ -33,7 +33,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, f1_score
 
 from . import config, data_utils
-from .llm_features import CONCEITOS, ROW_KEY
+from .llm_concepts import CONCEITOS, ROW_KEY
 
 
 def _metricas(y_true, y_pred) -> dict:
@@ -98,7 +98,7 @@ def run(n_sample: int = 40, usar_llm: bool = True, lote: int = 1) -> None:
         pred_c = clf_c.predict(Xev_c)
         resultados.append({"abordagem": "C) ML + features LLM", **_metricas(y_eval, pred_c)})
     else:
-        print("[C] pulada: rode 'python -m src.llm_features' para gerar llm_features.csv.\n")
+        print("[C] pulada: rode 'python -m src.llm_concepts' para gerar llm_features.csv.\n")
 
     # ---- (B) LLM puro (Groq/Llama) ----
     if usar_llm:

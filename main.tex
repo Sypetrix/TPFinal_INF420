@@ -59,7 +59,7 @@ As principais contribuições deste trabalho são:
   \item uma comparação criteriosa de quatro famílias de modelos clássicos sobre representações TF-IDF, com validação cruzada estratificada, busca de hiperparâmetros, prevenção explícita de vazamento de informação e comparação contra um \textit{baseline} trivial;
   \item uma análise de granularidade que contrasta a tarefa em cinco e em três níveis, quantificando o impacto do número de classes;
   \item a integração de um LLM (Llama~3.1, via Groq) em três papéis estratégicos --- \textit{baseline} de classificação, explicador e extrator de características semânticas;
-  \item um recomendador de exercícios baseado em conteúdo, capaz de combinar múltiplas fontes de questões; e
+  \item um recomendador de exercícios por \textbf{conceitos} (com TF-IDF como alternativa) e \textbf{dificuldade compatível}, capaz de combinar múltiplas fontes de questões; e
   \item uma etapa de inferência integrada que, para uma questão nova, prevê a dificuldade, identifica os conceitos e recomenda exercícios semelhantes no nível previsto --- estabelecendo o elo entre classificação e recomendação.
 \end{itemize}
 
@@ -129,7 +129,7 @@ O arcabouço de avaliação comparativa --- modelos clássicos \textit{versus} L
 \subsection{Recomendador de Exercícios}
 \label{sec:recomendador}
 
-Como componente adicional, implementamos um recomendador baseado em conteúdo: cada questão é representada por seu vetor TF-IDF, o perfil do aluno é modelado como o centroide das questões que já resolveu e recomendam-se as questões não resolvidas mais similares (similaridade do cosseno), com filtro opcional por nível de dificuldade. Por não depender de rótulos, o recomendador combina múltiplas fontes num só catálogo, incluindo --- além do INF110 --- questões do Neps Academy (1.448), do SPOJ (301) e da OBI (353), totalizando mais de 2.200 exercícios candidatos. Quando aplicado a uma questão nova (uso-fim da ferramenta), o filtro de nível é acionado pela \emph{dificuldade prevista} para aquela questão, alinhando as sugestões ao nível estimado.
+Como componente central, implementamos um recomendador cujo critério de similaridade são os \textbf{conceitos identificados pela LLM} (recorrendo à similaridade TF-IDF do enunciado quando os conceitos não estão disponíveis), com filtro por \textbf{dificuldade compatível} (mesmo nível ou um acima/abaixo). As questões do catálogo sem rótulo recebem dificuldade \emph{predita pelo modelo de ML treinado}, de modo que o filtro por nível valha para toda a base. O catálogo combina múltiplas fontes, incluindo --- além do INF110 --- questões do Neps Academy (1.448), do SPOJ (301) e da OBI (353), totalizando mais de 2.200 exercícios candidatos. Quando aplicado a uma questão nova (uso-fim da ferramenta), o filtro é acionado pela \emph{dificuldade prevista} para aquela questão, alinhando as sugestões ao nível estimado.
 
 \section{Resultados e Discussão}
 \label{sec:resultados}

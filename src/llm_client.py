@@ -1,18 +1,18 @@
-"""Cliente fino para a API da Groq (modelos Llama via Groq Cloud).
+"""Cliente fino e MODULAR para LLMs com API no padrão OpenAI.
 
-Centraliza a criação do cliente, o controle de novas tentativas (útil para os
-limites da camada gratuita — por minuto: RPM e TPM) e o parsing de respostas em
-JSON. É reaproveitado pelos módulos llm_baseline, llm_features, llm_explain,
-evaluate e predict.
+Suporta múltiplos provedores que expõem o endpoint de *chat completions*
+compatível com OpenAI — basta trocar base_url/chave/modelo. O provedor ativo é
+escolhido por ``LLM_PROVIDER`` no ``.env``:
 
-Por que Groq/Llama? O gargalo da camada gratuita do projeto sempre foi a COTA
-(nº de requisições), não dinheiro nem qualidade — a tarefa (classificar
-dificuldade e extrair conceitos de enunciados) é leve para um LLM. O modelo
-``llama-3.1-8b-instant`` na Groq tem a maior cota diária gratuita disponível
-(~14.400 requisições/dia), além de ser muito rápido.
+  * ``groq``     (padrão) — Llama via Groq Cloud; maior cota gratuita diária.
+  * ``deepseek`` — modelos DeepSeek (alternativa, também gratuita/barata).
 
-A API da Groq é compatível com o padrão "chat completions" (mensagens com papéis
-system/user). Requer o pacote `groq` (veja requirements.txt).
+Trocar de provedor é uma linha no ``.env`` (``LLM_PROVIDER`` e a chave
+correspondente), sem mexer no código. Centraliza também o controle de novas
+tentativas (limites por minuto da camada gratuita) e o parsing tolerante de JSON.
+
+Requer o pacote ``openai`` (veja requirements.txt). As etapas só de ML rodam sem
+ele instalado (import preguiçoso).
 """
 from __future__ import annotations
 
@@ -22,28 +22,27 @@ from typing import Any
 
 from . import config
 
-# Importação preguiçosa: só quem usa LLM precisa do pacote instalado. As etapas
-# só de ML (1, 2, 3) rodam sem ter o pacote `groq`.
+# Importação preguiçosa: só quem usa LLM precisa do pacote instalado.
 try:
-    from groq import Groq
+    from openai import OpenAI
 except ImportError as _err:  # pragma: no cover
-    Groq = None
+    OpenAI = None
     _IMPORT_ERROR = _err
 else:
     _IMPORT_ERROR = None
 
-_client: "Groq | None" = None
+_client: "OpenAI | None" = None
 
 
-def get_client() -> "Groq":
-    """Cria (uma única vez) e retorna o cliente da Groq."""
-    if Groq is None:
+def get_client() -> "OpenAI":
+    """Cria (uma única vez) e retorna o cliente do provedor ativo."""
+    if OpenAI is None:
         raise ImportError(
-            "Pacote 'groq' não encontrado. Instale com: pip install groq"
+            "Pacote 'openai' não encontrado. Instale com: pip install openai"
         ) from _IMPORT_ERROR
     global _client
     if _client is None:
-        _client = Groq(api_key=config.require_api_key())
+        _client = OpenAI(api_key=config.require_api_key(), base_url=config.LLM_BASE_URL)
     return _client
 
 
@@ -59,16 +58,9 @@ def _codigo_http(err: Exception) -> int | None:
 
 
 def _eh_cota_diaria(err: Exception) -> bool:
-    """True se o erro é estouro da cota DIÁRIA (RPD) — repetir hoje não ajuda.
-
-    Distinto dos limites por minuto (RPM/TPM), esses sim recuperáveis com espera.
-    """
+    """True se o erro é estouro da cota DIÁRIA (RPD) — repetir hoje não ajuda."""
     texto = str(err).lower()
-    eh_429 = (
-        _codigo_http(err) == 429
-        or "rate_limit" in texto
-        or "429" in texto
-    )
+    eh_429 = _codigo_http(err) == 429 or "rate_limit" in texto or "429" in texto
     return eh_429 and any(
         s in texto for s in ("per day", "perday", "daily", "requests per day", "rpd")
     )
@@ -80,7 +72,7 @@ def _nao_retentavel(err: Exception) -> bool:
         return True
     texto = str(err).lower()
     return any(s in texto for s in (
-        "invalid api key", "invalid_api_key", "authentication",
+        "invalid api key", "invalid_api_key", "authentication", "unauthorized",
         "permission", "not found", "does not exist", "model_not_found",
     ))
 
@@ -94,17 +86,15 @@ def generate(
     max_output_tokens: int | None = None,
     max_retries: int = 5,
 ) -> str:
-    """Envia um prompt ao modelo (Groq) e retorna o texto da resposta.
+    """Envia um prompt ao LLM do provedor ativo e retorna o texto da resposta.
 
-    Repete com backoff exponencial em erros transitórios (ex.: limites por
-    MINUTO — RPM/TPM —, instabilidade). Já em erros de **cota diária (RPD)** ou de
-    **configuração** (chave/modelo inválidos), falha imediatamente com mensagem
-    clara — repetir nesses casos só gastaria mais cota à toa.
+    Repete com backoff exponencial em erros transitórios (limites por MINUTO,
+    instabilidade). Em cota DIÁRIA (RPD) ou erro de configuração (chave/modelo),
+    falha imediatamente com mensagem clara.
 
-    Obs.: ``as_json`` é mantido para compatibilidade de interface, mas NÃO força o
-    modo JSON estrito da Groq (``response_format``), porque alguns prompts do
-    projeto pedem um array no topo (lotes), incompatível com esse modo. A
-    robustez do JSON vem da temperatura 0 + do parser tolerante ``_parse_json``.
+    Obs.: ``as_json`` é mantido para compatibilidade, mas não força o modo JSON
+    estrito (alguns prompts pedem array no topo, incompatível com esse modo). A
+    robustez vem da temperatura 0 + parser tolerante ``_parse_json``.
     """
     client = get_client()
     messages: list[dict[str, str]] = []
@@ -113,7 +103,7 @@ def generate(
     messages.append({"role": "user", "content": prompt})
 
     kwargs: dict[str, Any] = {
-        "model": config.GROQ_MODEL,
+        "model": config.LLM_MODEL,
         "messages": messages,
         "temperature": temperature,
     }
@@ -130,27 +120,25 @@ def generate(
             last_err = err
             if _eh_cota_diaria(err):
                 raise RuntimeError(
-                    "Limite DIÁRIO de requisições da API da Groq atingido "
-                    f"(modelo '{config.GROQ_MODEL}'). Opções: (1) troque "
-                    "GROQ_MODEL no .env por outro modelo; (2) reduza a amostra "
-                    "com --n; (3) use lotes com --lote; ou (4) tente de novo "
-                    "amanhã (a cota renova à meia-noite UTC). Veja os limites em "
-                    "https://console.groq.com/docs/rate-limits . "
+                    "Limite DIÁRIO de requisições da API atingido "
+                    f"(provedor '{config.LLM_PROVIDER}', modelo '{config.LLM_MODEL}'). "
+                    "Opções: (1) troque LLM_MODEL/LLM_PROVIDER no .env; (2) reduza a "
+                    "amostra com --n; (3) use --lote; ou (4) tente amanhã. "
                     f"Detalhe da API: {err}"
                 ) from err
             if _nao_retentavel(err):
                 raise RuntimeError(
-                    "Erro de configuração da API da Groq (chave inválida, "
-                    "modelo inexistente ou sem permissão). Confira GROQ_API_KEY "
-                    f"e GROQ_MODEL no .env. Detalhe da API: {err}"
+                    "Erro de configuração da API do LLM (chave inválida, modelo "
+                    "inexistente ou sem permissão). Confira LLM_PROVIDER, a chave do "
+                    f"provedor e LLM_MODEL no .env. Detalhe da API: {err}"
                 ) from err
             if attempt == max_retries:
                 break
             time.sleep(delay)
             delay = min(delay * 2, 60)
     raise RuntimeError(
-        f"Falha ao chamar a Groq após {max_retries} tentativas "
-        f"(modelo '{config.GROQ_MODEL}'): {last_err}"
+        f"Falha ao chamar o LLM após {max_retries} tentativas "
+        f"(provedor '{config.LLM_PROVIDER}', modelo '{config.LLM_MODEL}'): {last_err}"
     )
 
 
@@ -175,7 +163,6 @@ def _parse_json(raw: str) -> Any:
     try:
         return json.loads(text)
     except json.JSONDecodeError:
-        # Última tentativa: recorta do primeiro '{'/'[' ao último '}'/']'.
         for open_c, close_c in (("{", "}"), ("[", "]")):
             start, end = text.find(open_c), text.rfind(close_c)
             if start != -1 and end > start:

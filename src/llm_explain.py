@@ -1,71 +1,65 @@
-"""Etapa 6 — LLM como explicador.
+"""Explicador da recomendação (LLM, sob demanda).
 
-Gera justificativas em linguagem natural para a dificuldade atribuída a um
-enunciado (seja a classificação do modelo de ML, seja a do próprio LLM).
-Útil para dar transparência às predições e apoiar o aluno/professor.
+Papel 3 da LLM no projeto: quando o sistema recomenda uma questão, gera uma
+justificativa em linguagem natural de **por que aquela questão foi escolhida**
+(ex.: "reforça grafos, conceito da questão avaliada, num nível um pouco acima").
+Roda apenas no momento da recomendação (uma chamada por recomendação), não em
+toda a base — custo desprezível.
 
-Pré-requisito: GROQ_API_KEY no .env.
+Pré-requisito: chave do provedor de LLM no .env (LLM_PROVIDER).
 
-Uso:
-    python -m src.llm_explain --n 5
+Uso (normalmente via ``src.predict_difficulty --explicar``):
+    python -m src.llm_explain   # demonstração com um exemplo sintético
 """
 from __future__ import annotations
 
 import argparse
 
-import pandas as pd
-
-from . import config, data_utils, llm_client
+from . import llm_client
 
 SYSTEM = (
-    "Você é um professor de algoritmos. Explique de forma didática e objetiva "
-    "por que uma questão de programação tem determinada dificuldade."
+    "Você é um tutor de programação competitiva. Explique de forma curta e "
+    "didática por que uma questão é uma boa recomendação para quem acabou de "
+    "estudar outra, citando conceitos em comum e a progressão de dificuldade."
 )
 
 
-def _build_prompt(statement: str, dificuldade: str) -> str:
-    return (
-        f"Uma questão foi classificada como de dificuldade '{dificuldade}'.\n"
-        "Explique em 2 a 4 frases o porquê, citando os conceitos/algoritmos "
-        "envolvidos e o que torna a questão mais fácil ou mais difícil.\n\n"
-        f"Enunciado:\n{statement[:4000]}"
+def explicar_recomendacao(
+    enunciado_avaliado: str,
+    enunciado_recomendado: str,
+    conceitos_comuns: list[str] | None = None,
+    relacao_dificuldade: str = "no mesmo nível",
+) -> str:
+    """Justifica, em 1-2 frases, por que a questão recomendada faz sentido."""
+    conceitos = ", ".join(conceitos_comuns) if conceitos_comuns else "conteúdo similar"
+    prompt = (
+        "Uma pessoa está estudando esta questão:\n"
+        f'"{str(enunciado_avaliado)[:1200]}"\n\n'
+        "Você vai recomendar a ela esta outra questão:\n"
+        f'"{str(enunciado_recomendado)[:1200]}"\n\n'
+        f"Conceitos em comum: {conceitos}.\n"
+        f"Relação de dificuldade da recomendada: {relacao_dificuldade}.\n\n"
+        "Explique em 1 a 2 frases, em português, por que esta é uma boa "
+        "recomendação — cite os conceitos reforçados e a progressão de "
+        "dificuldade. Seja direto, sem repetir os enunciados."
     )
+    return llm_client.generate(prompt, SYSTEM, temperature=0.3)
 
 
-def explain(statement: str, dificuldade: str) -> str:
-    """Retorna uma explicação textual para a dificuldade informada."""
-    return llm_client.generate(
-        _build_prompt(statement, dificuldade), SYSTEM, temperature=0.3
-    )
-
-
-def run(n: int = 5) -> None:
-    config.require_api_key()
-    if not config.CLEAN_DATASET.exists():
-        raise FileNotFoundError(
-            "dataset_limpo.csv não encontrado. Rode antes: python -m src.preprocess"
-        )
-
-    df = pd.read_csv(config.CLEAN_DATASET)
-    _, df_test = data_utils.split_train_test(df)
-    amostra = df_test.sample(min(n, len(df_test)), random_state=config.RANDOM_SEED)
-
-    for _, row in amostra.iterrows():
-        rotulo = str(row.get(config.LABEL_COL, "desconhecida"))
-        texto = str(row[config.TEXT_COL])
-        print("=" * 70)
-        print(f"Dificuldade: {rotulo}")
-        print(f"Enunciado: {texto[:300]}{'...' if len(texto) > 300 else ''}")
-        print("-> Explicação do LLM:")
-        print(explain(texto, rotulo))
-        print()
+def run() -> None:
+    """Demonstração rápida com um exemplo sintético."""
+    avaliada = ("Dado um grafo não-direcionado, encontre o menor caminho entre "
+                "dois vértices usando busca em largura (BFS).")
+    recomendada = ("Em um labirinto representado por uma grade, encontre o menor "
+                   "número de passos do início até a saída.")
+    print("Explicação da recomendação:")
+    print(explicar_recomendacao(avaliada, recomendada, ["grafos", "busca_binaria"],
+                                "um nível acima"))
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Etapa 6 - Explicações com LLM (Groq)")
-    parser.add_argument("--n", type=int, default=5, help="qtd. de exemplos a explicar")
-    args = parser.parse_args()
-    run(n=args.n)
+    argparse.ArgumentParser(description="Explicador da recomendação (LLM, sob demanda)").parse_args()
+    run()
 
 
 if __name__ == "__main__":

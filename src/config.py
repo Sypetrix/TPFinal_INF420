@@ -18,13 +18,35 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(ROOT_DIR / ".env")
 
 # ----------------------------------------------------------------------------
-# Groq Cloud (modelos Llama) — provedor do LLM
+# LLM (modular): provedor com API compatível com OpenAI — Groq (padrão)/DeepSeek
 # ----------------------------------------------------------------------------
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "groq").strip().lower()
+
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "").strip()
-# Default no modelo com a maior cota gratuita diária disponível
-# (llama-3.1-8b-instant: ~14.400 requisições/dia). Troque por GROQ_MODEL no .env
-# se preferir outro (ver comentário no .env.example).
-GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant").strip()
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "").strip()
+
+# base_url e modelo padrão por provedor (ambos expõem chat/completions no
+# padrão OpenAI, então um único cliente atende os dois — ver src/llm_client.py).
+_LLM_BASE_URLS = {
+    "groq": "https://api.groq.com/openai/v1",
+    "deepseek": "https://api.deepseek.com",
+}
+_LLM_DEFAULT_MODELS = {
+    "groq": "llama-3.1-8b-instant",   # maior cota gratuita diária (~14.400/dia)
+    "deepseek": "deepseek-chat",
+}
+_LLM_API_KEYS = {"groq": GROQ_API_KEY, "deepseek": DEEPSEEK_API_KEY}
+
+LLM_BASE_URL = _LLM_BASE_URLS.get(LLM_PROVIDER, _LLM_BASE_URLS["groq"])
+LLM_API_KEY = _LLM_API_KEYS.get(LLM_PROVIDER, GROQ_API_KEY)
+# Precedência do modelo: LLM_MODEL no .env > GROQ_MODEL (compat., só p/ groq) >
+# default do provedor. Troque LLM_MODEL no .env p/ usar, ex., llama-3.3-70b-versatile.
+LLM_MODEL = (
+    os.getenv("LLM_MODEL", "").strip()
+    or (os.getenv("GROQ_MODEL", "").strip() if LLM_PROVIDER == "groq" else "")
+    or _LLM_DEFAULT_MODELS.get(LLM_PROVIDER, _LLM_DEFAULT_MODELS["groq"])
+)
+GROQ_MODEL = LLM_MODEL   # compat. com referências antigas
 
 # ----------------------------------------------------------------------------
 # Caminhos
@@ -167,11 +189,13 @@ for _d in (RAW_DIR, PROCESSED_DIR, MODELS_DIR):
 
 
 def require_api_key() -> str:
-    """Retorna a chave da Groq ou levanta um erro amigável se ausente."""
-    if not GROQ_API_KEY or GROQ_API_KEY == "sua_chave_aqui":
+    """Retorna a chave do provedor de LLM ativo ou levanta erro amigável."""
+    if not LLM_API_KEY or LLM_API_KEY == "sua_chave_aqui":
+        nome = "GROQ_API_KEY" if LLM_PROVIDER == "groq" else "DEEPSEEK_API_KEY"
+        url = ("https://console.groq.com/keys" if LLM_PROVIDER == "groq"
+               else "https://platform.deepseek.com/api_keys")
         raise RuntimeError(
-            "GROQ_API_KEY não configurada. Edite o arquivo .env na raiz do "
-            "projeto e coloque sua chave da Groq em GROQ_API_KEY "
-            "(crie em https://console.groq.com/keys)."
+            f"{nome} não configurada (LLM_PROVIDER={LLM_PROVIDER}). Edite o .env "
+            f"na raiz do projeto e coloque sua chave em {nome} (crie em {url})."
         )
-    return GROQ_API_KEY
+    return LLM_API_KEY

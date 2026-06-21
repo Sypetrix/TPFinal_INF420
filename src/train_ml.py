@@ -128,10 +128,14 @@ def run(niveis: int = 5) -> None:
     if niveis == 3:
         y = data_utils.collapse_to_3(y)
         ordem_rotulos = config.DIFFICULTY_LABELS_3
-        sufixo, salvar_modelos = "_3niveis", False
+        sufixo = "_3niveis"
     else:
         ordem_rotulos = config.DIFFICULTY_LABELS
-        sufixo, salvar_modelos = "", True
+        sufixo = ""
+    # Ambas as granularidades salvam seus artefatos, com sufixo distinto, sem se
+    # sobrescreverem (o produto/predict usa 3 níveis; o relatório também analisa 5).
+    salvar_modelos = True
+    best_model_path = config.MODELS_DIR / f"best_ml_model{sufixo}.joblib"
 
     cv = data_utils.make_cv(y)
     print(f"Granularidade: {niveis} níveis")
@@ -176,7 +180,7 @@ def run(niveis: int = 5) -> None:
         print(classification_report(y, pred_oof, zero_division=0))
 
         if salvar_modelos:
-            joblib.dump(busca.best_estimator_, config.MODELS_DIR / f"ml_{_slug(nome)}.joblib")
+            joblib.dump(busca.best_estimator_, config.MODELS_DIR / f"ml_{_slug(nome)}{sufixo}.joblib")
         if registro["f1_macro"] > melhor["f1"]:
             melhor = {
                 "nome": nome,
@@ -191,7 +195,7 @@ def run(niveis: int = 5) -> None:
     if salvar_modelos:
         # GridSearchCV(refit="f1_macro") já reajustou o melhor estimador em toda
         # a base; salvamos esse Pipeline (TF-IDF + classificador) autossuficiente.
-        joblib.dump(melhor["estimador"], config.BEST_ML_MODEL)
+        joblib.dump(melhor["estimador"], best_model_path)
 
     # Matriz de confusão out-of-fold do melhor modelo (ordem canônica dos níveis).
     rotulos = [c for c in ordem_rotulos if c in set(y)]
@@ -206,7 +210,7 @@ def run(niveis: int = 5) -> None:
     print(f"\nMelhor modelo: {melhor['nome']} (F1-macro = {melhor['f1']:.3f})")
     print(f"Métricas salvas em: {metrics_csv}")
     if salvar_modelos:
-        print(f"Pipeline salvo em : {config.BEST_ML_MODEL}")
+        print(f"Pipeline salvo em : {best_model_path}")
 
 
 def main() -> None:

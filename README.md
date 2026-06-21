@@ -61,19 +61,19 @@ TP_Final_INF420/
 ├── notebook/
 │   └── exploracao.ipynb  # Análise Exploratória (EDA)
 ├── src/
-│   ├── config.py       # configuração central (.env, caminhos, colunas)
-│   ├── data_utils.py   # carregamento, split treino/teste e limpeza de texto
-│   ├── llm_client.py   # cliente da API da Groq (Llama)
-│   ├── ingest.py       # Etapa 1: arquivos/ -> data/raw/questoes.csv
-│   ├── preprocess.py   # Etapa 2: limpeza + TF-IDF
-│   ├── train_ml.py     # Etapa 3: LogReg, KNN, SVM, RF (validação cruzada)
-│   ├── llm_baseline.py # Etapa 4: classificação direta via LLM (Groq)
-│   ├── llm_features.py # Etapa 5: LLM como extrator de conceitos
-│   ├── llm_explain.py  # Etapa 6: LLM como explicador
-│   ├── evaluate.py     # Etapa 7: comparação ML vs LLM vs ML+LLM
-│   ├── predict.py      # Inferência: prevê dificuldade + tópico + recomenda (questões novas)
-│   └── recommend.py    # recomendação personalizada de exercícios
-├── .env                # SUA chave da Groq (não versionado)
+│   ├── config.py            # configuração central (.env, caminhos, provedor LLM)
+│   ├── data_utils.py        # carregamento, split treino/teste e limpeza de texto
+│   ├── llm_client.py        # cliente LLM modular (Groq/DeepSeek, padrão OpenAI)
+│   ├── ingest.py            # Etapa 1: arquivos/ -> data/raw/questoes.csv
+│   ├── preprocess.py        # Etapa 2: limpeza + TF-IDF
+│   ├── llm_concepts.py      # extração de conceitos via LLM (feature ML + similaridade)
+│   ├── train_ml.py          # Etapa 3: LogReg, KNN, SVM, RF (validação cruzada)
+│   ├── llm_baseline.py      # baseline de classificação via LLM (comparação, base de treino)
+│   ├── evaluate.py          # métricas: ML puro vs LLM vs ML+conceitos
+│   ├── predict_difficulty.py# aplica o modelo a arquivos/avaliar (dificuldade ML + conceitos)
+│   ├── recommend.py         # recomendação por conceitos + dificuldade
+│   └── llm_explain.py       # explica a recomendação (LLM, sob demanda)
+├── .env                # chave(s) do provedor de LLM (não versionado)
 ├── .env.example        # modelo de configuração
 └── requirements.txt
 ```
@@ -86,12 +86,12 @@ TP_Final_INF420/
 | 1b. EDA | Distribuição das classes, tamanho dos enunciados | abrir `notebook/exploracao.ipynb` |
 | 2. Pré-processamento | Limpeza de texto + vetorização TF-IDF | `python -m src.preprocess` |
 | 3. Modelos tradicionais | LogReg, KNN, SVM, RF — validação cruzada + tuning | `python -m src.train_ml` |
-| 4. Baseline LLM | LLM (Groq) classifica direto (zero-/few-shot) | `python -m src.llm_baseline --n 10 --few-shot` |
-| 5. LLM extrator de features | LLM identifica conceitos (DP, grafos…) | `python -m src.llm_features --n 10` |
-| 6. LLM explicador | Gera justificativas das classificações | `python -m src.llm_explain --n 3` |
-| 7. Avaliação final | Compara ML puro vs LLM vs ML+features LLM | `python -m src.evaluate --n 20` (ou `--no-llm`) |
-| 🎯 Inferência (questões novas) | Prevê dificuldade + tópico e recomenda similares (§6) | `python -m src.predict --teste --n 5` |
-| ➕ Recomendação | Sugere exercícios ao aluno (catálogo multi-fonte, §5) | `python -m src.recommend` |
+| 4. Conceitos (LLM) | LLM identifica conceitos (DP, grafos…) — feature de ML e similaridade | `python -m src.llm_concepts --n 10` |
+| 5. Baseline LLM | LLM classifica direto (zero-/few-shot) — só comparação, base de treino | `python -m src.llm_baseline --n 10 --few-shot` |
+| 6. Avaliação final | Compara ML puro vs LLM vs ML+conceitos (acurácia/F1) | `python -m src.evaluate --n 20` (ou `--no-llm`) |
+| 🎯 Inferência (questões novas) | Dificuldade (ML) + conceitos (LLM) + recomenda por conceitos/nível (§6) | `python -m src.predict_difficulty --fonte avaliar` |
+| ➕ Recomendação | Recomendador por conceitos + dificuldade (catálogo multi-fonte, §5) | `python -m src.recommend` |
+| ✎ Explicação | Justifica uma recomendação (sob demanda) | via `--explicar` na inferência |
 
 > ⚠️ Os comandos das etapas 4–7 acima usam amostras **pequenas** de propósito —
 > cada item vira uma chamada à API do LLM (Groq), que tem cota gratuita limitada.
@@ -125,21 +125,22 @@ TP_Final_INF420/
 > compilar, é preciso o `webmedia.cls` (fornecido pelo professor em `sample/`, que
 > não é versionado).
 
-### 3.1 Etapas com LLM (Groq): chave, custo e limites da API
+### 3.1 Etapas com LLM: provedor, chave, custo e limites da API
 
-As etapas **4, 5, 6, a parte LLM da 7 e a parte LLM da inferência (`predict`)**
-chamam a API da Groq e exigem `GROQ_API_KEY` no `.env` (crie a chave gratuita em
-<https://console.groq.com/keys>). Já as etapas **1, 2, 3, as figuras e a
-inferência com `--no-llm` NÃO usam a API** — todo o resultado do classificador que
-aparece no relatório é reproduzível **offline** (use `--no-llm` nas etapas 7 e na
-inferência). Ou seja: a nota do trabalho não depende de ter cota de API sobrando.
+O **provedor de LLM é modular** (`LLM_PROVIDER` no `.env`): **Groq** (padrão,
+Llama) ou **DeepSeek** — ambos com API no padrão OpenAI, trocáveis numa linha. As
+etapas que usam LLM (`llm_concepts`, `llm_baseline`, `evaluate` sem `--no-llm`, e a
+parte LLM da inferência) exigem a chave do provedor ativo no `.env`
+(Groq: <https://console.groq.com/keys>). Já a **ingestão, o pré-processamento, o
+treino, as figuras e a inferência com `--no-llm` NÃO usam a API** — o resultado do
+classificador é reproduzível **offline**. Importante: a **dificuldade das questões
+a avaliar é decidida pelo ML**, não pela LLM (a LLM extrai conceitos e explica).
 
 **Comece pequeno** — cada item vira **uma** chamada à API:
 
 ```bash
-python -m src.llm_baseline --n 5 --few-shot   # 5 chamadas
-python -m src.llm_features  --n 5              # 5 chamadas (tem retomada)
-python -m src.llm_explain   --n 3             # 3 chamadas
+python -m src.llm_concepts  --n 5              # 5 chamadas (tem retomada)
+python -m src.llm_baseline  --n 5 --few-shot   # 5 chamadas (comparação)
 python -m src.evaluate      --n 10            # ~10 chamadas (abordagem LLM)
 python -m src.evaluate      --no-llm          # 0 chamadas (só ML)
 ```
@@ -147,26 +148,26 @@ python -m src.evaluate      --no-llm          # 0 chamadas (só ML)
 **A cota gratuita (free tier) da Groq tem limites por minuto e por dia:**
 - **RPM / TPM** (requisições / *tokens* por *minuto*): rajadas rápidas ou lotes
   muito grandes estouram → espace as chamadas com `--sleep 4` (disponível em
-  `llm_baseline` e `llm_features`) e use lotes menores.
+  `llm_baseline` e `llm_concepts`) e use lotes menores.
 - **RPD** (requisições por *dia*): teto **diário** por modelo. O padrão
   `llama-3.1-8b-instant` tem a **maior** cota (~14.400 req/dia); a contagem
   **renova à meia-noite UTC**. Limites oficiais por modelo:
   <https://console.groq.com/docs/rate-limits>.
 
-A etapa 5 (`llm_features`) tem **retomada**: não refaz linhas já gravadas em
-`llm_features.csv`, então dá para processar a base aos poucos sem perder progresso.
+A extração de conceitos (`llm_concepts`) tem **retomada**: não refaz itens já
+gravados no cache, então dá para processar a base aos poucos sem perder progresso.
 
 #### Lotes (prompt packing): menos chamadas para a mesma tarefa
 
-Para gastar menos cota, as etapas **4, 5, 7 e a inferência** aceitam `--lote N`,
-que envia **N enunciados em uma única requisição** (em vez de uma por item),
-reduzindo o número de chamadas em ~N×:
+Para gastar menos cota, `llm_concepts`, `llm_baseline`, `evaluate` e a inferência
+aceitam `--lote N`, que envia **N enunciados em uma única requisição** (em vez de
+uma por item), reduzindo o número de chamadas em ~N×:
 
 ```bash
+python -m src.llm_concepts  --lote 10                     # base toda em ~14 chamadas
 python -m src.llm_baseline --n 40 --few-shot --lote 10   # ~4 chamadas em vez de 40
-python -m src.llm_features  --lote 10                     # base toda em ~14 chamadas
 python -m src.evaluate      --n 40 --lote 10             # baseline LLM em lotes
-python -m src.predict       --teste --n 20 --lote 5      # inferência em lotes
+python -m src.predict_difficulty --fonte avaliar --lote 5 # inferência em lotes
 ```
 
 A resposta é casada por `id`; se algum item não voltar, ele é reprocessado
@@ -276,21 +277,22 @@ questões rotuladas; a recomendação por conteúdo puro percorre todo o catálo
 (e aí `SPOJ`/`OBI` também aparecem). O TF-IDF do recomendador é ajustado sobre o
 catálogo combinado, independente do vetorizador do classificador.
 
-## 6. Inferência: avaliar questões novas (`predict`)
+## 6. Inferência: avaliar questões novas (`predict_difficulty`)
 
-Esta é a etapa que coloca a ferramenta "em produção" — o uso do **professor que
-tem questões novas e quer avaliá-las**. Para cada questão (ainda **sem rótulo**),
-a etapa `src.predict`:
+Esta é a etapa-fim — o uso do **professor que tem questões novas e quer
+avaliá-las**. Para cada questão (ainda **sem rótulo**), `src.predict_difficulty`:
 
-1. **Prevê a dificuldade** com o classificador de ML já treinado
-   (`models/<DATASET>/best_ml_model.joblib`) — **offline, sem API**;
-2. **Identifica o(s) tópico(s)/conceito(s)** (recursão, grafos, programação
-   dinâmica…) usando o LLM (Groq) — opcional (`--no-llm`);
-3. **Recomenda questões similares** do banco já existente (catálogo rotulado da
-   §5), por padrão **no mesmo nível de dificuldade previsto** — este é o **elo
-   classificação → recomendação**: a dificuldade (e os conceitos) identificados
-   guiam quais exercícios são sugeridos. Use `--ignorar-nivel` para recomendar só
-   por conteúdo, sem o filtro de nível.
+1. **Prevê a dificuldade** com o classificador de ML treinado (em **3 níveis** por
+   padrão — `models/<DATASET>/best_ml_model_3niveis.joblib`; use `--niveis 5` para
+   5 níveis) — **offline, sem API**. A dificuldade é decidida pelo **ML**, não pela
+   LLM;
+2. **Identifica os conceitos** (recursão, grafos, programação dinâmica…) com a
+   LLM — opcional (`--no-llm`);
+3. **Recomenda questões** do banco (catálogo da §5) por **conceitos em comum +
+   dificuldade compatível** (mesmo nível ±1 do previsto). Quando não há conceitos,
+   cai para similaridade TF-IDF. Quase-duplicatas (a mesma questão) são descartadas
+   (`--manter-duplicatas` desliga; `--ignorar-nivel` remove o filtro de nível);
+4. *(opcional `--explicar`)* a LLM **justifica cada recomendação**.
 
 Há dois modos de entrada:
 
@@ -298,27 +300,28 @@ Há dois modos de entrada:
 # (a) Uso avaliador: uma pasta arquivos/<Nome>/ com um JSON no formato judge_json
 #     (campo metadata.Difficulty em branco = "a avaliar"). O repositório já inclui
 #     um exemplo pronto em arquivos/avaliar/ (questões reais do OBI e do SPOJ).
-DATASET=avaliar python -m src.ingest            # consolida a fonte 'avaliar'
-python -m src.predict --fonte avaliar --top-k 3 # usa o modelo da fonte ativa (DATASET)
+DATASET=avaliar python -m src.ingest                       # consolida a fonte 'avaliar'
+python -m src.predict_difficulty --fonte avaliar --no-llm  # offline (ML + recomendação)
+python -m src.predict_difficulty --fonte avaliar --lote 5  # completo (+ conceitos)
 
-# (b) Modo teste: amostra questões SEM rótulo já presentes no catálogo do
-#     recomendador (SPOJ/OBI/Neps), para validar a ferramenta ponta a ponta.
-python -m src.predict --teste --n 5 --no-llm   # offline (só ML + recomendação)
-python -m src.predict --teste --n 5            # completo (+ tópico e dificuldade LLM)
+# (b) Modo teste: amostra questões SEM rótulo já no catálogo, para validar
+#     a ferramenta ponta a ponta.
+python -m src.predict_difficulty --teste --n 5 --no-llm
 ```
 
-> A previsão de dificuldade usa o modelo da **fonte ativa** (`DATASET`), não a
-> fonte avaliada: mantenha `DATASET=INF110` (ou `Neps`) — que têm o classificador
-> treinado — e use `--fonte avaliar` apenas para apontar as questões a avaliar.
+> **Treine o classificador antes** (uma vez): `python -m src.preprocess` e
+> `python -m src.train_ml --niveis 3` geram `best_ml_model_3niveis.joblib`. A
+> previsão usa o modelo da **fonte ativa** (`DATASET`): mantenha `DATASET=INF110`
+> (ou `Neps`) e use `--fonte avaliar` só para apontar as questões. Dica: **Neps**
+> tem ~1.300 questões rotuladas (vs. 80 do INF110), então `DATASET=Neps` tende a
+> dar um classificador mais robusto.
 
-> **Treine o classificador antes.** A previsão de dificuldade usa o modelo da
-> fonte ativa (`DATASET`): rode `python -m src.preprocess && python -m src.train_ml`
-> para gerar `models/<DATASET>/best_ml_model.joblib`. Dica: a fonte **Neps** tem
-> ~1.300 questões rotuladas (contra 80 do INF110), então um classificador treinado
-> com `DATASET=Neps` tende a ser mais robusto para uso geral.
+> **Recomendação por conceitos:** para o critério de conceitos valer no catálogo,
+> extraia-os por fonte uma vez (`python -m src.llm_concepts --fonte Neps --lote 10`,
+> idem SPOJ/OBI/INF110). Sem esse cache, a recomendação usa TF-IDF (funciona, mas
+> não é o critério ideal). A saída é salva em
+> `data/processed/<DATASET>/avaliar_classificado.csv`.
 
-> No modo `--teste`, as questões amostradas **não têm rótulo verdadeiro**, então o
-> que se demonstra é o **funcionamento** ponta a ponta (previsão + tópico +
-> recomendação), não a acurácia. A acurácia do classificador é medida na **Etapa 7**
-> (`src.evaluate`), sobre dados rotulados. A saída é salva em
-> `data/processed/<DATASET>/predicoes.csv`.
+> No modo `--teste`, as questões **não têm rótulo verdadeiro** — demonstra-se o
+> **funcionamento** ponta a ponta, não a acurácia (medida na avaliação, `src.evaluate`,
+> sobre dados rotulados).
