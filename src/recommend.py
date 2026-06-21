@@ -131,6 +131,43 @@ class RecomendadorConteudo:
             .reset_index(names="indice")
         )
 
+    def recomendar_por_texto(
+        self,
+        texto: str,
+        nivel_alvo: str | None = None,
+        top_k: int = 5,
+        excluir_idx: list[int] | None = None,
+    ) -> pd.DataFrame:
+        """Recomenda questões do catálogo mais similares a um TEXTO arbitrário.
+
+        Diferente de ``recomendar`` (que parte de índices já no catálogo), aqui o
+        enunciado pode ser de uma questão NOVA (ex.: a questão que o professor
+        quer avaliar). O texto é limpo e projetado no mesmo espaço TF-IDF do
+        catálogo; recomendamos as questões mais similares (cosseno).
+
+        excluir_idx : índices do catálogo a omitir (ex.: a própria questão, se ela
+                      já estiver no catálogo, para não se recomendar a si mesma).
+        """
+        vetor = self.vectorizer.transform([data_utils.clean_text(str(texto))])
+        df = self.df.copy()
+        df["similaridade"] = cosine_similarity(vetor, self.X).ravel()
+
+        mask = pd.Series(True, index=df.index)
+        if excluir_idx:
+            mask &= ~df.index.isin(excluir_idx)
+        if nivel_alvo and config.LABEL_COL in df.columns:
+            alvo = _norm_nivel(nivel_alvo)
+            mask &= df[config.LABEL_COL].map(_norm_nivel) == alvo
+
+        colunas = [c for c in (config.ID_COL, "fonte", config.TEXT_COL, config.LABEL_COL) if c in df.columns]
+        colunas.append("similaridade")
+        return (
+            df[mask]
+            .sort_values("similaridade", ascending=False)
+            .head(top_k)[colunas]
+            .reset_index(names="indice")
+        )
+
     def recomendar_proximo_nivel(self, resolvidos_idx: list[int], top_k: int = 5) -> pd.DataFrame:
         """Recomenda no nível imediatamente acima do que o aluno mais resolveu."""
         if not resolvidos_idx or config.LABEL_COL not in self.df.columns:

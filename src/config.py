@@ -18,12 +18,13 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(ROOT_DIR / ".env")
 
 # ----------------------------------------------------------------------------
-# Google Gemini (Google AI Studio)
+# Groq Cloud (modelos Llama) — provedor do LLM
 # ----------------------------------------------------------------------------
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
-# Default em um modelo com cota gratuita mais generosa (ver comentário no
-# .env.example). Troque por GEMINI_MODEL no .env se preferir outro.
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash").strip()
+GROQ_API_KEY = os.getenv("GROQ_API_KEY", "").strip()
+# Default no modelo com a maior cota gratuita diária disponível
+# (llama-3.1-8b-instant: ~14.400 requisições/dia). Troque por GROQ_MODEL no .env
+# se preferir outro (ver comentário no .env.example).
+GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant").strip()
 
 # ----------------------------------------------------------------------------
 # Caminhos
@@ -166,11 +167,11 @@ for _d in (RAW_DIR, PROCESSED_DIR, MODELS_DIR):
 
 
 def require_api_key() -> str:
-    """Retorna a chave do Gemini ou levanta um erro amigável se ausente."""
-    if not GEMINI_API_KEY or GEMINI_API_KEY == "sua_chave_aqui":
+    """Retorna a chave da Groq ou levanta um erro amigável se ausente."""
+    if not GROQ_API_KEY or GROQ_API_KEY == "sua_chave_aqui":
         raise RuntimeError(
-            "GEMINI_API_KEY não configurada. Edite o arquivo .env na raiz do "
-            "projeto e coloque sua chave do Google AI Studio em "
-            "GEMINI_API_KEY (https://aistudio.google.com/app/apikey)."
+            "GROQ_API_KEY não configurada. Edite o arquivo .env na raiz do "
+            "projeto e coloque sua chave da Groq em GROQ_API_KEY "
+            "(crie em https://console.groq.com/keys)."
         )
-    return GEMINI_API_KEY
+    return GROQ_API_KEY

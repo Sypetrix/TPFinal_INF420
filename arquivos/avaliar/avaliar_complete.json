@@ -1,0 +1,119 @@
+[
+  {
+    "ID": 90001,
+    "Name": "[OBI #1473] Conta de água",
+    "URL": "https://olimpiada.ic.unicamp.br/pratique/p1/2010/f1/conta/",
+    "Problem_Description": "Conta de água A empresa local de abastecimento de água, a Saneamento Básico da Cidade (SBC), está promovendo uma campanha de conservaçãoo de água, distribuindo cartilhas e promovendo açãoes demonstrando a importância da água para a vida e para o meio ambiente. Para incentivar mais ainda a economia de água, a SBC alterou os preços de seu fornecimento de forma que, proporcionalmente, aqueles clientes que consumirem menos água paguem menos pelo metro cúbico. Todo cliente paga mensalmente uma assinatura de R$ 7, que inclui uma franquia de 10 m 3 de água. Isto é, para qualquer consumo entre 0 e 10 m 3 , o consumidor paga a mesma quantia de R$ 7 reais (note que o valor da assinatura deve ser pago mesmo que o consumidor não tenha consumido água). Acima de 10 m 3 , cada metro cúbico subsequente tem um valor diferente, dependendo da faixa de consumo. A SBC cobra apenas por quantidades inteiras de metros cúbicos consumidos. A tabela abaixo especifica o preço por metro cúbico para cada faixa de consumo: Faixa de consumo (m 3 ) Preço (por m 3 ) até 10 11 a 30 31 a 100 101 em diante incluído na franquia R$ 1 R$ 2 R$ 5 Assim, por exemplo, se o consumo foi de 120 m 3 , o valor da conta é: 7 reais da assinatura básica; 20 reais pelo consumo no intervalo 11 - 30 m 3 ; 140 reais pelo consumo no intervalo 31 - 100 m 3 ; 100 reais pelo consumo no intervalo 101 - 120 m 3 . Logo o valor total da conta de água é R$ 267. Tarefa Escreva um programa que, dado o consumo de uma residência em m 3 , calcula o valor da conta de água daquela residência.",
+    "Input": "A única linha da entrada contém um único inteiro N , indicando o consumo de água da residência, em m 3 (0 ≤ N ≤ 103).",
+    "Output": "Seu programa deve imprimir uma única linha, contendo o valor da conta de água daquela residência. Exemplos",
+    "Test_Case": [
+      {
+        "input": "8",
+        "output": "7"
+      },
+      {
+        "input": "14",
+        "output": "11"
+      },
+      {
+        "input": "42",
+        "output": "51"
+      }
+    ],
+    "metadata": {
+      "Difficulty": " "
+    }
+  },
+  {
+    "ID": 90002,
+    "Name": "[OBI #11032] Bolas",
+    "URL": "https://olimpiada.ic.unicamp.br/pratique/ps/2018/f3/bolas/",
+    "Problem_Description": "Bolas Temos oito bolas, colocadas lado a lado em uma sequência. Cada bola tem um número impresso, que pode ter valor de 0 até 9. Queremos trocar algumas bolas de posição na sequência de modo que nenhum par de bolas vizinhas na sequência tenha o mesmo número. Quer dizer, não pode haver duas bolas, uma ao lado da outra, com o mesmo número. A figura ao lado mostra um exemplo para o qual isso foi possível. Mas será que sempre é possível? Seu programa deve decidir se é ou não possível obter uma sequência em que não haja bolas vizinhas com o mesmo número.",
+    "Input": "A única linha da entrada contém uma sequência de oito inteiros B i , para 1 ≤ i ≤ 8, representando os números impressos em cada bola da sequência.",
+    "Output": "Imprima uma linha contendo o caractere \" S \" se for possível trocar bolas de posição e obter a sequência sem bolas vizinhas com o mesmo número; ou o caracter \" N \" se não for possível. Restrições B i é um inteiro entre 0 e 9, inclusive. Exemplos",
+    "Test_Case": [
+      {
+        "input": "3 7 3 3 5 5 5 9",
+        "output": "S"
+      },
+      {
+        "input": "8 3 8 8 8 8 8 0",
+        "output": "N"
+      }
+    ],
+    "metadata": {
+      "Difficulty": " "
+    }
+  },
+  {
+    "ID": 90003,
+    "Name": "[OBI #1930] Passatempo",
+    "URL": "https://olimpiada.ic.unicamp.br/pratique/ps/2021/f2/passatempo/",
+    "Problem_Description": "Passatempo Desafios de lógica e matemática são um ótimo passatempo, atraindo um grande número de praticantes, e um mercado que envolve aplicativos para celular, atividades on-line, revistas especializadas e até mesmo cursos na internet para melhorar o desempenho! Neste problema sua tarefa é escrever um programa que resolva um novo passatempo, mostrado na figura abaixo. O passatempo é composto por um quadriculado com letras dentro de cada célula e números ao lado de cada linha ou coluna do quadriculado. As letras dentro de cada célula representam variáveis, e os números representam as somas dos valores das variáveis em cada linha ou coluna. O objetivo desse passatempo é determinar o valor de cada variável de modo a satisfazer as somas das linhas e colunas mostradas. Para permitir que um número maior de pessoas consiga resolver o passatempo, ele tem uma propriedade que facilita a sua solução: sempre é possível encontrar uma linha ou coluna em que há apenas uma variável cujo valor ainda é desconhecido. Assim, uma possível maneira de resolver o problema é, a cada passo da solução, encontrar o valor de uma variável. Sua tarefa é, dado um passatempo, determinar os valores das variáveis que o solucionam.",
+    "Input": "A primeira linha contém dois inteiros L e C indicando o número de linhas e o número de colunas do passatempo. Cada uma das L linhas seguintes contém C nomes de variáveis, seguidos de um inteiro S, a soma resultante das variáveis dessa linha. A última linha contém C inteiros X i , indicando respectivamente a soma das variáveis na coluna i. Nomes de variáveis são formados por precisamente duas letras minúsculas, de 'a' a 'z'. Todos os passatempos têm solução única, em que todas as variáveis são números inteiros.",
+    "Output": "Seu programa deve produzir uma linha para cada variável do passatempo, contendo o nome da variável e o seu valor inteiro. As variáveis devem ser escritas em ordem alfabética crescente, ou seja, respeitando a ordem aa, ab, …, az, ba, bb, …, za, zb, …, zz. Restrições 1 ≤ L ≤ 100 2 ≤ C ≤ 100 -10 8 ≤ S ≤ 10 8 -10 8 ≤ X i ≤ 10 8 Exemplos",
+    "Test_Case": [
+      {
+        "input": "4 5 df bb cg df df 11 ee az cg az ee 6 df cg cg df df 10 az az cg az az 6 6 7 8 6 6",
+        "output": "az 1 bb 3 cg 2 df 2 ee 1"
+      },
+      {
+        "input": "3 4 aa bb cc dd 10 3 6 9 12",
+        "output": "aa 1 bb 2 cc 3 dd 4"
+      },
+      {
+        "input": "3 3 aa zz aa 27 vv zz aa -5 kk kk aa 40 15 -7 54",
+        "output": "aa 18 kk 11 vv -14 zz -9"
+      }
+    ],
+    "metadata": {
+      "Difficulty": " "
+    }
+  },
+  {
+    "ID": 90004,
+    "Name": "[SPOJ #1299] HYPER10",
+    "URL": "https://br.spoj.com/problems/HYPER10/",
+    "Problem_Description": "Helen é uma garota hiperativa. Ela quer agendar suas atividades de forma que em qualquer momento do dia haja ao menos uma atividade que ela possa fazer. Ela não se importa se suas atividades se sobrepõem no tempo, desde que cada momento do seu dia tenha uma atividade agendada. Helen dividiu o dia de uma forma particular. O dia começa no tempo 0 e termina no tempo M . Cada momento do dia é representado por um número real entre 0 e M , inclusive. Helen fez uma lista de todas as possíveis atividades, com seus tempos de início e fim. Agora ela precisa escolher qual subconjunto de atividades vai agendar. Se uma atividade começa no instante S e termina no instante F , então dizemos que ela cobre todo o período entre S e F , inclusive. Helen não quer desperdiçar nenhuma atividade, portanto ela vai escolher apenas subconjuntos mínimos de atividades que cobrem o dia a ser agendado. Um subconjunto de atividades é um subconjunto mínimo que cobre o dia se e somente se: cada instante do dia é coberto por ao menos uma atividade do subconjunto; e remover qualquer uma das atividades do subconjunto deixaria ao menos um instante do dia descoberto. Note que alguns instantes do dia podem ser cobertos por mais de uma atividade. Dada a lista de possíveis atividades para um dia, você deve ajudar Helen determinando quantos subconjuntos mínimos distintos de atividades cobrem o dia inteiro.",
+    "Input": "Cada caso de teste se estende por várias linhas. A primeira linha contém dois inteiros M e N , representando respectivamente o maior valor de tempo do dia (1 ≤ M ≤ 10 9 ) e o número de possíveis atividades para o dia (1 ≤ N ≤ 100). Cada uma das próximas N linhas descreve uma possível atividade e contém dois inteiros S e F , representando respectivamente os tempos de início e fim da atividade (0 ≤ S < F ≤ M ). O último caso de teste é seguido de uma linha contendo dois zeros.",
+    "Output": "Para cada caso de teste, imprima uma única linha com um único inteiro representando a quantidade de subconjuntos que cobrem o dia. Para tornar sua vida mais fácil, imprima apenas o resto ao dividir a solução por 10 8 . Exemplo",
+    "Test_Case": [
+      {
+        "input": "8 7 0 3 2 5 5 8 1 3 3 6 4 6 0 2 1 1 0 1 2 1 0 1 0 0",
+        "output": "4 1 0"
+      }
+    ],
+    "metadata": {
+      "Difficulty": " "
+    }
+  },
+  {
+    "ID": 90005,
+    "Name": "[SPOJ #192] TV",
+    "URL": "https://br.spoj.com/problems/TV/",
+    "Problem_Description": "A vovó tem um televisor muito antigo, que ultimamente está exibindo um defeito incômodo: a imagem aparece 'deslocada’ (para cima ou para baixo, para o lado direito ou para o lado esquerdo). Quando a imagem está deslocada para cima, a parte da imagem que deixa de ser vista na parte superior reaparece na parte de baixo da tela. Da mesma forma, quando a imagem está deslocada a direita, a parte da imagem que deixa de ser vista à direita reaparece na tela do lado esquerdo. A imagem do televisor pode ser vista como uma matriz de pontos organizados em linhas e colunas. Para consertar o televisor da vovó, você pode ajustar a imagem introduzindo uma série de 'comandos de correção’ em um painel de ajuste. Cada comando de correção desloca a imagem de um certo número de linhas (para cima ou para baixo) e um certo número de colunas (para a direita ou para a esquerda). Tarefa Dada uma matriz que representa uma imagem defeituosa e uma série de comandos de correção, seu programa deve calcular a matriz que representa a imagem resultante após todos os comandos terem sido aplicados sequencialmente.",
+    "Input": "A entrada possui vários conjuntos de teste. Cada conjunto de teste inicia com a descrição da matriz que representa a imagem do televisor. A primeira linha contém dois inteiros M e N representando o número de linhas e o número de colunas da matriz ( 1 <= M <= 1000 e 1 <= N <= 1000 ). As M linhas seguintes da entrada contém cada uma N inteiros, descrevendo o valor de cada ponto da imagem. Após a descrição da imagem, segue-se a descrição dos comandos de correção. Cada comando de correção é descrito em uma linha contendo dois inteiros X e Y. O valor de X representa o deslocamento na direção horizontal (valor positivo representa deslocamento para a direita, valor negativo para a esquerda), e o valor de Y representa o deslocamento da direção vertical (valor positivo para cima, valor negativo para baixo). O final da lista de comandos é indicado por X = Y = 0 , e o final da entrada é indicado por M = N = 0 . Exemplo de Entrada 3 3 1 2 3 4 5 6 7 8 9 1 0 1 -1 0 0 3 4 6 7 8 5 10 11 12 9 2 3 4 1 -3 2 0 0 0 0",
+    "Output": "Para cada conjunto de teste, o seu programa deve produzir uma imagem na saída. A primeira linha da saída deve conter um identificador do conjunto de teste, no formato \"Teste n\", onde n é numerado seqüencialmente a partir de 1. A seguir deve aparecer a matriz que representa a imagem resultante, no mesmo formato da imagem de entrada. Ou seja, as N linhas seguintes devem conter cada uma M inteiros que representam os pixels da imagem. Após a imagem deixe uma linha em branco. A grafia mostrada no Exemplo de Saída, abaixo, deve ser seguida rigorosamente. Exemplo de Saída Teste 1 8 9 7 2 3 1 5 6 4 Teste 2 1 2 3 4 5 6 7 8 9 10 11 12 (esta saída corresponde ao exemplo de entrada acima) Restricões 0 <= N <= 1000 (N = 0 apenas para indicar o final da entrada) 0 <= M <= 1000 (M = 0 apenas para indicar o final da entrada) 0 <= X <= 1000 0 <= Y <= 1000 0 <= número de comandos de correção em cada conjunto de teste <= 1000",
+    "Test_Case": [],
+    "metadata": {
+      "Difficulty": " "
+    }
+  },
+  {
+    "ID": 90006,
+    "Name": "[SPOJ #1133] LOOPMUSI",
+    "URL": "https://br.spoj.com/problems/LOOPMUSI/",
+    "Problem_Description": "Um loop musical é um trecho de música que foi composto para repetir continuamente (ou seja, o trecho inicia novamente toda vez que chega ao final), sem que se note descontinuidade. Loops são muito usados na sonorização de jogos, especialmente jogos casuais pela internet. Loops podem ser digitalizados por exemplo utilizando PCM. PCM, do inglês Pulse Code Modulation , é uma técnica para representação de sinais analógicos, muito utilizada em estúdio digital. Nessa técnica, a magnitude do sinal é amostrada a intervalos regulares de tempo, e os valores amostrados são armazenados em seqüência. Para reproduzir a forma de onda amostrada, o processo é invertido (demodulação). Fernandinha trabalha para uma empresa que desenvolve jogos e compôs um bonito loop musical, codificando-o em PCM. Analisando a forma de onda do seu loop em um software de edição de estúdio, Fernandinha ficou curiosa ao notar a quantidade de “picos” existentes. Um pico em uma forma de onda é um valor de uma amostra que representa um máximo ou mínimo local, ou seja, um ponto de inflexão da forma de onda. A figura abaixo ilustra (a) um exemplo de forma de onda e (b) o loop formado com essa forma de onda, contendo 48 picos. Fernandinha é uma amiga muito querida e pediu sua ajuda para determinar quantos picos existem no seu loop musical.",
+    "Input": "A entrada contém varios casos de teste. A primeira linha de um caso de teste contém um inteiro N , representando o número de amostras no loop musical de Fernandinha ( 2 <= N <= 10^4 ). A segunda linha contém N inteiros Hi , separados por espaços, representando a seqüência de magnitudes das amostras ( −10^4 <= Hi <= 10^4 para 1 <= i <= N , H1 != HN e Hi != Hi+1 para 1 <= i < N ). Note que H1 segue HN quando o loop é reproduzido. O final da entrada é indicado por uma linha que contém apenas o número zero.",
+    "Output": "Para cada caso de teste da entrada seu programa deve imprimir uma única linha, contendo apenas um inteiro, o número de picos existentes no loop musical de Fernandinha. Exemplo",
+    "Test_Case": [
+      {
+        "input": "2 1 -3 6 40 0 -41 0 41 42 4 300 450 449 450 0",
+        "output": "2 2 4"
+      }
+    ],
+    "metadata": {
+      "Difficulty": " "
+    }
+  }
+]

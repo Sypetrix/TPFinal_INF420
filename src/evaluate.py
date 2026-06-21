@@ -2,7 +2,7 @@
 
 Compara, sobre a MESMA amostra de teste, três abordagens:
   (A) ML puro            -> features TF-IDF
-  (B) LLM puro           -> baseline direto com Gemini
+  (B) LLM puro           -> baseline direto com Groq/Llama
   (C) ML + features LLM  -> TF-IDF concatenado aos conceitos extraídos (Etapa 5)
 
 Para (A) e (C) usa-se o mesmo estimador (Regressão Logística), de modo que a
@@ -11,12 +11,12 @@ Para (A) e (C) usa-se o mesmo estimador (Regressão Logística), de modo que a
 O TF-IDF é ajustado **apenas com o conjunto de treino** (não o vetorizador salvo
 pela Etapa 2, que vê toda a base), para que a comparação não sofra vazamento de
 informação do teste. A amostra de teste é fixa porque a abordagem (B) chama a
-API do Gemini e tem custo — daí não usar validação cruzada aqui.
+API do LLM e tem custo (cota) — daí não usar validação cruzada aqui.
 
 Pré-requisitos:
   - python -m src.preprocess        (sempre)
   - python -m src.llm_features      (necessário para a abordagem C)
-  - GEMINI_API_KEY no .env          (necessário para a abordagem B)
+  - GROQ_API_KEY no .env            (necessário para a abordagem B)
 
 Uso:
     python -m src.evaluate --n 40            # compara A, B e C
@@ -100,13 +100,13 @@ def run(n_sample: int = 40, usar_llm: bool = True, lote: int = 1) -> None:
     else:
         print("[C] pulada: rode 'python -m src.llm_features' para gerar llm_features.csv.\n")
 
-    # ---- (B) LLM puro (Gemini) ----
+    # ---- (B) LLM puro (Groq/Llama) ----
     if usar_llm:
-        from . import llm_baseline   # import preguiçoso (depende de google-genai)
+        from . import llm_baseline   # import preguiçoso (depende do pacote `groq`)
 
         exemplos = llm_baseline.few_shot_examples(df_train, por_classe=1)
         pred_b = llm_baseline.classify_series(amostra[config.TEXT_COL], exemplos, lote=lote)
-        resultados.append({"abordagem": "B) LLM puro (Gemini)", **_metricas(y_eval, pred_b)})
+        resultados.append({"abordagem": "B) LLM puro (Groq)", **_metricas(y_eval, pred_b)})
     else:
         print("[B] pulada: execução com --no-llm.\n")
 
@@ -123,7 +123,7 @@ def run(n_sample: int = 40, usar_llm: bool = True, lote: int = 1) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Etapa 7 - Avaliação final comparativa")
     parser.add_argument("--n", type=int, default=40, help="tamanho da amostra de teste")
-    parser.add_argument("--no-llm", action="store_true", help="não chama a API do Gemini (pula B)")
+    parser.add_argument("--no-llm", action="store_true", help="não chama a API do LLM/Groq (pula B)")
     parser.add_argument("--lote", type=int, default=1,
                         help="enunciados por requisição no baseline LLM (prompt packing)")
     args = parser.parse_args()

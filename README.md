@@ -5,7 +5,7 @@ Trabalho final de **INF420 (Inteligência Artificial) — UFV**.
 Sistema que **classifica a dificuldade** de questões de programação (foco em
 maratonas) a partir do enunciado, em **5 níveis** (muito fácil, fácil, médio,
 difícil, muito difícil), combinando **Aprendizado de Máquina tradicional** com
-**LLMs (Google Gemini Flash)**, e que **recomenda novos exercícios** de forma
+**LLMs (Groq / Llama)**, e que **recomenda novos exercícios** de forma
 personalizada com base no histórico do aluno.
 
 **Autores:** Carlos Eduardo Pereira Oliveira (116233) · Luis Felipe Martins Pereira (112710)
@@ -22,9 +22,9 @@ source .venv/bin/activate        # Windows: .venv\Scripts\activate
 # 2. Instale as dependências
 pip install -r requirements.txt
 
-# 3. Configure a chave do Gemini
+# 3. Configure a chave da Groq
 cp .env.example .env             # depois edite o .env
-#   -> coloque sua chave em GEMINI_API_KEY (https://aistudio.google.com/app/apikey)
+#   -> coloque sua chave em GROQ_API_KEY (https://console.groq.com/keys)
 ```
 
 > Os dados originais ficam em **`arquivos/`**, organizada por **fonte** (uma
@@ -63,16 +63,17 @@ TP_Final_INF420/
 ├── src/
 │   ├── config.py       # configuração central (.env, caminhos, colunas)
 │   ├── data_utils.py   # carregamento, split treino/teste e limpeza de texto
-│   ├── gemini_client.py# cliente do Google Gemini
+│   ├── llm_client.py   # cliente da API da Groq (Llama)
 │   ├── ingest.py       # Etapa 1: arquivos/ -> data/raw/questoes.csv
 │   ├── preprocess.py   # Etapa 2: limpeza + TF-IDF
 │   ├── train_ml.py     # Etapa 3: LogReg, KNN, SVM, RF (validação cruzada)
-│   ├── llm_baseline.py # Etapa 4: classificação direta via Gemini
-│   ├── llm_features.py # Etapa 5: Gemini como extrator de conceitos
-│   ├── llm_explain.py  # Etapa 6: Gemini como explicador
+│   ├── llm_baseline.py # Etapa 4: classificação direta via LLM (Groq)
+│   ├── llm_features.py # Etapa 5: LLM como extrator de conceitos
+│   ├── llm_explain.py  # Etapa 6: LLM como explicador
 │   ├── evaluate.py     # Etapa 7: comparação ML vs LLM vs ML+LLM
+│   ├── predict.py      # Inferência: prevê dificuldade + tópico + recomenda (questões novas)
 │   └── recommend.py    # recomendação personalizada de exercícios
-├── .env                # SUA chave do Gemini (não versionado)
+├── .env                # SUA chave da Groq (não versionado)
 ├── .env.example        # modelo de configuração
 └── requirements.txt
 ```
@@ -85,14 +86,15 @@ TP_Final_INF420/
 | 1b. EDA | Distribuição das classes, tamanho dos enunciados | abrir `notebook/exploracao.ipynb` |
 | 2. Pré-processamento | Limpeza de texto + vetorização TF-IDF | `python -m src.preprocess` |
 | 3. Modelos tradicionais | LogReg, KNN, SVM, RF — validação cruzada + tuning | `python -m src.train_ml` |
-| 4. Baseline LLM | Gemini classifica direto (zero-/few-shot) | `python -m src.llm_baseline --n 10 --few-shot` |
-| 5. LLM extrator de features | Gemini identifica conceitos (DP, grafos…) | `python -m src.llm_features --n 10` |
+| 4. Baseline LLM | LLM (Groq) classifica direto (zero-/few-shot) | `python -m src.llm_baseline --n 10 --few-shot` |
+| 5. LLM extrator de features | LLM identifica conceitos (DP, grafos…) | `python -m src.llm_features --n 10` |
 | 6. LLM explicador | Gera justificativas das classificações | `python -m src.llm_explain --n 3` |
 | 7. Avaliação final | Compara ML puro vs LLM vs ML+features LLM | `python -m src.evaluate --n 20` (ou `--no-llm`) |
+| 🎯 Inferência (questões novas) | Prevê dificuldade + tópico e recomenda similares (§6) | `python -m src.predict --teste --n 5` |
 | ➕ Recomendação | Sugere exercícios ao aluno (catálogo multi-fonte, §5) | `python -m src.recommend` |
 
 > ⚠️ Os comandos das etapas 4–7 acima usam amostras **pequenas** de propósito —
-> cada item vira uma chamada à API do Gemini, que tem cota gratuita limitada.
+> cada item vira uma chamada à API do LLM (Groq), que tem cota gratuita limitada.
 > **Aumente o `--n` aos poucos.** Detalhes e solução de problemas de cota em §3.1.
 
 > **Etapa 1 automática:** rodar a Etapa 2 (`src.preprocess`) já dispara a Etapa 1
@@ -123,13 +125,14 @@ TP_Final_INF420/
 > compilar, é preciso o `webmedia.cls` (fornecido pelo professor em `sample/`, que
 > não é versionado).
 
-### 3.1 Etapas com LLM (Gemini): chave, custo e limites da API
+### 3.1 Etapas com LLM (Groq): chave, custo e limites da API
 
-As etapas **4, 5, 6 e a parte LLM da 7** chamam a API do Gemini e exigem
-`GEMINI_API_KEY` no `.env` (crie a chave em <https://aistudio.google.com/app/apikey>).
-Já as etapas **1, 2, 3 e as figuras NÃO usam a API** — todo o resultado do
-classificador que aparece no relatório é reproduzível **offline** (use `--no-llm`
-na etapa 7). Ou seja: a nota do trabalho não depende de ter cota de API sobrando.
+As etapas **4, 5, 6, a parte LLM da 7 e a parte LLM da inferência (`predict`)**
+chamam a API da Groq e exigem `GROQ_API_KEY` no `.env` (crie a chave gratuita em
+<https://console.groq.com/keys>). Já as etapas **1, 2, 3, as figuras e a
+inferência com `--no-llm` NÃO usam a API** — todo o resultado do classificador que
+aparece no relatório é reproduzível **offline** (use `--no-llm` nas etapas 7 e na
+inferência). Ou seja: a nota do trabalho não depende de ter cota de API sobrando.
 
 **Comece pequeno** — cada item vira **uma** chamada à API:
 
@@ -141,61 +144,61 @@ python -m src.evaluate      --n 10            # ~10 chamadas (abordagem LLM)
 python -m src.evaluate      --no-llm          # 0 chamadas (só ML)
 ```
 
-**A cota gratuita (free tier) tem dois limites distintos:**
-- **RPM** (requisições por *minuto*): rajadas rápidas estouram → espace as
-  chamadas com `--sleep 4` (disponível em `llm_baseline` e `llm_features`).
-- **RPD** (requisições por *dia*): teto **diário** por modelo; ao acabar, só
-  renova no dia seguinte.
+**A cota gratuita (free tier) da Groq tem limites por minuto e por dia:**
+- **RPM / TPM** (requisições / *tokens* por *minuto*): rajadas rápidas ou lotes
+  muito grandes estouram → espace as chamadas com `--sleep 4` (disponível em
+  `llm_baseline` e `llm_features`) e use lotes menores.
+- **RPD** (requisições por *dia*): teto **diário** por modelo. O padrão
+  `llama-3.1-8b-instant` tem a **maior** cota (~14.400 req/dia); a contagem
+  **renova à meia-noite UTC**. Limites oficiais por modelo:
+  <https://console.groq.com/docs/rate-limits>.
 
 A etapa 5 (`llm_features`) tem **retomada**: não refaz linhas já gravadas em
-`llm_features.csv`, então dá para processar a base aos poucos ao longo de vários
-dias sem perder o progresso.
+`llm_features.csv`, então dá para processar a base aos poucos sem perder progresso.
 
 #### Lotes (prompt packing): menos chamadas para a mesma tarefa
 
-Para gastar menos cota, as etapas **4, 5 e 7** aceitam `--lote N`, que envia
-**N enunciados em uma única requisição** (em vez de uma por item), reduzindo o
-número de chamadas em ~N×:
+Para gastar menos cota, as etapas **4, 5, 7 e a inferência** aceitam `--lote N`,
+que envia **N enunciados em uma única requisição** (em vez de uma por item),
+reduzindo o número de chamadas em ~N×:
 
 ```bash
 python -m src.llm_baseline --n 40 --few-shot --lote 10   # ~4 chamadas em vez de 40
 python -m src.llm_features  --lote 10                     # base toda em ~14 chamadas
 python -m src.evaluate      --n 40 --lote 10             # baseline LLM em lotes
+python -m src.predict       --teste --n 20 --lote 5      # inferência em lotes
 ```
 
 A resposta é casada por `id`; se algum item não voltar, ele é reprocessado
 sozinho — o resultado tem sempre o mesmo tamanho e a mesma corretude do modo
-item-a-item. Comece com `--lote 5`–`10`: lotes muito grandes podem confundir o
-modelo e estourar o limite de *tokens* por requisição.
+item-a-item. Comece com `--lote 5`–`10`: lotes grandes de enunciados longos podem
+estourar o limite de *tokens* por minuto (TPM).
 
-> **E a "Batch API" oficial do Gemini?** Existe um modo de lote assíncrono
-> (`client.batches`) que processa milhares de pedidos em até 24 h por **~50% do
-> preço**. Mas isso é otimização de **custo em dinheiro**, que faz sentido no
-> tier **pago**. No **free tier** vocês não pagam em dinheiro — o gargalo é a
-> **cota** (RPM/RPD), e o que a economiza é reduzir o nº de requisições, que é
+> **E a "Batch API" oficial?** A Groq também oferece um modo de lote assíncrono
+> (~50% do preço). Mas isso é otimização de **custo em dinheiro**, que faz sentido
+> no tier **pago**. No **free tier** vocês não pagam em dinheiro — o gargalo é a
+> **cota** (RPM/TPM/RPD), e o que a economiza é reduzir o nº de requisições, que é
 > exatamente o que o `--lote` (prompt packing) faz. Por isso adotamos essa
-> abordagem em vez da Batch API.
+> abordagem.
 
-#### "Bati no limite diário quase de imediato" — o que está acontecendo?
+#### "Bati no limite" — o que está acontecendo?
 
-Quase sempre é a **cota diária (RPD) do modelo** (não um problema da sua conta).
-Causas prováveis e como resolver:
+Com o `llama-3.1-8b-instant` a cota **diária** é alta (~14.400 req), então o
+estouro costuma ser por **minuto** (RPM/TPM) — recuperável com espera. Causas e
+como resolver:
 
-1. **Modelo com cota pequena.** Modelos `2.5`/`pro` têm RPD baixo no free tier e
-   estouram rápido. Troque `GEMINI_MODEL` no `.env` por um mais generoso — ex.:
-   `gemini-2.0-flash` (padrão atual) ou `gemini-2.0-flash-lite`. Limites oficiais
-   por modelo: <https://ai.google.dev/gemini-api/docs/rate-limits>.
-2. **Job grande de uma vez.** Rodar `llm_features` sobre a base inteira (138
-   itens) ou `evaluate --n 40` pode passar do teto diário. Use `--n` pequeno e
-   aproveite a retomada da etapa 5.
-3. **Repetições gastando cota.** *(já corrigido)* o cliente agora **para na hora**
-   ao detectar estouro de cota diária ou erro de configuração (chave/modelo
-   inválidos), em vez de repetir 5× e gastar mais cota à toa.
-4. **Cota já consumida no dia.** Se a mesma chave foi usada em outro lugar, a cota
-   diária pode já estar esgotada — ela renova por volta da meia-noite no fuso do
-   Pacífico (PT).
+1. **Lote/job grande estourando o TPM.** Lotes grandes de enunciados longos
+   passam do teto de *tokens por minuto*. Use `--lote 5` e `--sleep 4`.
+2. **Rajada rápida (RPM).** Muitas chamadas em poucos segundos. Espace com
+   `--sleep`. O cliente já faz *backoff* automático nesses erros transitórios.
+3. **Repetições gastando cota.** *(já tratado)* o cliente **para na hora** ao
+   detectar estouro de cota **diária** ou erro de configuração (chave/modelo
+   inválidos), em vez de repetir 5× à toa.
+4. **Modelo trocado para um menor.** Se usar `llama-3.3-70b-versatile` (mais
+   forte, porém cota menor), o teto diário cai — volte ao `8b-instant` para mais
+   cota.
 
-Para acompanhar uso, chave e limites: <https://aistudio.google.com/>.
+Para acompanhar uso, chave e limites: <https://console.groq.com/>.
 
 ## 4. Como os dados são consolidados (Etapa 1)
 
@@ -272,3 +275,50 @@ Cada fonte listada precisa ter sido consolidada antes
 questões rotuladas; a recomendação por conteúdo puro percorre todo o catálogo
 (e aí `SPOJ`/`OBI` também aparecem). O TF-IDF do recomendador é ajustado sobre o
 catálogo combinado, independente do vetorizador do classificador.
+
+## 6. Inferência: avaliar questões novas (`predict`)
+
+Esta é a etapa que coloca a ferramenta "em produção" — o uso do **professor que
+tem questões novas e quer avaliá-las**. Para cada questão (ainda **sem rótulo**),
+a etapa `src.predict`:
+
+1. **Prevê a dificuldade** com o classificador de ML já treinado
+   (`models/<DATASET>/best_ml_model.joblib`) — **offline, sem API**;
+2. **Identifica o(s) tópico(s)/conceito(s)** (recursão, grafos, programação
+   dinâmica…) usando o LLM (Groq) — opcional (`--no-llm`);
+3. **Recomenda questões similares** do banco já existente (catálogo rotulado da
+   §5), por padrão **no mesmo nível de dificuldade previsto** — este é o **elo
+   classificação → recomendação**: a dificuldade (e os conceitos) identificados
+   guiam quais exercícios são sugeridos. Use `--ignorar-nivel` para recomendar só
+   por conteúdo, sem o filtro de nível.
+
+Há dois modos de entrada:
+
+```bash
+# (a) Uso avaliador: uma pasta arquivos/<Nome>/ com um JSON no formato judge_json
+#     (campo metadata.Difficulty em branco = "a avaliar"). O repositório já inclui
+#     um exemplo pronto em arquivos/avaliar/ (questões reais do OBI e do SPOJ).
+DATASET=avaliar python -m src.ingest            # consolida a fonte 'avaliar'
+python -m src.predict --fonte avaliar --top-k 3 # usa o modelo da fonte ativa (DATASET)
+
+# (b) Modo teste: amostra questões SEM rótulo já presentes no catálogo do
+#     recomendador (SPOJ/OBI/Neps), para validar a ferramenta ponta a ponta.
+python -m src.predict --teste --n 5 --no-llm   # offline (só ML + recomendação)
+python -m src.predict --teste --n 5            # completo (+ tópico e dificuldade LLM)
+```
+
+> A previsão de dificuldade usa o modelo da **fonte ativa** (`DATASET`), não a
+> fonte avaliada: mantenha `DATASET=INF110` (ou `Neps`) — que têm o classificador
+> treinado — e use `--fonte avaliar` apenas para apontar as questões a avaliar.
+
+> **Treine o classificador antes.** A previsão de dificuldade usa o modelo da
+> fonte ativa (`DATASET`): rode `python -m src.preprocess && python -m src.train_ml`
+> para gerar `models/<DATASET>/best_ml_model.joblib`. Dica: a fonte **Neps** tem
+> ~1.300 questões rotuladas (contra 80 do INF110), então um classificador treinado
+> com `DATASET=Neps` tende a ser mais robusto para uso geral.
+
+> No modo `--teste`, as questões amostradas **não têm rótulo verdadeiro**, então o
+> que se demonstra é o **funcionamento** ponta a ponta (previsão + tópico +
+> recomendação), não a acurácia. A acurácia do classificador é medida na **Etapa 7**
+> (`src.evaluate`), sobre dados rotulados. A saída é salva em
+> `data/processed/<DATASET>/predicoes.csv`.

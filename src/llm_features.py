@@ -1,13 +1,13 @@
 """Etapa 5 — LLM como extrator de características.
 
-Pede ao Gemini para identificar quais conceitos/algoritmos aparecem em cada
-enunciado (recursão, programação dinâmica, grafos, etc.) e gera colunas
+Pede ao LLM (Groq/Llama) para identificar quais conceitos/algoritmos aparecem em
+cada enunciado (recursão, programação dinâmica, grafos, etc.) e gera colunas
 binárias que podem ser combinadas com as features TF-IDF (ver src.evaluate).
 
 Tem retomada automática: linhas já processadas em data/processed/llm_features.csv
 são puladas, permitindo rodar aos poucos sem refazer chamadas.
 
-Pré-requisito: GEMINI_API_KEY no .env e dataset_limpo.csv.
+Pré-requisito: GROQ_API_KEY no .env e dataset_limpo.csv.
 
 Uso:
     python -m src.llm_features            # processa toda a base
@@ -22,7 +22,7 @@ import unicodedata
 import pandas as pd
 from tqdm import tqdm
 
-from . import config, gemini_client
+from . import config, llm_client
 
 # Taxonomia de conceitos considerada (ajuste conforme o domínio da base).
 CONCEITOS = [
@@ -76,7 +76,7 @@ def _vetor_conceitos(brutos) -> dict[str, int]:
 
 def extract_one(statement: str) -> dict[str, int]:
     """Retorna {conceito: 0/1} para um enunciado."""
-    data = gemini_client.generate_json(_build_prompt(statement), SYSTEM)
+    data = llm_client.generate_json(_build_prompt(statement), SYSTEM)
     brutos = data.get("conceitos", []) if isinstance(data, dict) else data
     return _vetor_conceitos(brutos)
 
@@ -102,7 +102,7 @@ def extract_batch(statements: list[str]) -> list[dict[str, int]]:
     Casa a resposta por ``id``; itens não cobertos são reprocessados
     individualmente, preservando tamanho e corretude do resultado.
     """
-    data = gemini_client.generate_json(_build_prompt_lote(statements), SYSTEM)
+    data = llm_client.generate_json(_build_prompt_lote(statements), SYSTEM)
     por_id: dict[int, dict[str, int]] = {}
     if isinstance(data, list):
         for item in data:
@@ -144,14 +144,14 @@ def run(n: int | None = None, sleep: float = 0.0, lote: int = 1) -> None:
         print("Nada a processar — todas as linhas já estão no cache.")
         return
 
-    print(f"Extraindo conceitos de {len(pendentes)} enunciado(s) via Gemini...")
+    print(f"Extraindo conceitos de {len(pendentes)} enunciado(s) via LLM (Groq)...")
     if lote > 1:
         print(f"Lote (prompt packing): {lote} enunciados por requisição.")
     registros = pendentes.to_dict("records")
     novas = []
     if lote and lote > 1:
         grupos = [registros[i:i + lote] for i in range(0, len(registros), lote)]
-        for grupo in tqdm(grupos, total=len(grupos), desc=f"Gemini (features, lote={lote})"):
+        for grupo in tqdm(grupos, total=len(grupos), desc=f"LLM (features, lote={lote})"):
             vetores = extract_batch([str(r[config.TEXT_COL]) for r in grupo])
             for r, feats in zip(grupo, vetores):
                 feats = dict(feats)
@@ -160,7 +160,7 @@ def run(n: int | None = None, sleep: float = 0.0, lote: int = 1) -> None:
             if sleep:
                 time.sleep(sleep)
     else:
-        for r in tqdm(registros, total=len(registros), desc="Gemini (features)"):
+        for r in tqdm(registros, total=len(registros), desc="LLM (features)"):
             feats = extract_one(str(r[config.TEXT_COL]))
             feats[ROW_KEY] = int(r[ROW_KEY])
             novas.append(feats)
@@ -177,7 +177,7 @@ def run(n: int | None = None, sleep: float = 0.0, lote: int = 1) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Etapa 5 - Extração de conceitos com Gemini")
+    parser = argparse.ArgumentParser(description="Etapa 5 - Extração de conceitos com LLM (Groq)")
     parser.add_argument("--n", type=int, default=None, help="limita qtd. de linhas pendentes")
     parser.add_argument("--sleep", type=float, default=0.0, help="pausa entre chamadas (s)")
     parser.add_argument("--lote", type=int, default=1,

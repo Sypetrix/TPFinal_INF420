@@ -4,7 +4,7 @@ Gera justificativas em linguagem natural para a dificuldade atribuída a um
 enunciado (seja a classificação do modelo de ML, seja a do próprio LLM).
 Útil para dar transparência às predições e apoiar o aluno/professor.
 
-Pré-requisito: GEMINI_API_KEY no .env.
+Pré-requisito: GROQ_API_KEY no .env.
 
 Uso:
     python -m src.llm_explain --n 5
@@ -15,7 +15,7 @@ import argparse
 
 import pandas as pd
 
-from . import config, data_utils, gemini_client
+from . import config, data_utils, llm_client
 
 SYSTEM = (
     "Você é um professor de algoritmos. Explique de forma didática e objetiva "
@@ -34,7 +34,7 @@ def _build_prompt(statement: str, dificuldade: str) -> str:
 
 def explain(statement: str, dificuldade: str) -> str:
     """Retorna uma explicação textual para a dificuldade informada."""
-    return gemini_client.generate(
+    return llm_client.generate(
         _build_prompt(statement, dificuldade), SYSTEM, temperature=0.3
     )
 
@@ -56,13 +56,13 @@ def run(n: int = 5) -> None:
         print("=" * 70)
         print(f"Dificuldade: {rotulo}")
         print(f"Enunciado: {texto[:300]}{'...' if len(texto) > 300 else ''}")
-        print("-> Explicação do Gemini:")
+        print("-> Explicação do LLM:")
         print(explain(texto, rotulo))
         print()
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Etapa 6 - Explicações com Gemini")
+    parser = argparse.ArgumentParser(description="Etapa 6 - Explicações com LLM (Groq)")
     parser.add_argument("--n", type=int, default=5, help="qtd. de exemplos a explicar")
     args = parser.parse_args()
     run(n=args.n)

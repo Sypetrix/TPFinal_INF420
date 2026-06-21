@@ -1,9 +1,9 @@
-"""Etapa 4 — Baseline com LLM (Google Gemini).
+"""Etapa 4 — Baseline com LLM (Groq / Llama).
 
-Classifica a dificuldade dos enunciados diretamente com o Gemini, em modo
+Classifica a dificuldade dos enunciados diretamente com o LLM, em modo
 zero-shot ou few-shot, para comparar com os modelos de ML tradicionais.
 
-Pré-requisito: GEMINI_API_KEY no .env e (para o few-shot) dataset_limpo.csv.
+Pré-requisito: GROQ_API_KEY no .env e (para o few-shot) dataset_limpo.csv.
 
 Uso:
     python -m src.llm_baseline --n 30
@@ -19,7 +19,7 @@ import pandas as pd
 from sklearn.metrics import accuracy_score, classification_report, f1_score
 from tqdm import tqdm
 
-from . import config, data_utils, gemini_client
+from . import config, data_utils, llm_client
 
 SYSTEM = (
     "Você é um juiz experiente de maratonas de programação competitiva. "
@@ -75,8 +75,8 @@ def _build_prompt(statement: str, examples: list[tuple[str, str]] | None = None)
 
 
 def classify_one(statement: str, examples: list[tuple[str, str]] | None = None) -> str:
-    """Classifica um único enunciado via Gemini e retorna o rótulo canônico."""
-    data = gemini_client.generate_json(_build_prompt(statement, examples), SYSTEM)
+    """Classifica um único enunciado via LLM e retorna o rótulo canônico."""
+    data = llm_client.generate_json(_build_prompt(statement, examples), SYSTEM)
     if isinstance(data, dict):
         return _normalize(data.get("dificuldade", ""))
     return _normalize(str(data))
@@ -114,7 +114,7 @@ def classify_batch(statements: list[str], examples: list[tuple[str, str]] | None
     (id ausente/ilegível) é reclassificado individualmente, garantindo que o
     resultado tenha o mesmo tamanho e a mesma corretude do modo item-a-item.
     """
-    data = gemini_client.generate_json(_build_prompt_lote(statements, examples), SYSTEM)
+    data = llm_client.generate_json(_build_prompt_lote(statements, examples), SYSTEM)
     por_id: dict[int, str] = {}
     if isinstance(data, list):
         for item in data:
@@ -153,13 +153,13 @@ def classify_series(textos, examples=None, sleep: float = 0.0, lote: int = 1) ->
     if lote and lote > 1:
         preds: list[str] = []
         grupos = [textos[i:i + lote] for i in range(0, len(textos), lote)]
-        for grupo in tqdm(grupos, desc=f"Gemini (baseline, lote={lote})"):
+        for grupo in tqdm(grupos, desc=f"LLM (baseline, lote={lote})"):
             preds.extend(classify_batch(grupo, examples))
             if sleep:
                 time.sleep(sleep)
         return preds
     preds = []
-    for texto in tqdm(textos, desc="Gemini (baseline)"):
+    for texto in tqdm(textos, desc="LLM (baseline)"):
         preds.append(classify_one(texto, examples))
         if sleep:
             time.sleep(sleep)
@@ -198,7 +198,7 @@ def run(n: int = 30, few_shot: bool = False, sleep: float = 0.0, lote: int = 1) 
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Etapa 4 - Baseline de classificação com Gemini")
+    parser = argparse.ArgumentParser(description="Etapa 4 - Baseline de classificação com LLM (Groq)")
     parser.add_argument("--n", type=int, default=30, help="qtd. de exemplos do teste")
     parser.add_argument("--few-shot", action="store_true", help="inclui exemplos no prompt")
     parser.add_argument("--sleep", type=float, default=0.0, help="pausa entre chamadas (s)")
