@@ -58,9 +58,11 @@ DATA_DIR = ROOT_DIR / "data"
 # arquivos/INF110/.
 ARQUIVOS_DIR = ROOT_DIR / os.getenv("ARQUIVOS_DIR", "arquivos").strip()
 
-# Fonte de dados ativa (subpasta de arquivos/). Troque DATASET no .env para
-# apontar o pipeline a outro banco de questões (ex.: Neps).
-DATASET = os.getenv("DATASET", "INF110").strip()
+# Fonte de dados ativa (subpasta de arquivos/). Padrão: Neps (base mais rica,
+# ~1.300 questões rotuladas pelo juiz) — é o classificador de produção. Troque
+# DATASET no .env para outra fonte; ex.: DATASET=INF110 reproduz o relatório
+# (dificuldade percebida pelos alunos, 80 questões).
+DATASET = os.getenv("DATASET", "Neps").strip()
 DATASET_DIR = ARQUIVOS_DIR / DATASET
 
 # Formato da fonte ativa — como a Etapa 1 (src.ingest) lê os dados brutos:

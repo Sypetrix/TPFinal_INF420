@@ -40,7 +40,7 @@
 \renewcommand{\shortauthors}{Oliveira e Pereira}
 
 \begin{abstract}
-Este trabalho investiga se o nível de dificuldade de uma questão de programação pode ser inferido automaticamente apenas a partir de seu enunciado textual. A tarefa foi modelada como classificação supervisionada em cinco níveis (de muito fácil a muito difícil), derivados das avaliações empíricas de dificuldade atribuídas por alunos a 80 questões da disciplina INF110 da Universidade Federal de Viçosa. Comparamos quatro famílias de modelos clássicos de aprendizado de máquina --- Regressão Logística, K-Nearest Neighbors (KNN), Support Vector Machines (SVM) e Random Forest --- sobre representações TF-IDF, utilizando validação cruzada estratificada, ajuste de hiperparâmetros e prevenção explícita de vazamento de informação, tendo como piso de comparação um \textit{baseline} de classe majoritária. O melhor modelo (KNN) atingiu F1-macro de $0{,}30$ na escala de cinco níveis, contra $0{,}13$ do \textit{baseline}. Uma análise complementar de granularidade mostrou que, ao reduzir a escala para três níveis, o F1-macro sobe para $0{,}44$, evidenciando o forte impacto do número de classes e do desbalanceamento. Adicionalmente, integramos um Grande Modelo de Linguagem (LLM, o Llama~3.1 servido pela plataforma Groq) em três papéis: \textit{baseline} de classificação, gerador de explicações e extrator de características semânticas. Por fim, encadeamos esses componentes em uma etapa de inferência que, dada uma questão nova, prevê sua dificuldade, identifica seus conceitos e recomenda exercícios semelhantes do catálogo no mesmo nível. Concluímos que o enunciado textual carrega sinal real, porém parcial, para a tarefa.
+Este trabalho investiga se o nível de dificuldade de uma questão de programação pode ser inferido automaticamente apenas a partir de seu enunciado textual. A tarefa foi modelada como classificação supervisionada em cinco níveis (de muito fácil a muito difícil), derivados das avaliações empíricas de dificuldade atribuídas por alunos a 80 questões da disciplina INF110 da Universidade Federal de Viçosa. Comparamos quatro famílias de modelos clássicos de aprendizado de máquina --- Regressão Logística, K-Nearest Neighbors (KNN), Support Vector Machines (SVM) e Random Forest --- sobre representações TF-IDF, utilizando validação cruzada estratificada, ajuste de hiperparâmetros e prevenção explícita de vazamento de informação, tendo como piso de comparação um \textit{baseline} de classe majoritária. O melhor modelo (KNN) atingiu F1-macro de $0{,}30$ na escala de cinco níveis, contra $0{,}13$ do \textit{baseline}. Uma análise complementar de granularidade mostrou que, ao reduzir a escala para três níveis, o F1-macro sobe para $0{,}44$, evidenciando o forte impacto do número de classes e do desbalanceamento. Adicionalmente, integramos um Grande Modelo de Linguagem (LLM, o Llama~3.1 servido pela plataforma Groq) em três papéis: \textit{baseline} de classificação, gerador de explicações e extrator de características semânticas. Por fim, encadeamos esses componentes em uma etapa de inferência que, dada uma questão nova, prevê sua dificuldade, identifica seus conceitos e recomenda exercícios semelhantes do catálogo no mesmo nível. Validamos ainda a mesma metodologia em uma base de maior escala (Neps Academy, 1.333 questões rotuladas por juiz), na qual o melhor modelo atinge F1-macro de $0{,}43$ (cinco níveis) e $0{,}59$ (três níveis) --- é esse classificador, treinado na base mais rica, que alimenta a ferramenta em uso prático. Concluímos que o enunciado textual carrega sinal real, porém parcial, para a tarefa.
 \end{abstract}
 
 \keywords{aprendizado de máquina, classificação de texto, processamento de linguagem natural, TF-IDF, LLMs, dificuldade de questões de programação}
@@ -159,8 +159,8 @@ A Figura~\ref{fig:confusao} traz a matriz de confusão do melhor modelo. Dois pa
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.92\linewidth]{matriz_confusao}
-  \caption{Matriz de confusão do melhor modelo (KNN), com predições \textit{out-of-fold}, na escala de cinco níveis. MF = muito fácil, F = fácil, M = médio, D = difícil, MD = muito difícil.}
+  \includegraphics[width=0.92\linewidth]{matriz_confusao_INF110}
+  \caption{Matriz de confusão do melhor modelo (KNN) no INF110, com predições \textit{out-of-fold}, na escala de cinco níveis. MF = muito fácil, F = fácil, M = médio, D = difícil, MD = muito difícil.}
   \Description{Mapa de calor 5 por 5 mostrando que as predições se concentram nas colunas fácil e médio, e que as classes muito fácil e muito difícil nunca são previstas.}
   \label{fig:confusao}
 \end{figure}
@@ -189,13 +189,72 @@ Para quantificar o impacto da granularidade, repetimos todo o protocolo colapsan
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\linewidth]{comparacao_f1}
-  \caption{F1-macro por modelo nas escalas de cinco e três níveis. A redução de granularidade melhora consistentemente o desempenho.}
+  \includegraphics[width=\linewidth]{comparacao_f1_INF110}
+  \caption{F1-macro por modelo (INF110) nas escalas de cinco e três níveis. A redução de granularidade melhora consistentemente o desempenho.}
   \Description{Gráfico de barras comparando o F1-macro de KNN, Regressão Logística, SVM e Random Forest em cinco e três níveis; todas as barras de três níveis são mais altas.}
   \label{fig:granularidade}
 \end{figure}
 
 O F1-macro do melhor modelo sobe de $0{,}30$ (cinco níveis) para $0{,}44$ (três níveis) --- um ganho de cerca de $45\%$ ---, e a melhora é consistente em todas as famílias. Mais importante, na escala de três níveis a classe ``difícil'' passa a ser efetivamente prevista (com F1 em torno de $0{,}48$ no KNN), ao contrário do que ocorria nas extremidades da escala de cinco níveis. Isso confirma que boa parte da dificuldade da tarefa não está no modelo, e sim na granularidade e no desbalanceamento dos rótulos.
+
+\subsection{Validação em Base de Maior Escala (Neps Academy)}
+\label{sec:neps}
+
+A base INF110, embora valiosa por refletir a percepção real dos alunos, é pequena (80 questões) e fortemente desbalanceada. Para verificar se a abordagem escala --- e para obter um classificador mais robusto para uso prático --- aplicamos \emph{exatamente a mesma metodologia} (limpeza, TF-IDF, as quatro famílias de modelos, validação cruzada estratificada com busca de hiperparâmetros e \textit{baseline} de classe majoritária) a uma segunda base: o \textbf{Neps Academy}, com 1.448 questões, das quais 1.333 trazem a dificuldade \textbf{atribuída por um juiz}. Diferentemente do INF110, todas as cinco classes têm ao menos 45 exemplos, permitindo estratificação plena.
+
+É importante ressaltar que os dois rótulos medem coisas distintas: o INF110 captura a dificuldade \emph{percebida pelos alunos}, enquanto o Neps reflete a dificuldade \emph{atribuída por um juiz} --- um alvo mais objetivo e menos ruidoso. Os resultados não são, portanto, diretamente comparáveis; o Neps responde a uma variante mais ``intrínseca'' da mesma tarefa.
+
+As Tabelas~\ref{tab:neps5} e~\ref{tab:neps3} apresentam o desempenho. O melhor modelo (Random Forest) atinge F1-macro de $0{,}43$ (cinco níveis) e $0{,}59$ (três níveis), bem acima dos $0{,}30$ e $0{,}44$ do INF110 (Figura~\ref{fig:neps_f1}). O ganho é coerente com o maior volume e o melhor balanceamento: a Figura~\ref{fig:neps_confusao} mostra que, ao contrário do INF110, \textbf{as classes extremas passam a ser efetivamente previstas}. É este classificador, treinado na base mais rica, que alimenta a etapa de inferência da ferramenta em uso prático.
+
+\begin{table}[t]
+  \caption{Desempenho na base Neps Academy (cinco níveis), validação cruzada, ordenado por F1-macro. Média $\pm$ desvio-padrão entre partições.}
+  \label{tab:neps5}
+  \begin{tabular}{lccc}
+    \toprule
+    Modelo & Acurácia & F1-macro & F1-pond. \\
+    \midrule
+    Random Forest        & $0{,}545 \pm 0{,}027$ & $\mathbf{0{,}426} \pm 0{,}036$ & $0{,}527$ \\
+    Reg. Logística       & $0{,}497 \pm 0{,}013$ & $0{,}423 \pm 0{,}032$ & $0{,}498$ \\
+    SVM linear           & $0{,}524 \pm 0{,}019$ & $0{,}409 \pm 0{,}032$ & $0{,}505$ \\
+    KNN                  & $0{,}467 \pm 0{,}037$ & $0{,}359 \pm 0{,}047$ & $0{,}446$ \\
+    \midrule
+    \textit{Baseline}    & $0{,}422$             & $0{,}119$             & $0{,}250$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[t]
+  \caption{Desempenho na base Neps Academy (três níveis), sob o mesmo protocolo, ordenado por F1-macro.}
+  \label{tab:neps3}
+  \begin{tabular}{lccc}
+    \toprule
+    Modelo & Acurácia & F1-macro & F1-pond. \\
+    \midrule
+    Random Forest        & $0{,}646 \pm 0{,}029$ & $\mathbf{0{,}593} \pm 0{,}032$ & $0{,}635$ \\
+    Reg. Logística       & $0{,}621 \pm 0{,}023$ & $0{,}579 \pm 0{,}024$ & $0{,}620$ \\
+    SVM linear           & $0{,}632 \pm 0{,}020$ & $0{,}576 \pm 0{,}027$ & $0{,}621$ \\
+    KNN                  & $0{,}568 \pm 0{,}012$ & $0{,}507 \pm 0{,}023$ & $0{,}554$ \\
+    \midrule
+    \textit{Baseline}    & $0{,}494$             & $0{,}220$             & $0{,}326$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.92\linewidth]{matriz_confusao_Neps}
+  \caption{Matriz de confusão do melhor modelo (Random Forest) no Neps, cinco níveis, predições \textit{out-of-fold}. Ao contrário do INF110, as classes extremas recebem predições corretas.}
+  \Description{Mapa de calor 5 por 5 da base Neps com predições distribuídas por todas as classes, inclusive as extremas.}
+  \label{fig:neps_confusao}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{comparacao_f1_Neps}
+  \caption{F1-macro por modelo na base Neps, nas escalas de cinco e três níveis.}
+  \Description{Gráfico de barras comparando o F1-macro dos quatro modelos na base Neps em cinco e três níveis.}
+  \label{fig:neps_f1}
+\end{figure}
 
 \subsection{Resposta à Pergunta de Pesquisa}
 
@@ -204,7 +263,7 @@ Os resultados indicam uma resposta \emph{parcialmente afirmativa}: existe sinal 
 \section{Conclusão e Trabalhos Futuros}
 \label{sec:conclusao}
 
-Este trabalho desenvolveu e avaliou um sistema reprodutível para classificação automática da dificuldade de questões de programação a partir do enunciado, em cinco níveis derivados da percepção real de alunos. Comparamos quatro famílias de modelos clássicos sobre representações TF-IDF, com um protocolo de avaliação cuidadoso (validação cruzada estratificada, sem vazamento de informação, com \textit{baseline} de referência), integramos um LLM em três papéis e os encadeamos em uma etapa de inferência que classifica, descreve e recomenda exercícios para questões novas. O melhor modelo (KNN) atingiu F1-macro de $0{,}30$ em cinco níveis e $0{,}44$ em três, deixando claro tanto que há sinal textual explorável quanto que a tarefa é fortemente limitada pelo tamanho e pelo desbalanceamento da base.
+Este trabalho desenvolveu e avaliou um sistema reprodutível para classificação automática da dificuldade de questões de programação a partir do enunciado, em cinco níveis derivados da percepção real de alunos. Comparamos quatro famílias de modelos clássicos sobre representações TF-IDF, com um protocolo de avaliação cuidadoso (validação cruzada estratificada, sem vazamento de informação, com \textit{baseline} de referência), integramos um LLM em três papéis e os encadeamos em uma etapa de inferência que classifica, descreve e recomenda exercícios para questões novas. O melhor modelo (KNN) atingiu F1-macro de $0{,}30$ em cinco níveis e $0{,}44$ em três, deixando claro tanto que há sinal textual explorável quanto que a tarefa é fortemente limitada pelo tamanho e pelo desbalanceamento da base. A aplicação da mesma metodologia ao Neps Academy (1.333 questões rotuladas por juiz, com classes balanceadas) elevou o F1-macro para $0{,}43$ (cinco níveis) e $0{,}59$ (três níveis), confirmando que boa parte dessa limitação advém do tamanho e do desbalanceamento da base --- e fornecendo o classificador que a ferramenta usa em produção.
 
 Como trabalhos futuros, destacam-se: (i) a incorporação de \textit{embeddings} semânticos densos (próprios de LLMs ou de modelos multilíngues abertos) como representação alternativa ou complementar ao TF-IDF; (ii) a execução da comparação quantitativa completa com as abordagens baseadas em LLM, já suportada pelo arcabouço implementado e agora viável sem custo pela camada gratuita da Groq; (iii) técnicas de mitigação de desbalanceamento, como reamostragem, ou a reformulação da tarefa como classificação ordinal; e (iv) a ampliação e o balanceamento da base de questões rotuladas, idealmente com avaliações de múltiplas instituições, para elevar o teto de desempenho alcançável.
 

@@ -2,16 +2,18 @@
 
 Lê ``models/<DATASET>/ml_metrics.csv``, ``ml_metrics_3niveis.csv`` e
 ``matriz_confusao.csv`` e produz, na pasta ``figuras/`` (versionada, para
-acompanhar o ``main.tex``):
+acompanhar o ``main.tex``), com o nome da fonte no arquivo (assim INF110 e Neps
+coexistem):
 
-  - ``matriz_confusao.png`` : mapa de calor da matriz de confusão (5 níveis, KNN)
-  - ``comparacao_f1.png``   : F1-macro por modelo, 5 vs 3 níveis
+  - ``matriz_confusao_<DATASET>.png`` : mapa de calor da matriz de confusão (5 níveis)
+  - ``comparacao_f1_<DATASET>.png``   : F1-macro por modelo, 5 vs 3 níveis
 
 Pré-requisito: rodar antes ``python -m src.train_ml`` (5 níveis) e
 ``python -m src.train_ml --niveis 3`` (análise complementar).
 
 Uso:
-    python -m src.figuras
+    python -m src.figuras                 # fonte ativa (DATASET)
+    DATASET=INF110 python -m src.figuras  # figuras do INF110
 """
 from __future__ import annotations
 
@@ -54,7 +56,7 @@ def _heatmap_confusao() -> None:
                     color="white" if valores[i, j] > limiar else "black", fontsize=9)
     fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
     fig.tight_layout()
-    saida = FIG_DIR / "matriz_confusao.png"
+    saida = FIG_DIR / f"matriz_confusao_{config.DATASET}.png"
     fig.savefig(saida, dpi=200)
     plt.close(fig)
     print("salvo:", saida)
@@ -86,7 +88,7 @@ def _barras_f1() -> None:
         ax.text(i - largura / 2, a + 0.01, f"{a:.2f}", ha="center", fontsize=8)
         ax.text(i + largura / 2, b + 0.01, f"{b:.2f}", ha="center", fontsize=8)
     fig.tight_layout()
-    saida = FIG_DIR / "comparacao_f1.png"
+    saida = FIG_DIR / f"comparacao_f1_{config.DATASET}.png"
     fig.savefig(saida, dpi=200)
     plt.close(fig)
     print("salvo:", saida)

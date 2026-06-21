@@ -32,7 +32,8 @@ cp .env.example .env             # depois edite o .env
 > dois formatos: **`feedbacks`** — enunciados em `txt/`/`txt_with_example/` +
 > avaliações dos alunos em `feedbacks_<ano>.json` (ex.: `INF110`) — ou
 > **`judge_json`** — um único JSON com a dificuldade já dada pelo juiz (ex.:
-> `Neps`). A fonte ativa é definida por `DATASET` no `.env` (padrão `INF110`) e a
+> `Neps`). A fonte ativa é definida por `DATASET` no `.env` (**padrão `Neps`**, a base
+mais rica; `DATASET=INF110` reproduz o relatório) e a
 > **Etapa 1** (`src.ingest`) detecta o formato e consolida tudo em
 > `data/raw/<DATASET>/questoes.csv` automaticamente. *Obs.: `SPOJ` e `OBI` não
 > têm dificuldade rotulada (ficam fora do classificador), mas são consolidados e
@@ -43,12 +44,12 @@ cp .env.example .env             # depois edite o .env
 ```
 TP_Final_INF420/
 ├── arquivos/           # dados originais, uma subpasta por fonte
-│   ├── INF110/             # formato 'feedbacks' (DATASET=INF110, padrão)
+│   ├── INF110/             # formato 'feedbacks' (DATASET=INF110, reproduz o relatório)
 │   │   ├── txt/                # enunciado puro (exercise_<id>.txt)
 │   │   ├── txt_with_example/   # enunciado + casos de exemplo
 │   │   ├── tex/                # versão LaTeX (não usada no ML)
 │   │   └── feedbacks_*.json    # avaliações dos alunos (nota 1-5 por questão)
-│   ├── Neps/               # formato 'judge_json' (dificuldade dada pelo juiz)
+│   ├── Neps/               # formato 'judge_json' — dificuldade do juiz (DATASET=Neps, PADRÃO)
 │   │   └── Neps_Academy_complete.json
 │   ├── SPOJ/               # 'judge_json' sem rótulo — só no recomendador
 │   │   └── SPOJ-BR_complete.json
@@ -82,7 +83,7 @@ TP_Final_INF420/
 
 | Etapa | O que faz | Como rodar |
 |------:|-----------|------------|
-| 1. Ingestão | Lê `arquivos/INF110/` (enunciados + feedbacks) → `questoes.csv` | `python -m src.ingest` |
+| 1. Ingestão | Lê a fonte ativa `arquivos/<DATASET>/` (padrão `Neps`) → `questoes.csv` | `python -m src.ingest` |
 | 1b. EDA | Distribuição das classes, tamanho dos enunciados | abrir `notebook/exploracao.ipynb` |
 | 2. Pré-processamento | Limpeza de texto + vetorização TF-IDF | `python -m src.preprocess` |
 | 3. Modelos tradicionais | LogReg, KNN, SVM, RF — validação cruzada + tuning | `python -m src.train_ml` |
@@ -311,10 +312,10 @@ python -m src.predict_difficulty --teste --n 5 --no-llm
 
 > **Treine o classificador antes** (uma vez): `python -m src.preprocess` e
 > `python -m src.train_ml --niveis 3` geram `best_ml_model_3niveis.joblib`. A
-> previsão usa o modelo da **fonte ativa** (`DATASET`): mantenha `DATASET=INF110`
-> (ou `Neps`) e use `--fonte avaliar` só para apontar as questões. Dica: **Neps**
-> tem ~1.300 questões rotuladas (vs. 80 do INF110), então `DATASET=Neps` tende a
-> dar um classificador mais robusto.
+> previsão usa o modelo da **fonte ativa** (`DATASET`, **padrão `Neps`** — a base
+> mais rica, ~1.300 questões rotuladas, classificador de produção); use
+> `--fonte avaliar` só para apontar as questões a avaliar. Para o estudo de
+> dificuldade percebida pelos alunos (relatório), use `DATASET=INF110`.
 
 > **Recomendação por conceitos:** para o critério de conceitos valer no catálogo,
 > extraia-os por fonte uma vez (`python -m src.llm_concepts --fonte Neps --lote 10`,
