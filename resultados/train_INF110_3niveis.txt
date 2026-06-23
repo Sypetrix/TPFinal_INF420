@@ -1,0 +1,77 @@
+Granularidade: 3 níveis
+Base rotulada: 80 exemplos | 3 classes
+Distribuição:
+facil      38
+medio      32
+dificil    10
+Validação cruzada: 5 folds
+
+=== Regressao Logistica ===
+melhores params : {'clf__C': 1.0}
+acurácia: 0.512 ± 0.145 | F1-macro: 0.395 ± 0.167 | F1-pond.: 0.482
+              precision    recall  f1-score   support
+
+     dificil       0.33      0.10      0.15        10
+       facil       0.54      0.68      0.60        38
+       medio       0.48      0.44      0.46        32
+
+    accuracy                           0.51        80
+   macro avg       0.45      0.41      0.41        80
+weighted avg       0.49      0.51      0.49        80
+
+=== KNN ===
+melhores params : {'clf__n_neighbors': 3, 'clf__weights': 'uniform'}
+acurácia: 0.450 ± 0.100 | F1-macro: 0.440 ± 0.117 | F1-pond.: 0.440
+              precision    recall  f1-score   support
+
+     dificil       0.45      0.50      0.48        10
+       facil       0.48      0.55      0.51        38
+       medio       0.40      0.31      0.35        32
+
+    accuracy                           0.45        80
+   macro avg       0.44      0.46      0.45        80
+weighted avg       0.44      0.45      0.44        80
+
+=== SVM (linear) ===
+melhores params : {'clf__C': 1.0}
+acurácia: 0.512 ± 0.121 | F1-macro: 0.386 ± 0.142 | F1-pond.: 0.470
+              precision    recall  f1-score   support
+
+     dificil       0.33      0.10      0.15        10
+       facil       0.54      0.71      0.61        38
+       medio       0.48      0.41      0.44        32
+
+    accuracy                           0.51        80
+   macro avg       0.45      0.41      0.40        80
+weighted avg       0.49      0.51      0.49        80
+
+=== Random Forest ===
+melhores params : {'clf__max_depth': None, 'clf__n_estimators': 200}
+acurácia: 0.550 ± 0.073 | F1-macro: 0.371 ± 0.063 | F1-pond.: 0.497
+              precision    recall  f1-score   support
+
+     dificil       0.00      0.00      0.00        10
+       facil       0.54      0.82      0.65        38
+       medio       0.57      0.41      0.47        32
+
+    accuracy                           0.55        80
+   macro avg       0.37      0.41      0.38        80
+weighted avg       0.48      0.55      0.50        80
+
+=== Resumo (validação cruzada, ordenado por F1-macro) ===
+                       modelo  acuracia  f1_macro  f1_ponderado
+                          KNN    0.4500  0.440445      0.439631
+          Regressao Logistica    0.5125  0.395206      0.481669
+                 SVM (linear)    0.5125  0.386255      0.470105
+                Random Forest    0.5500  0.371214      0.497111
+Baseline (classe majoritária)    0.4750  0.214493      0.306522
+
+Matriz de confusão — KNN (linhas=verdadeiro, colunas=previsto):
+         facil  medio  dificil
+facil       21     12        5
+medio       21     10        1
+dificil      2      3        5
+
+Melhor modelo: KNN (F1-macro = 0.440)
+Métricas salvas em: /sessions/funny-elegant-babbage/mnt/TPFinal_INF420/models/INF110/ml_metrics_3niveis.csv
+Pipeline salvo em : /sessions/funny-elegant-babbage/mnt/TPFinal_INF420/models/INF110/best_ml_model_3niveis.joblib

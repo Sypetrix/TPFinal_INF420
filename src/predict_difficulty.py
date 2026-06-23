@@ -254,8 +254,9 @@ def main() -> None:
     parser.add_argument("--no-llm", action="store_true",
                         help="não chama a API do LLM (sem conceitos; recomendação por TF-IDF)")
     parser.add_argument("--top-k", type=int, default=3, help="nº de recomendações por questão")
-    parser.add_argument("--lote", type=int, default=1,
-                        help="enunciados por requisição no LLM (prompt packing; >1 economiza cota)")
+    parser.add_argument("--lote", type=int, default=10,
+                        help="enunciados por requisição no LLM (prompt packing; >1 economiza cota). "
+                             "Padrão 10 — reduz ~10x as chamadas à API. Use --lote 1 p/ item-a-item.")
     parser.add_argument("--niveis", type=int, choices=[5, 3], default=3,
                         help="granularidade da dificuldade (padrão 3; precisa do modelo treinado)")
     parser.add_argument("--ignorar-nivel", action="store_true",

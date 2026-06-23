@@ -202,8 +202,9 @@ def main() -> None:
     parser.add_argument("--n", type=int, default=30, help="qtd. de exemplos do teste")
     parser.add_argument("--few-shot", action="store_true", help="inclui exemplos no prompt")
     parser.add_argument("--sleep", type=float, default=0.0, help="pausa entre chamadas (s)")
-    parser.add_argument("--lote", type=int, default=1,
-                        help="enunciados por requisição (prompt packing; >1 economiza cota)")
+    parser.add_argument("--lote", type=int, default=10,
+                        help="enunciados por requisição (prompt packing; >1 economiza cota). "
+                             "Padrão 10 — reduz ~10x as chamadas à API. Use --lote 1 p/ item-a-item.")
     args = parser.parse_args()
     run(n=args.n, few_shot=args.few_shot, sleep=args.sleep, lote=args.lote)
 

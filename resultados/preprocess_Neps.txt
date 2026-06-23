@@ -1,0 +1,20 @@
+[nltk_data] Error loading stopwords: <urlopen error Tunnel connection
+[nltk_data]     failed: 403 Forbidden>
+Base carregada de questoes.csv: 1448 linhas x 6 colunas
+Limpando enunciados...
+Ajustando TF-IDF (max_features=5000, ngram=(1, 2), min_df=2)...
+
+=== Pré-processamento concluído ===
+Exemplos válidos : 1448
+Features TF-IDF  : 5000
+Dataset limpo    : /sessions/funny-elegant-babbage/mnt/TPFinal_INF420/data/processed/Neps/dataset_limpo.csv
+Vetorizador      : /sessions/funny-elegant-babbage/mnt/TPFinal_INF420/models/Neps/tfidf_vectorizer.joblib
+
+Distribuição das classes:
+dificuldade
+dificil          562
+medio            324
+facil            306
+muito_dificil     96
+muito_facil       45
+Name: count, dtype: Int64
