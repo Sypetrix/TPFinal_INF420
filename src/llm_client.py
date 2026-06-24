@@ -147,9 +147,22 @@ def generate_json(
     system_instruction: str | None = None,
     **kwargs: Any,
 ) -> Any:
-    """Igual a generate(), mas já faz o parsing do JSON retornado."""
+    """Igual a generate(), mas já faz o parsing do JSON retornado.
+
+    Se o LLM devolver algo que NÃO é JSON válido (mesmo após o parser tolerante
+    de ``_parse_json``), retorna ``None`` em vez de levantar exceção. Isso
+    permite que os chamadores (extract_batch / classify_batch) acionem o
+    fallback item-a-item — o prompt individual é bem menor e tem chance muito
+    maior de produzir JSON válido. Ou seja: 1 lote ruim não trava o pipeline.
+    """
     raw = generate(prompt, system_instruction, as_json=True, **kwargs)
-    return _parse_json(raw)
+    try:
+        return _parse_json(raw)
+    except json.JSONDecodeError as err:
+        # Log curto para diagnóstico (não inunda o terminal).
+        print(f"[aviso] LLM devolveu JSON inválido ({err}); "
+              "caindo p/ fallback item-a-item neste lote.")
+        return None
 
 
 def _parse_json(raw: str) -> Any:

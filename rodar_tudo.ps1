@@ -25,7 +25,10 @@
 .PARAMETER Sleep
   Pausa (s) entre chamadas à API, evita estourar o limite por minuto. Padrão 3.
 .PARAMETER AmostraN
-  Tamanho da amostra de teste no evaluate/llm_baseline. Padrão 40 (uso moderado).
+  Tamanho da amostra de teste no evaluate/llm_baseline. Padrão 0 = TODO o conjunto
+  de teste (com retomada automática: se a cota da API estourar, rode de novo no dia
+  seguinte que ele continua de onde parou, pulando os ids já em llm_baseline_preds.csv).
+  Use um número (ex.: -AmostraN 40) para limitar a amostra manualmente.
 .PARAMETER ConceitosN
   Quantos enunciados extrair conceitos. 0 = base toda (recomendado p/ approach C).
 .PARAMETER SemLLM
@@ -43,7 +46,7 @@ param(
     [string[]]$Bases      = @('Neps','INF110'),
     [int]     $Lote       = 10,
     [double]  $Sleep      = 3,
-    [int]     $AmostraN   = 40,
+    [int]     $AmostraN   = 0,
     [int]     $ConceitosN = 0,
     [switch]  $SemLLM,
     [switch]  $ComAvaliar

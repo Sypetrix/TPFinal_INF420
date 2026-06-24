@@ -66,7 +66,11 @@ def run(n_sample: int = 40, usar_llm: bool = True, lote: int = 1, sleep: float =
     df[ROW_KEY] = df.index
 
     df_train, df_test = data_utils.split_train_test(df)
-    amostra = df_test.sample(min(n_sample, len(df_test)), random_state=config.RANDOM_SEED)
+    if n_sample is None or n_sample <= 0:
+        amostra = df_test
+        print(f"Avaliação sobre TODO o conjunto de teste ({len(amostra)} exemplos).")
+    else:
+        amostra = df_test.sample(min(n_sample, len(df_test)), random_state=config.RANDOM_SEED)
 
     y_train = df_train[config.LABEL_COL].astype(str).str.lower()
     y_eval = amostra[config.LABEL_COL].astype(str).str.lower()
@@ -102,11 +106,30 @@ def run(n_sample: int = 40, usar_llm: bool = True, lote: int = 1, sleep: float =
 
     # ---- (B) LLM puro (Groq/Llama) ----
     if usar_llm:
-        from . import llm_baseline   # import preguiçoso (depende do pacote `groq`)
+        from . import llm_baseline   # import preguiçoso (depende do pacote do provedor)
 
         exemplos = llm_baseline.few_shot_examples(df_train, por_classe=1)
-        pred_b = llm_baseline.classify_series(amostra[config.TEXT_COL], exemplos, sleep=sleep, lote=lote)
-        resultados.append({"abordagem": "B) LLM puro (Groq)", **_metricas(y_eval, pred_b)})
+        # Usa o cache incremental: se a cota estourar no meio, basta rodar de
+        # novo que continua de onde parou (pula ids já em llm_baseline_preds.csv).
+        pred_b = llm_baseline.classify_with_cache(
+            amostra,
+            examples=exemplos,
+            sleep=sleep,
+            lote=lote,
+            save_path=config.LLM_BASELINE_PREDS,
+        )
+        # Se a cota acabar antes do fim, alguns ids ficam sem predição (NaN).
+        # Avalia só os que têm predição (e avisa quantos faltam).
+        mask = pred_b.notna()
+        faltando = int((~mask).sum())
+        if faltando:
+            print(f"[B] {faltando}/{len(amostra)} ainda sem predição "
+                  f"(cota da API esgotada?). Métricas calculadas sobre "
+                  f"{int(mask.sum())} exemplos já no cache; rode de novo "
+                  f"para terminar.")
+        if mask.any():
+            resultados.append({"abordagem": "B) LLM puro (Groq)",
+                               **_metricas(y_eval[mask.values], pred_b[mask].astype(str))})
     else:
         print("[B] pulada: execução com --no-llm.\n")
 
@@ -122,7 +145,8 @@ def run(n_sample: int = 40, usar_llm: bool = True, lote: int = 1, sleep: float =
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Etapa 7 - Avaliação final comparativa")
-    parser.add_argument("--n", type=int, default=40, help="tamanho da amostra de teste")
+    parser.add_argument("--n", type=int, default=40,
+                        help="tamanho da amostra de teste (0 = todo o conjunto de teste, com retomada)")
     parser.add_argument("--no-llm", action="store_true", help="não chama a API do LLM/Groq (pula B)")
     parser.add_argument("--lote", type=int, default=10,
                         help="enunciados por requisição no baseline LLM (prompt packing). "

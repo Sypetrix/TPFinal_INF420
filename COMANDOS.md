@@ -58,16 +58,23 @@ Saídas (por base): `models\<base>\ml_metrics.csv`, `ml_metrics_3niveis.csv`,
 $env:DATASET = "Neps"          # ou "INF110"
 # conceitos via LLM (feature da abordagem C). Lote 10 = ~10x menos chamadas.
 python -m src.llm_concepts --lote 10 --sleep 3
-# baseline: LLM classifica direto (few-shot)
-python -m src.llm_baseline --n 40 --few-shot --lote 10 --sleep 3
+# baseline: LLM classifica direto (few-shot). --n 0 = TODO o conjunto de teste.
+python -m src.llm_baseline --n 0 --few-shot --lote 10 --sleep 3
 # avaliação final comparando ML puro (A) x LLM (B) x ML+conceitos (C)
-python -m src.evaluate --n 40 --lote 10 --sleep 3
+python -m src.evaluate --n 0 --lote 10 --sleep 3
 ```
 
 Saída: `models\<base>\comparacao_final.csv` e `data\processed\<base>\llm_*.csv`.
 
 > **Sem querer gastar cota?** Rode só a parte offline da avaliação:
-> `python -m src.evaluate --n 40 --no-llm` (compara A e C, sem chamar a API).
+> `python -m src.evaluate --n 0 --no-llm` (compara A e C, sem chamar a API).
+
+> **Estourou a cota diária da Groq?** Sem problema: tanto `llm_concepts` quanto
+> `llm_baseline`/`evaluate` têm **cache incremental + retomada automática** (chave:
+> `id` da questão). Cada lote é salvo assim que termina em
+> `data\processed\<base>\llm_baseline_preds.csv` / `llm_features.csv`. Rode o mesmo
+> comando de novo (no dia seguinte, ou trocando `LLM_PROVIDER` no `.env` para
+> `deepseek`) e ele pula as questões já feitas e continua até terminar.
 
 ### 3. (Opcional) Inferência sobre questões novas
 

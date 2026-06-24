@@ -1,6 +1,6 @@
 ########################################################################
 #  RESUMO DE RESULTADOS — para conferência e montagem do banner
-#  gerado em: 2026-06-23 00:40:05
+#  gerado em: 2026-06-23 21:52:52
 #  bases incluídas: INF110, Neps
 ########################################################################
 
@@ -59,11 +59,11 @@ FONTE: INF110
 [ Comparação final — ML puro x LLM puro x ML+conceitos ]
   abordagem              acuracia   f1_macro   f1_pond.
   -----------------------------------------------------
-  B) LLM puro (Groq)        0.438      0.400      0.469
+  B) LLM puro (Groq)        0.312      0.269      0.323
   C) ML + features LLM      0.500      0.240      0.492
   A) ML puro (TF-IDF)       0.375      0.172      0.352
 
-  >> Melhor: B) LLM puro (Groq) (F1-macro=0.400, acurácia=0.438)
+  >> Melhor: B) LLM puro (Groq) (F1-macro=0.269, acurácia=0.312)
 
 
 ========================================================================
@@ -117,9 +117,9 @@ FONTE: Neps
 [ Comparação final — ML puro x LLM puro x ML+conceitos ]
   abordagem              acuracia   f1_macro   f1_pond.
   -----------------------------------------------------
-  C) ML + features LLM      0.480      0.393      0.475
-  A) ML puro (TF-IDF)       0.480      0.391      0.482
-  B) LLM puro (Groq)        0.375      0.378      0.388
+  A) ML puro (TF-IDF)       0.468      0.399      0.471
+  C) ML + features LLM      0.483      0.396      0.489
+  B) LLM puro (Groq)        0.300      0.281      0.302
 
-  >> Melhor: C) ML + features LLM (F1-macro=0.393, acurácia=0.480)
+  >> Melhor: A) ML puro (TF-IDF) (F1-macro=0.399, acurácia=0.468)
 

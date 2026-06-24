@@ -130,6 +130,18 @@ def _load_cache() -> pd.DataFrame:
     return pd.DataFrame(columns=[ROW_KEY, *CONCEITOS])
 
 
+def _salvar_cache_atomico(cache: pd.DataFrame, path) -> None:
+    """Grava o cache CSV de forma atômica (escreve em .tmp e renomeia).
+
+    Usado para salvar a CADA lote, de modo que um crash (cota, JSON quebrado,
+    queda de rede) nunca perca o trabalho já feito.
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    cache.to_csv(tmp, index=False)
+    tmp.replace(path)
+
+
 # ----------------------------------------------------------------------------
 # Conceitos para a BASE DE RECOMENDAÇÃO (por fonte, com cache/retomada)
 # ----------------------------------------------------------------------------
@@ -166,27 +178,28 @@ def extrair_conceitos_fonte(fonte: str, n: int | None = None, lote: int = 1,
         return saida
 
     registros = pend.to_dict("records")
-    novas: list[dict] = []
     print(f"[{fonte}] extraindo conceitos de {len(registros)} questão(ões) via LLM...")
-    if lote and lote > 1:
-        grupos = [registros[i:i + lote] for i in range(0, len(registros), lote)]
-        for grupo in tqdm(grupos, desc=f"conceitos {fonte} (lote={lote})"):
+    lote_eff = max(1, int(lote or 1))
+    grupos = [registros[i:i + lote_eff] for i in range(0, len(registros), lote_eff)]
+    desc = f"conceitos {fonte} (lote={lote_eff})" if lote_eff > 1 else f"conceitos {fonte}"
+    # Salva DEPOIS DE CADA LOTE — mesma garantia de retomada do passo de treino.
+    for grupo in tqdm(grupos, desc=desc):
+        if lote_eff > 1:
             vetores = extract_batch([str(r[config.TEXT_COL]) for r in grupo])
-            for r, feats in zip(grupo, vetores):
-                linha = dict(feats); linha[config.ID_COL] = r[config.ID_COL]
-                novas.append(linha)
-            if sleep:
-                time.sleep(sleep)
-    else:
-        for r in tqdm(registros, desc=f"conceitos {fonte}"):
-            linha = dict(extract_one(str(r[config.TEXT_COL])))
+        else:
+            vetores = [extract_one(str(grupo[0][config.TEXT_COL]))]
+        novas_linhas = []
+        for r, feats in zip(grupo, vetores):
+            linha = dict(feats)
             linha[config.ID_COL] = r[config.ID_COL]
-            novas.append(linha)
-            if sleep:
-                time.sleep(sleep)
+            novas_linhas.append(linha)
+        cache = pd.concat([cache, pd.DataFrame(novas_linhas)], ignore_index=True)
+        cache_ordenado = cache[[config.ID_COL, *CONCEITOS]]
+        _salvar_cache_atomico(cache_ordenado, saida)
+        if sleep:
+            time.sleep(sleep)
 
-    res = pd.concat([cache, pd.DataFrame(novas)], ignore_index=True)[[config.ID_COL, *CONCEITOS]]
-    res.to_csv(saida, index=False)
+    res = pd.read_csv(saida)
     print(f"[{fonte}] conceitos salvos em {saida} ({len(res)} linhas)")
     return saida
 
@@ -229,33 +242,32 @@ def run(n: int | None = None, sleep: float = 0.0, lote: int = 1) -> None:
         print("Nada a processar — todas as linhas já estão no cache.")
         return
 
-    print(f"Extraindo conceitos de {len(pendentes)} enunciado(s) via LLM (Groq)...")
+    print(f"Extraindo conceitos de {len(pendentes)} enunciado(s) via LLM...")
     if lote > 1:
         print(f"Lote (prompt packing): {lote} enunciados por requisição.")
     registros = pendentes.to_dict("records")
-    novas = []
-    if lote and lote > 1:
-        grupos = [registros[i:i + lote] for i in range(0, len(registros), lote)]
-        for grupo in tqdm(grupos, total=len(grupos), desc=f"LLM (features, lote={lote})"):
+    lote_eff = max(1, int(lote or 1))
+    grupos = [registros[i:i + lote_eff] for i in range(0, len(registros), lote_eff)]
+    desc = f"LLM (features, lote={lote_eff})" if lote_eff > 1 else "LLM (features)"
+    # Salva o cache DEPOIS DE CADA LOTE (atomicamente). Se a API cair, estourar
+    # a cota ou devolver JSON ruim, nada já feito é perdido — retoma do CSV.
+    for grupo in tqdm(grupos, total=len(grupos), desc=desc):
+        if lote_eff > 1:
             vetores = extract_batch([str(r[config.TEXT_COL]) for r in grupo])
-            for r, feats in zip(grupo, vetores):
-                feats = dict(feats)
-                feats[ROW_KEY] = int(r[ROW_KEY])
-                novas.append(feats)
-            if sleep:
-                time.sleep(sleep)
-    else:
-        for r in tqdm(registros, total=len(registros), desc="LLM (features)"):
-            feats = extract_one(str(r[config.TEXT_COL]))
-            feats[ROW_KEY] = int(r[ROW_KEY])
-            novas.append(feats)
-            if sleep:
-                time.sleep(sleep)
+        else:
+            vetores = [extract_one(str(grupo[0][config.TEXT_COL]))]
+        novas_linhas = []
+        for r, feats in zip(grupo, vetores):
+            linha = dict(feats)
+            linha[ROW_KEY] = int(r[ROW_KEY])
+            novas_linhas.append(linha)
+        cache = pd.concat([cache, pd.DataFrame(novas_linhas)], ignore_index=True)
+        cache_ordenado = cache.sort_values(ROW_KEY)[[ROW_KEY, *CONCEITOS]]
+        _salvar_cache_atomico(cache_ordenado, config.LLM_FEATURES)
+        if sleep:
+            time.sleep(sleep)
 
-    resultado = pd.concat([cache, pd.DataFrame(novas)], ignore_index=True)
-    resultado = resultado.sort_values(ROW_KEY)[[ROW_KEY, *CONCEITOS]]
-    resultado.to_csv(config.LLM_FEATURES, index=False)
-
+    resultado = pd.read_csv(config.LLM_FEATURES)
     print(f"\nFeatures salvas em: {config.LLM_FEATURES} ({len(resultado)} linhas)")
     print("Frequência de cada conceito:")
     print(resultado[CONCEITOS].sum().sort_values(ascending=False))

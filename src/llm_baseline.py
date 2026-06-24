@@ -3,17 +3,25 @@
 Classifica a dificuldade dos enunciados diretamente com o LLM, em modo
 zero-shot ou few-shot, para comparar com os modelos de ML tradicionais.
 
-Pré-requisito: GROQ_API_KEY no .env e (para o few-shot) dataset_limpo.csv.
+Tem **cache incremental + retomada automática** (chave: ``config.ID_COL``):
+cada lote é salvo em ``config.LLM_BASELINE_PREDS`` assim que termina, de modo
+que estourar a cota da API no meio do caminho NÃO perde o trabalho já feito —
+basta rodar de novo (no dia seguinte, ou com outro provedor) que o script pula
+as questões já classificadas e continua de onde parou.
+
+Pré-requisito: chave do provedor de LLM no .env e (para o few-shot) dataset_limpo.csv.
 
 Uso:
-    python -m src.llm_baseline --n 30
+    python -m src.llm_baseline --n 30              # 30 amostras do teste
     python -m src.llm_baseline --n 30 --few-shot
+    python -m src.llm_baseline --n 0               # TODO o conjunto de teste (com retomada)
 """
 from __future__ import annotations
 
 import argparse
 import time
 import unicodedata
+from pathlib import Path
 
 import pandas as pd
 from sklearn.metrics import accuracy_score, classification_report, f1_score
@@ -148,6 +156,8 @@ def classify_series(textos, examples=None, sleep: float = 0.0, lote: int = 1) ->
 
     ``lote`` > 1 agrupa os enunciados em lotes de ``lote`` por requisição
     (prompt packing), reduzindo o nº de chamadas à API ~``lote`` vezes.
+
+    *Sem cache* — use ``classify_with_cache`` quando precisar de retomada.
     """
     textos = [str(t) for t in textos]
     if lote and lote > 1:
@@ -166,7 +176,99 @@ def classify_series(textos, examples=None, sleep: float = 0.0, lote: int = 1) ->
     return preds
 
 
+# ----------------------------------------------------------------------------
+# Cache incremental + retomada
+# ----------------------------------------------------------------------------
+def _carregar_cache(path: Path) -> pd.DataFrame:
+    """Lê o CSV de cache se existir, garantindo a coluna pred_llm."""
+    if path.exists():
+        cache = pd.read_csv(path)
+        if "pred_llm" in cache.columns:
+            return cache
+    return pd.DataFrame()
+
+
+def _ids_em_cache(cache: pd.DataFrame) -> set[str]:
+    if cache.empty or config.ID_COL not in cache.columns:
+        return set()
+    return set(cache[config.ID_COL].astype(str))
+
+
+def _salvar_cache(cache: pd.DataFrame, path: Path) -> None:
+    """Grava o cache de forma atômica (escreve em .tmp e renomeia)."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    cache.to_csv(tmp, index=False)
+    tmp.replace(path)
+
+
+def classify_with_cache(
+    df: pd.DataFrame,
+    examples: list[tuple[str, str]] | None = None,
+    *,
+    sleep: float = 0.0,
+    lote: int = 1,
+    save_path: Path | None = None,
+    text_col: str | None = None,
+    id_col: str | None = None,
+) -> pd.Series:
+    """Classifica ``df`` com retomada: pula ids já presentes em ``save_path``.
+
+    A cada lote processado, o cache CSV é regravado por inteiro (operação
+    atômica via .tmp). Se a API estourar a cota no meio, o trabalho já feito
+    está salvo — basta rodar o comando de novo (mesmo dia com outro provedor,
+    ou no dia seguinte) que ele continua de onde parou.
+
+    Retorna uma ``Series`` de predições alinhada à ordem de ``df``.
+    """
+    text_col = text_col or config.TEXT_COL
+    id_col = id_col or config.ID_COL
+    save_path = save_path or config.LLM_BASELINE_PREDS
+
+    if id_col not in df.columns:
+        raise KeyError(f"Coluna de id '{id_col}' não está no DataFrame de entrada.")
+
+    cache = _carregar_cache(save_path)
+    feitos = _ids_em_cache(cache)
+
+    pendentes = df[~df[id_col].astype(str).isin(feitos)].copy()
+    total = len(df)
+    ja_cacheados = total - len(pendentes)
+    if ja_cacheados:
+        print(f"[cache] {ja_cacheados}/{total} já classificados — retomando do restante.")
+
+    if not pendentes.empty:
+        registros = pendentes.to_dict("records")
+        lote_eff = max(1, int(lote or 1))
+        grupos = [registros[i:i + lote_eff] for i in range(0, len(registros), lote_eff)]
+        desc = f"LLM (baseline, lote={lote_eff})" if lote_eff > 1 else "LLM (baseline)"
+        for grupo in tqdm(grupos, desc=desc):
+            textos = [str(r[text_col]) for r in grupo]
+            if lote_eff > 1:
+                preds_lote = classify_batch(textos, examples)
+            else:
+                preds_lote = [classify_one(textos[0], examples)]
+            novas_linhas = []
+            for r, pred in zip(grupo, preds_lote):
+                linha = dict(r)
+                linha["pred_llm"] = pred
+                novas_linhas.append(linha)
+            cache = pd.concat([cache, pd.DataFrame(novas_linhas)], ignore_index=True)
+            _salvar_cache(cache, save_path)
+            if sleep:
+                time.sleep(sleep)
+
+    # Alinha as predições à ordem do df de entrada.
+    mapa = dict(zip(cache[id_col].astype(str), cache["pred_llm"]))
+    return df[id_col].astype(str).map(mapa)
+
+
 def run(n: int = 30, few_shot: bool = False, sleep: float = 0.0, lote: int = 1) -> None:
+    """Roda o baseline LLM sobre uma amostra (ou TODO o teste, se n<=0).
+
+    Reaproveita ``config.LLM_BASELINE_PREDS`` como cache: se a cota da API
+    estourar, basta rodar de novo que continua de onde parou.
+    """
     config.require_api_key()
     if not config.CLEAN_DATASET.exists():
         raise FileNotFoundError(
@@ -174,20 +276,30 @@ def run(n: int = 30, few_shot: bool = False, sleep: float = 0.0, lote: int = 1) 
         )
 
     df = pd.read_csv(config.CLEAN_DATASET)
-    _, df_test = data_utils.split_train_test(df)
-    amostra = df_test.sample(min(n, len(df_test)), random_state=config.RANDOM_SEED)
+    df_train, df_test = data_utils.split_train_test(df)
 
-    exemplos = few_shot_examples(df, por_classe=1) if few_shot else None
+    if n is None or n <= 0:
+        amostra = df_test
+        print(f"Usando TODO o conjunto de teste ({len(amostra)} exemplos).")
+    else:
+        amostra = df_test.sample(min(n, len(df_test)), random_state=config.RANDOM_SEED)
+
+    exemplos = few_shot_examples(df_train, por_classe=1) if few_shot else None
     if exemplos:
         print(f"Few-shot com {len(exemplos)} exemplo(s).")
     if lote > 1:
         print(f"Lote (prompt packing): {lote} enunciados por requisição.")
 
-    preds = classify_series(amostra[config.TEXT_COL], exemplos, sleep=sleep, lote=lote)
+    preds = classify_with_cache(
+        amostra,
+        examples=exemplos,
+        sleep=sleep,
+        lote=lote,
+        save_path=config.LLM_BASELINE_PREDS,
+    )
     amostra = amostra.copy()
-    amostra["pred_llm"] = preds
-    amostra.to_csv(config.LLM_BASELINE_PREDS, index=False)
-    print(f"\nPredições salvas em: {config.LLM_BASELINE_PREDS}")
+    amostra["pred_llm"] = preds.values
+    print(f"\nPredições no cache: {config.LLM_BASELINE_PREDS}")
 
     if config.LABEL_COL in amostra.columns:
         y_true = amostra[config.LABEL_COL].astype(str).str.lower()
@@ -199,7 +311,8 @@ def run(n: int = 30, few_shot: bool = False, sleep: float = 0.0, lote: int = 1) 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Etapa 4 - Baseline de classificação com LLM (Groq)")
-    parser.add_argument("--n", type=int, default=30, help="qtd. de exemplos do teste")
+    parser.add_argument("--n", type=int, default=30,
+                        help="qtd. de exemplos do teste (0 = todo o conjunto de teste, com retomada)")
     parser.add_argument("--few-shot", action="store_true", help="inclui exemplos no prompt")
     parser.add_argument("--sleep", type=float, default=0.0, help="pausa entre chamadas (s)")
     parser.add_argument("--lote", type=int, default=10,
