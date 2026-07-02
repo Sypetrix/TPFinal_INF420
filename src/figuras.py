@@ -1,106 +1,88 @@
-"""Gera as figuras do relatório a partir dos artefatos salvos pela Etapa 3.
-
-Lê ``models/<DATASET>/ml_metrics.csv``, ``ml_metrics_3niveis.csv`` e
-``matriz_confusao.csv`` e produz, na pasta ``figuras/`` (versionada, para
-acompanhar o ``main.tex``), com o nome da fonte no arquivo (assim INF110 e Neps
-coexistem):
-
-  - ``matriz_confusao_<DATASET>.png`` : mapa de calor da matriz de confusão (5 níveis)
-  - ``comparacao_f1_<DATASET>.png``   : F1-macro por modelo, 5 vs 3 níveis
-
-Pré-requisito: rodar antes ``python -m src.train_ml`` (5 níveis) e
-``python -m src.train_ml --niveis 3`` (análise complementar).
-
-Uso:
-    python -m src.figuras                 # fonte ativa (DATASET)
-    DATASET=INF110 python -m src.figuras  # figuras do INF110
-"""
+"""Gera as figuras do relatorio a partir dos artefatos salvos pela Etapa 3."""
 from __future__ import annotations
 
 import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
-matplotlib.use("Agg")  # backend sem display, para salvar arquivos
-
-import matplotlib.pyplot as plt  # noqa: E402
-import numpy as np  # noqa: E402
-import pandas as pd  # noqa: E402
-
-from . import config  # noqa: E402
+from . import config
 
 FIG_DIR = config.ROOT_DIR / "figuras"
-
-# Abreviações dos níveis para caber nos eixos das figuras.
-ABREV = {
-    "muito_facil": "MF", "facil": "F", "medio": "M",
-    "dificil": "D", "muito_dificil": "MD",
-}
+ABREV = {"muito_facil": "MF", "facil": "F", "medio": "M", "dificil": "D", "muito_dificil": "MD"}
 MODELOS = ["KNN", "Regressao Logistica", "SVM (linear)", "Random Forest"]
 MODELOS_CURTO = ["KNN", "Reg. Log.", "SVM", "RF"]
 
 
-def _heatmap_confusao() -> None:
-    cm = pd.read_csv(config.MODELS_DIR / "matriz_confusao.csv", index_col=0)
-    rotulos = [ABREV.get(c, c) for c in cm.index]
-    valores = cm.values
+def _f1_por_modelo(df):
+    return [float(df.loc[df["modelo"] == n, "f1_macro"].iloc[0]) if (df["modelo"] == n).any() else np.nan for n in MODELOS]
 
-    fig, ax = plt.subplots(figsize=(4.0, 3.2))
-    im = ax.imshow(valores, cmap="Blues")
-    ax.set_xticks(range(len(rotulos)), labels=rotulos)
-    ax.set_yticks(range(len(rotulos)), labels=rotulos)
-    ax.set_xlabel("Classe prevista")
-    ax.set_ylabel("Classe verdadeira")
-    limiar = valores.max() / 2 if valores.max() else 1
-    for i in range(valores.shape[0]):
-        for j in range(valores.shape[1]):
-            ax.text(j, i, int(valores[i, j]), ha="center", va="center",
-                    color="white" if valores[i, j] > limiar else "black", fontsize=9)
-    fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+
+def _painel_matrizes():
+    MODELS = config.ROOT_DIR / "models"
+    fontes = ["INF110", "Neps"]
+    csvs = {}
+    for f in fontes:
+        c5 = MODELS / f / "matriz_confusao.csv"
+        c3 = MODELS / f / "matriz_confusao_3niveis.csv"
+        if not (c5.exists() and c3.exists()):
+            print(f"[aviso] artefatos de {f} faltando; painel NAO gerado."); return
+        csvs[f] = (c5, c3)
+    fig, axes = plt.subplots(2, 2, figsize=(8.5, 7.0))
+    titulos = [("INF110 - 5 niveis", csvs["INF110"][0]),
+               ("INF110 - 3 niveis", csvs["INF110"][1]),
+               ("Neps - 5 niveis", csvs["Neps"][0]),
+               ("Neps - 3 niveis", csvs["Neps"][1])]
+    for ax, (t, p) in zip(axes.flat, titulos):
+        cm = pd.read_csv(p, index_col=0)
+        rot = [ABREV.get(c, c) for c in cm.index]
+        v = cm.values
+        im = ax.imshow(v, cmap="Blues")
+        ax.set_xticks(range(len(rot)), labels=rot); ax.set_yticks(range(len(rot)), labels=rot)
+        ax.set_title(t, fontsize=11); ax.set_xlabel("Prevista", fontsize=9); ax.set_ylabel("Verdadeira", fontsize=9)
+        lim = v.max() / 2 if v.max() else 1
+        for i in range(v.shape[0]):
+            for j in range(v.shape[1]):
+                ax.text(j, i, int(v[i, j]), ha="center", va="center",
+                        color="white" if v[i, j] > lim else "black", fontsize=8)
+        fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
     fig.tight_layout()
-    saida = FIG_DIR / f"matriz_confusao_{config.DATASET}.png"
-    fig.savefig(saida, dpi=200)
-    plt.close(fig)
-    print("salvo:", saida)
+    s = FIG_DIR / "matrizes_consolidadas.png"
+    fig.savefig(s, dpi=200); plt.close(fig); print("salvo:", s)
 
 
-def _f1_por_modelo(df: pd.DataFrame) -> list[float]:
-    return [
-        float(df.loc[df["modelo"] == nome, "f1_macro"].iloc[0])
-        if (df["modelo"] == nome).any() else np.nan
-        for nome in MODELOS
-    ]
-
-
-def _barras_f1() -> None:
-    m5 = pd.read_csv(config.MODELS_DIR / "ml_metrics.csv")
-    m3 = pd.read_csv(config.MODELS_DIR / "ml_metrics_3niveis.csv")
-    v5, v3 = _f1_por_modelo(m5), _f1_por_modelo(m3)
-
-    x = np.arange(len(MODELOS))
-    largura = 0.38
-    fig, ax = plt.subplots(figsize=(6.0, 3.3))
-    ax.bar(x - largura / 2, v5, largura, label="5 níveis")
-    ax.bar(x + largura / 2, v3, largura, label="3 níveis")
-    ax.set_xticks(x, labels=MODELOS_CURTO)
-    ax.set_ylabel("F1-macro")
-    ax.set_ylim(0, 0.6)
-    ax.legend()
-    for i, (a, b) in enumerate(zip(v5, v3)):
-        ax.text(i - largura / 2, a + 0.01, f"{a:.2f}", ha="center", fontsize=8)
-        ax.text(i + largura / 2, b + 0.01, f"{b:.2f}", ha="center", fontsize=8)
+def _barras_f1_consolidadas():
+    MODELS = config.ROOT_DIR / "models"
+    fontes = ["INF110", "Neps"]
+    dados = {}
+    for f in fontes:
+        m5 = MODELS / f / "ml_metrics.csv"; m3 = MODELS / f / "ml_metrics_3niveis.csv"
+        if not (m5.exists() and m3.exists()):
+            print(f"[aviso] metricas de {f} faltando; NAO gerado."); return
+        dados[f] = (pd.read_csv(m5), pd.read_csv(m3))
+    fig, axes = plt.subplots(1, 2, figsize=(9.6, 3.6), sharey=True)
+    x = np.arange(len(MODELOS)); w = 0.38
+    for ax, f in zip(axes, fontes):
+        m5, m3 = dados[f]; v5, v3 = _f1_por_modelo(m5), _f1_por_modelo(m3)
+        ax.bar(x - w/2, v5, w, label="5 niveis"); ax.bar(x + w/2, v3, w, label="3 niveis")
+        ax.set_xticks(x, labels=MODELOS_CURTO); ax.set_title(f, fontsize=11); ax.set_ylim(0, 0.75)
+        for i, (a, b) in enumerate(zip(v5, v3)):
+            ax.text(i - w/2, a + 0.01, f"{a:.2f}", ha="center", fontsize=8)
+            ax.text(i + w/2, b + 0.01, f"{b:.2f}", ha="center", fontsize=8)
+    axes[0].set_ylabel("F1-macro"); axes[0].legend(loc="upper right", fontsize=9)
     fig.tight_layout()
-    saida = FIG_DIR / f"comparacao_f1_{config.DATASET}.png"
-    fig.savefig(saida, dpi=200)
-    plt.close(fig)
-    print("salvo:", saida)
+    s = FIG_DIR / "comparacao_f1_consolidada.png"
+    fig.savefig(s, dpi=200); plt.close(fig); print("salvo:", s)
 
 
-def run() -> None:
+def run():
     FIG_DIR.mkdir(exist_ok=True)
-    _heatmap_confusao()
-    _barras_f1()
+    _painel_matrizes()
+    _barras_f1_consolidadas()
 
 
-def main() -> None:
+def main():
     run()
 
 

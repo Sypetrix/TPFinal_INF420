@@ -40,7 +40,7 @@
 \renewcommand{\shortauthors}{Oliveira e Pereira}
 
 \begin{abstract}
-Este trabalho investiga se o nível de dificuldade de uma questão de programação pode ser inferido automaticamente apenas a partir de seu enunciado textual. A tarefa foi modelada como classificação supervisionada em cinco níveis (de muito fácil a muito difícil), derivados das avaliações empíricas de dificuldade atribuídas por alunos a 80 questões da disciplina INF110 da Universidade Federal de Viçosa. Comparamos quatro famílias de modelos clássicos de aprendizado de máquina --- Regressão Logística, K-Nearest Neighbors (KNN), Support Vector Machines (SVM) e Random Forest --- sobre representações TF-IDF, utilizando validação cruzada estratificada, ajuste de hiperparâmetros e prevenção explícita de vazamento de informação, tendo como piso de comparação um \textit{baseline} de classe majoritária. O melhor modelo (KNN) atingiu F1-macro de $0{,}30$ na escala de cinco níveis, contra $0{,}13$ do \textit{baseline}. Uma análise complementar de granularidade mostrou que, ao reduzir a escala para três níveis, o F1-macro sobe para $0{,}44$, evidenciando o forte impacto do número de classes e do desbalanceamento. Adicionalmente, integramos um Grande Modelo de Linguagem (LLM, o Llama~3.1 servido pela plataforma Groq) em três papéis: \textit{baseline} de classificação, gerador de explicações e extrator de características semânticas. Por fim, encadeamos esses componentes em uma etapa de inferência que, dada uma questão nova, prevê sua dificuldade, identifica seus conceitos e recomenda exercícios semelhantes do catálogo no mesmo nível. Validamos ainda a mesma metodologia em uma base de maior escala (Neps Academy, 1.333 questões rotuladas por juiz), na qual o melhor modelo atinge F1-macro de $0{,}43$ (cinco níveis) e $0{,}59$ (três níveis) --- é esse classificador, treinado na base mais rica, que alimenta a ferramenta em uso prático. Concluímos que o enunciado textual carrega sinal real, porém parcial, para a tarefa.
+Este trabalho investiga se o nível de dificuldade de uma questão de programação pode ser inferido automaticamente apenas a partir do enunciado textual. Comparamos duas granularidades de rótulo (cinco níveis, derivados diretamente das avaliações dos alunos, e três níveis, obtidos colapsando as extremidades) e, com base no ganho consistente de precisão observado experimentalmente, adotamos \textbf{três níveis} como configuração final do sistema. A metodologia foi aplicada em duas bases distintas para permitir comparação direta: o \textbf{INF110} (Universidade Federal de Viçosa, 80 questões rotuladas pelos alunos) e o \textbf{Neps Academy} (1.333 questões rotuladas por juiz). Sobre representações TF-IDF, comparamos quatro famílias de modelos clássicos --- Regressão Logística, KNN, SVM linear e Random Forest --- em validação cruzada estratificada, com prevenção explícita de vazamento de informação. Os melhores resultados foram F1-macro $0{,}47$ (INF110, três níveis) e $0{,}60$ (Neps, três níveis), contra $0{,}30$ e $0{,}43$ na escala de cinco níveis. Um LLM servido pela plataforma \textbf{Groq} foi integrado em três papéis (\textit{baseline} de classificação, gerador de explicações e extrator de conceitos), e o pipeline foi encadeado em uma etapa de inferência que, dada uma questão nova, prevê sua dificuldade, identifica conceitos e recomenda exercícios semelhantes do catálogo. O classificador Random Forest treinado no Neps em três níveis é o que alimenta a ferramenta em uso prático.
 \end{abstract}
 
 \keywords{aprendizado de máquina, classificação de texto, processamento de linguagem natural, TF-IDF, LLMs, dificuldade de questões de programação}
@@ -51,221 +51,195 @@ Este trabalho investiga se o nível de dificuldade de uma questão de programaç
 
 A classificação automática da dificuldade de questões de programação é um problema relevante em contextos educacionais, como plataformas de ensino e sistemas de recomendação de exercícios. A capacidade de estimar automaticamente o nível de dificuldade pode auxiliar tanto alunos quanto professores na organização do processo de aprendizagem, na montagem de listas balanceadas e na personalização de trilhas de estudo.
 
-A principal pergunta que orientou o trabalho foi: \textit{é possível inferir automaticamente o nível de dificuldade de uma questão de programação apenas a partir de seu enunciado textual?} Para respondê-la, tratamos a tarefa como um problema de classificação supervisionada e a estudamos sobre uma base real de avaliações de dificuldade feitas por alunos.
+A principal pergunta que orientou o trabalho foi: \textit{é possível inferir automaticamente o nível de dificuldade de uma questão de programação apenas a partir de seu enunciado textual?} Para respondê-la, tratamos a tarefa como um problema de classificação supervisionada e a estudamos sobre duas bases reais: uma com dificuldade percebida pelos alunos e outra com dificuldade atribuída por juiz.
 
 As principais contribuições deste trabalho são:
 \begin{itemize}
-  \item um \textit{pipeline} reprodutível e modular que vai da ingestão dos dados brutos à avaliação dos modelos, com configuração centralizada e separação por fonte de dados;
-  \item uma comparação criteriosa de quatro famílias de modelos clássicos sobre representações TF-IDF, com validação cruzada estratificada, busca de hiperparâmetros, prevenção explícita de vazamento de informação e comparação contra um \textit{baseline} trivial;
-  \item uma análise de granularidade que contrasta a tarefa em cinco e em três níveis, quantificando o impacto do número de classes;
-  \item a integração de um LLM (Llama~3.1, via Groq) em três papéis estratégicos --- \textit{baseline} de classificação, explicador e extrator de características semânticas;
-  \item um recomendador de exercícios por \textbf{conceitos} (com TF-IDF como alternativa) e \textbf{dificuldade compatível}, capaz de combinar múltiplas fontes de questões; e
-  \item uma etapa de inferência integrada que, para uma questão nova, prevê a dificuldade, identifica os conceitos e recomenda exercícios semelhantes no nível previsto --- estabelecendo o elo entre classificação e recomendação.
+  \item um \textit{pipeline} reprodutível e modular que vai da ingestão dos dados brutos à avaliação dos modelos, com configuração centralizada e suporte a múltiplas fontes de dados no mesmo arcabouço;
+  \item uma comparação direta de duas granularidades de rótulo (cinco e três níveis) sobre duas bases (INF110 e Neps Academy), que justifica empiricamente a escolha por três níveis como configuração final;
+  \item a comparação de quatro famílias de modelos clássicos sobre representações TF-IDF, com validação cruzada estratificada, busca de hiperparâmetros e prevenção explícita de vazamento de informação;
+  \item a integração de um LLM (via plataforma \textbf{Groq}, com cliente OpenAI-compatível intercambiável por configuração) em três papéis estratégicos: \textit{baseline} de classificação, explicador e extrator de conceitos; e
+  \item uma etapa de inferência integrada que, para uma questão nova, prevê a dificuldade (ML), identifica conceitos (LLM) e recomenda exercícios semelhantes por conceitos em comum e dificuldade compatível, funcionando como a ferramenta em uso prático.
 \end{itemize}
 
 \section{Trabalhos Relacionados}
 
 A representação de textos por TF-IDF (\textit{Term Frequency--Inverse Document Frequency}) é uma técnica consolidada em recuperação de informação e classificação de texto~\cite{salton1988}, por ponderar termos de acordo com sua frequência local e raridade no corpus. Sobre essas representações, modelos clássicos de aprendizado de máquina são amplamente empregados: a classificação por vizinhos mais próximos~\cite{coverhart1967}, as máquinas de vetores de suporte~\cite{cortes1995} e as florestas aleatórias~\cite{breiman2001} figuram entre as abordagens mais robustas para dados esparsos, ao lado de métodos lineares. Toda a implementação apoiou-se em bibliotecas maduras do ecossistema Python, em especial o \texttt{scikit-learn}~\cite{pedregosa2011} e o \texttt{NLTK}~\cite{bird2009}.
 
-Mais recentemente, Grandes Modelos de Linguagem (LLMs) como o Llama~\cite{llama2024} têm sido aplicados a tarefas de compreensão textual em cenários de poucos exemplos (\textit{few-shot}), tornando-se candidatos naturais tanto como \textit{baselines} fortes quanto como ferramentas de extração de conhecimento. A estimativa automática de dificuldade, especificamente, é um problema desafiador porque a dificuldade percebida depende não só do texto, mas de conhecimentos prévios e habilidades do solucionador, o que motiva o uso combinado de representações clássicas e semânticas.
+Mais recentemente, Grandes Modelos de Linguagem (LLMs) têm sido aplicados a tarefas de compreensão textual em cenários de poucos exemplos (\textit{few-shot}), tornando-se candidatos naturais tanto como \textit{baselines} fortes quanto como ferramentas de extração de conhecimento. A estimativa automática de dificuldade, especificamente, é um problema desafiador porque a dificuldade percebida depende não só do texto, mas de conhecimentos prévios e habilidades do solucionador, o que motiva o uso combinado de representações clássicas e semânticas.
 
 \section{Materiais e Métodos}
 
-\subsection{Base de Dados}
+\subsection{Bases de Dados}
+\label{sec:bases}
 
-A base principal foi fornecida pelo professor e corresponde a questões da disciplina INF110 da Universidade Federal de Viçosa. Cada questão possui um enunciado textual e, quando avaliada, um conjunto de notas de dificuldade atribuídas empiricamente por alunos em uma escala de 1 (muito fácil) a 5 (muito difícil). Ao todo, são 138 enunciados; destes, 80 receberam avaliações de alunos, totalizando 2.244 avaliações coletadas ao longo de três anos (308 em 2024, 1.233 em 2025 e 703 em 2026). Os enunciados têm, em média, 236 palavras (mediana de 220, variando de 67 a 610).
+O trabalho utiliza \textbf{duas bases distintas} por escolha metodológica: uma reflete a dificuldade \emph{subjetiva} (percepção real dos alunos), a outra reflete a dificuldade \emph{objetiva} (juízo profissional). Estudar as duas em paralelo permite separar o que é característica do sinal textual do que é ruído de rótulo. Aplicamos exatamente a mesma metodologia a ambas para permitir comparação direta:
 
-Para obter um rótulo único por questão, agregamos as notas dos alunos pela \textbf{média aritmética arredondada ao inteiro mais próximo}, mapeando cada inteiro de 1 a 5 a um dos cinco níveis canônicos. Optou-se pela média, e não pela moda, para evitar classificações enganosas em casos bimodais --- por exemplo, quando metade dos alunos considera a questão muito fácil e a outra metade muito difícil, a média a posiciona corretamente como ``médio''. A Tabela~\ref{tab:dist} apresenta a distribuição resultante.
+\begin{itemize}
+  \item \textbf{INF110} (Universidade Federal de Viçosa): 138 enunciados da disciplina, dos quais \textbf{80} receberam avaliações empíricas de dificuldade por alunos em uma escala de 1 (muito fácil) a 5 (muito difícil). Ao todo, foram coletadas 2.244 avaliações ao longo de três anos (308 em 2024, 1.233 em 2025 e 703 em 2026). Para obter um rótulo único por questão, agregamos as notas pela \textbf{média aritmética arredondada ao inteiro mais próximo}. Optou-se pela média, e não pela moda, para evitar classificações enganosas em casos bimodais.
+  \item \textbf{Neps Academy}: 1.448 questões coletadas da plataforma, das quais \textbf{1.333} trazem a dificuldade \textbf{atribuída por juiz}. Diferentemente do INF110, o rótulo é objetivo (não depende de percepção de aluno) e as classes são muito melhor balanceadas.
+\end{itemize}
+
+A Tabela~\ref{tab:bases} mostra a distribuição das duas bases pelas cinco classes. O contraste é o esperado: o INF110 é pequeno e fortemente desbalanceado (com ``muito difícil'' contendo um único exemplo), enquanto o Neps é grande e tem representação razoável em todas as classes.
 
 \begin{table}[t]
-  \caption{Distribuição das 80 questões rotuladas do INF110 pelos cinco níveis de dificuldade.}
-  \label{tab:dist}
-  \begin{tabular}{lc}
+  \caption{Distribuição das duas bases rotuladas pelas cinco classes de dificuldade.}
+  \label{tab:bases}
+  \begin{tabular}{lcc}
     \toprule
-    Nível & \# Questões \\
+    Nível & INF110 & Neps Academy \\
     \midrule
-    Muito fácil    & 7  \\
-    Fácil          & 31 \\
-    Médio          & 32 \\
-    Difícil        & 9  \\
-    Muito difícil  & 1  \\
+    Muito fácil    & 7   & 45    \\
+    Fácil          & 31  & 306   \\
+    Médio          & 32  & 324   \\
+    Difícil        & 9   & 562   \\
+    Muito difícil  & 1   & 96    \\
     \midrule
-    Total          & 80 \\
+    Total          & 80  & 1.333 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Observa-se um \textbf{desbalanceamento severo}: as classes centrais (fácil e médio) concentram 63 das 80 questões, enquanto ``muito difícil'' possui um único exemplo. Esse desequilíbrio, inerente à percepção real dos discentes, é um fator determinante para os resultados e é discutido na Seção~\ref{sec:resultados}. As 58 questões sem avaliação não entram no treinamento supervisionado, mas são aproveitadas pelo recomendador (Seção~\ref{sec:recomendador}).
+É importante ressaltar que os dois rótulos medem coisas distintas: o INF110 captura a dificuldade \emph{percebida pelos alunos} (subjetiva, com ruído do repertório de quem avaliou), enquanto o Neps reflete a dificuldade \emph{atribuída por um juiz} (objetiva, menos ruidosa). Os resultados nas duas bases não são, portanto, diretamente comparáveis em termos absolutos. Ainda assim, aplicar a mesma metodologia às duas permite observar se os padrões (impacto da granularidade, ranqueamento entre modelos) se mantêm.
 
-\subsection{Decisão de Modelagem: Cinco Níveis}
+Além dessas duas bases rotuladas, o \textbf{recomendador} combina múltiplas fontes como catálogo (SPOJ, com 301 questões, e OBI, com 353), totalizando mais de 2.200 exercícios candidatos. Como o recomendador é baseado em conteúdo (conceitos + TF-IDF), essas fontes sem rótulo também podem entrar: a dificuldade delas é preenchida pela predição do modelo de ML.
 
-Diferentemente da proposta inicial, que previa três níveis (fácil, médio e difícil), a versão final adota \textbf{cinco níveis}, em correspondência direta com a escala de 1 a 5 utilizada pelos alunos. Essa decisão preserva toda a granularidade da percepção dos discentes e evita o descarte de informação que ocorreria ao colapsar a escala. O custo dessa escolha é tornar a tarefa mais difícil e acentuar o desbalanceamento nas extremidades, o que avaliamos explicitamente na análise de granularidade (Seção~\ref{sec:granularidade}).
+\subsection{Escala de Dificuldade: Cinco versus Três Níveis}
+\label{sec:escala}
+
+Ao longo do desenvolvimento, testamos duas granularidades de rótulo:
+\begin{itemize}
+  \item \textbf{Cinco níveis}: escala natural, em correspondência direta com as notas de 1 a 5 (muito fácil, fácil, médio, difícil, muito difícil);
+  \item \textbf{Três níveis}: escala reduzida (fácil, médio, difícil), obtida colapsando muito fácil + fácil e difícil + muito difícil.
+\end{itemize}
+
+Após comparar experimentalmente as duas granularidades (Seção~\ref{sec:resultados}), \textbf{a versão final adota três níveis}. A decisão é justificada em duas frentes: (i) ganho consistente de F1-macro em todas as famílias de modelos e em ambas as bases; e (ii) na escala de cinco níveis, o modelo ignora sistematicamente as classes extremas quando a base é pequena, o que compromete a utilidade prática.
 
 \subsection{Pré-processamento e Representação}
 
-Cada enunciado passou por uma rotina de limpeza padronizada: conversão para minúsculas, remoção de trechos de código, remoção de acentuação e de pontuação, colapso de espaços e remoção de \textit{stopwords} em português e inglês (via \texttt{NLTK}~\cite{bird2009}). Os enunciados limpos foram convertidos em vetores TF-IDF~\cite{salton1988}, considerando unigramas e bigramas, com no máximo 5.000 atributos e descartando termos que aparecessem em menos de dois documentos. A vetorização foi encapsulada em um \textit{pipeline} de modo a ser reajustada de forma independente em cada partição de treino (Seção~\ref{sec:protocolo}). O uso de \textit{embeddings} semânticos densos foi considerado e permanece como trabalho futuro (Seção~\ref{sec:conclusao}).
+Cada enunciado passou por uma rotina de limpeza padronizada: conversão para minúsculas, remoção de trechos de código, remoção de acentuação e de pontuação, colapso de espaços e remoção de \textit{stopwords} em português e inglês (via \texttt{NLTK}~\cite{bird2009}). Os enunciados limpos foram convertidos em vetores TF-IDF~\cite{salton1988}, considerando unigramas e bigramas, com no máximo 5.000 atributos e descartando termos que aparecessem em menos de dois documentos.
+
+A escolha do TF-IDF em vez de \textit{embeddings} densos foi deliberada. Em regime de poucos exemplos rotulados (o INF110 tem 80), representações interpretáveis e de baixa variância tendem a superar representações de alta capacidade, que exigem muitos dados para não sobreajustar. O TF-IDF também facilita a inspeção posterior de quais termos pesam em cada predição. A vetorização foi encapsulada em um \textit{pipeline} de modo a ser reajustada de forma independente em cada partição de treino (Seção~\ref{sec:protocolo}).
 
 \subsection{Modelos}
 
-Foram exploradas quatro famílias de modelos, escolhidas por representarem paradigmas distintos de aprendizado e por permitirem comparação justa em um mesmo cenário: \textbf{Regressão Logística} (linear), \textbf{KNN}~\cite{coverhart1967} (baseado em vizinhança, com distância do cosseno), \textbf{SVM linear}~\cite{cortes1995} (margem máxima) e \textbf{Random Forest}~\cite{breiman2001} (\textit{ensemble} de árvores). Para mitigar o desbalanceamento, os modelos que o suportam foram treinados com ponderação de classes inversamente proporcional à sua frequência. Os hiperparâmetros de cada família foram selecionados por busca em grade (\textit{grid search}) sob a mesma validação cruzada, otimizando o F1-macro. Como piso de comparação, incluímos um \textit{baseline} trivial que sempre prevê a classe majoritária.
+Foram exploradas quatro famílias, escolhidas para cobrir paradigmas distintos de decisão e evitar que o resultado dependa de uma única premissa indutiva: \textbf{Regressão Logística} (fronteira linear no espaço TF-IDF), \textbf{KNN}~\cite{coverhart1967} (baseado em vizinhança, com distância do cosseno, sem premissa paramétrica), \textbf{SVM linear}~\cite{cortes1995} (margem máxima, robusto a alta dimensão esparsa) e \textbf{Random Forest}~\cite{breiman2001} (\textit{ensemble} de árvores, capaz de capturar interações não lineares). Assim, quatro respostas independentes convergem ou divergem sobre o mesmo cenário.
+
+Os modelos que o suportam foram treinados com ponderação de classes inversamente proporcional à sua frequência, para mitigar o desbalanceamento. Os hiperparâmetros de cada família foram selecionados por busca em grade (\textit{grid search}) sob a mesma validação cruzada, otimizando o F1-macro. Como piso de comparação, incluímos um \textit{baseline} trivial que sempre prevê a classe majoritária.
 
 \subsection{Protocolo de Avaliação}
 \label{sec:protocolo}
 
-Como a base rotulada é pequena (80 exemplos), um único particionamento treino/teste produziria métricas instáveis e pouco confiáveis. Adotamos, portanto, \textbf{validação cruzada estratificada} com 5 partições, reportando média e desvio-padrão entre elas. Quando alguma classe é rara demais para ser estratificada (caso de ``muito difícil'', com um exemplo), o procedimento recai automaticamente para uma validação cruzada não estratificada, com aviso.
+Adotamos \textbf{validação cruzada estratificada} com 5 partições, reportando média e desvio-padrão entre elas. Quando alguma classe é rara demais para ser estratificada (caso de ``muito difícil'' no INF110, com um exemplo), o procedimento recai automaticamente para uma validação cruzada não estratificada.
 
-Dois cuidados metodológicos foram centrais. Primeiro, a \textbf{prevenção de vazamento de informação}: o vetorizador TF-IDF é reajustado \emph{dentro} de cada partição de treino, nunca tendo acesso aos documentos de teste --- evitando que estatísticas globais do corpus contaminem a avaliação. Segundo, o uso de \textbf{predições \textit{out-of-fold}} para construir o relatório por classe e a matriz de confusão, de modo que cada questão seja avaliada exatamente pelo modelo que não a viu durante o treino. As métricas reportadas são acurácia, F1-macro (que trata todas as classes igualmente, penalizando o mau desempenho nas classes raras) e F1-ponderado. Todos os experimentos usaram semente aleatória fixa para garantir reprodutibilidade.
+Dois cuidados metodológicos foram centrais. Primeiro, a \textbf{prevenção de vazamento de informação}: o vetorizador TF-IDF é reajustado \emph{dentro} de cada partição de treino, nunca tendo acesso aos documentos de teste. Segundo, o uso de \textbf{predições \textit{out-of-fold}} para construir o relatório por classe e a matriz de confusão, de modo que cada questão seja avaliada exatamente pelo modelo que não a viu durante o treino.
+
+Adotamos o \textbf{F1-macro como métrica-alvo} justamente porque a acurácia é enganosa em bases desbalanceadas: um classificador trivial que sempre prevê a classe majoritária alcança acurácia acima do acaso, mas F1-macro próximo a zero. O F1-macro trata todas as classes com o mesmo peso e penaliza fortemente o modelo que ignora as classes raras, o que é exatamente o comportamento que queremos evitar. Reportamos ainda acurácia e F1-ponderado como referências complementares. Todos os experimentos usaram semente aleatória fixa para garantir reprodutibilidade.
 
 \subsection{Integração de LLM}
 
-Um LLM aberto de ponta (Llama~3.1~\cite{llama2024}), servido com inferência gratuita e de alta vazão pela plataforma Groq, foi integrado ao sistema em três papéis estratégicos:
+Um Grande Modelo de Linguagem servido pela plataforma \textbf{Groq}, cuja camada gratuita oferece cota diária elevada, foi integrado ao sistema em três papéis estratégicos:
 \begin{enumerate}
   \item \textbf{\textit{Baseline} de classificação}: o modelo classifica diretamente a dificuldade do enunciado, em modo \textit{zero-shot} ou \textit{few-shot}, servindo de referência para os modelos clássicos;
-  \item \textbf{Explicador}: gera justificativas em linguagem natural para a dificuldade atribuída, citando os conceitos e algoritmos envolvidos, dando transparência às predições; e
-  \item \textbf{Extrator de características semânticas}: identifica os conceitos necessários para resolver cada questão (por exemplo, recursão, programação dinâmica, grafos e estruturas de dados), gerando atributos que podem ser combinados às \textit{features} TF-IDF.
+  \item \textbf{Explicador}: gera justificativas em linguagem natural para a dificuldade e para as recomendações, dando transparência às predições; e
+  \item \textbf{Extrator de conceitos}: identifica os conceitos necessários para resolver cada questão (recursão, programação dinâmica, grafos, estruturas de dados etc.), gerando atributos que podem ser combinados às \textit{features} TF-IDF e, principalmente, servem de critério de similaridade para o recomendador.
 \end{enumerate}
-O arcabouço de avaliação comparativa --- modelos clássicos \textit{versus} LLM \textit{versus} modelos clássicos enriquecidos com as características extraídas pelo LLM --- está implementado e é reprodutível. A adoção da Groq, cuja camada gratuita oferece cota diária elevada, remove a barreira de custo que limitava a comparação empírica em larga escala com o LLM. Esses papéis convergem em uma \textbf{etapa de inferência} que operacionaliza o uso-fim da ferramenta: dada uma questão nova, ainda sem rótulo, o sistema prevê sua dificuldade (pelos modelos clássicos e/ou pelo LLM), identifica seus conceitos e, a partir desse nível e conteúdo, recomenda exercícios semelhantes do catálogo rotulado --- estabelecendo o elo entre classificação e recomendação.
+A implementação é agnóstica ao modelo específico: o cliente é construído sobre o padrão \textit{OpenAI-compatível}, então o modelo em uso é apenas um parâmetro de configuração. Basta trocá-lo no \texttt{.env} para experimentar diferentes modelos servidos pelo Groq ou migrar para outro provedor compatível, sem alterar o código.
 
 \subsection{Recomendador de Exercícios}
 \label{sec:recomendador}
 
-Como componente central, implementamos um recomendador cujo critério de similaridade são os \textbf{conceitos identificados pela LLM} (recorrendo à similaridade TF-IDF do enunciado quando os conceitos não estão disponíveis), com filtro por \textbf{dificuldade compatível} (mesmo nível ou um acima/abaixo). As questões do catálogo sem rótulo recebem dificuldade \emph{predita pelo modelo de ML treinado}, de modo que o filtro por nível valha para toda a base. O catálogo combina múltiplas fontes, incluindo --- além do INF110 --- questões do Neps Academy (1.448), do SPOJ (301) e da OBI (353), totalizando mais de 2.200 exercícios candidatos. Quando aplicado a uma questão nova (uso-fim da ferramenta), o filtro é acionado pela \emph{dificuldade prevista} para aquela questão, alinhando as sugestões ao nível estimado.
+Como componente central da ferramenta, implementamos um recomendador cujo critério principal de similaridade são os \textbf{conceitos identificados pela LLM}, com fallback para similaridade TF-IDF do enunciado quando os conceitos não estão disponíveis. O filtro por \textbf{dificuldade compatível} (mesmo nível ou um acima/abaixo) usa a escala de três níveis, coerente com a decisão da Seção~\ref{sec:escala}. As questões do catálogo sem rótulo recebem dificuldade \emph{predita pelo modelo de ML treinado}, de modo que o filtro por nível valha para toda a base. Quando aplicado a uma questão nova (uso-fim da ferramenta), o filtro é acionado pela dificuldade prevista para aquela questão, alinhando as sugestões ao nível estimado.
 
 \section{Resultados e Discussão}
 \label{sec:resultados}
 
-\subsection{Classificação em Cinco Níveis}
+A análise segue duas frentes complementares. Primeiro, comparamos as quatro famílias em desempenho agregado (F1-macro por modelo, base e escala de dificuldade), o que sustenta a escolha de três níveis como configuração final (Seção~\ref{sec:comparacao}). Em seguida, inspecionamos qualitativamente onde cada configuração acerta ou erra, via matrizes de confusão \textit{out-of-fold} (Seção~\ref{sec:matrizes}). A síntese na Seção~\ref{sec:pergunta} responde à pergunta que orientou o trabalho.
 
-A Tabela~\ref{tab:resultados} apresenta o desempenho das quatro famílias sob validação cruzada. O \textbf{KNN} obteve o melhor F1-macro ($0{,}30$), seguido de perto, em acurácia, por SVM e Random Forest. Todos os modelos superam com folga o \textit{baseline} de classe majoritária, especialmente em F1-macro ($0{,}30$ contra $0{,}13$): embora o ganho em acurácia sobre o \textit{baseline} seja modesto, o F1-macro muito superior indica que os modelos efetivamente distribuem predições entre as classes centrais, em vez de colapsar em uma só.
+\subsection{Cinco versus Três Níveis, INF110 versus Neps}
+\label{sec:comparacao}
+
+A Figura~\ref{fig:barras} apresenta o F1-macro das quatro famílias nas duas bases, para as duas granularidades. Dois padrões saltam à vista. Primeiro, \textbf{a redução para três níveis melhora o desempenho de forma consistente} em todas as famílias e nas duas bases, com ganho médio de $45\%$ no INF110 e de $41\%$ no Neps. Segundo, o \textbf{Neps supera o INF110} de forma clara nas duas escalas, o que é coerente com o volume 17$\times$ maior e o melhor balanceamento da base.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{comparacao_f1_consolidada}
+  \caption{F1-macro por modelo, cinco \textit{versus} três níveis, nas duas bases. A escala de três níveis melhora o desempenho em todas as famílias e em ambas as bases; o Neps ultrapassa o INF110 nas duas granularidades.}
+  \Description{Gráfico de barras com dois painéis (INF110 e Neps); em cada painel, quatro pares de barras (KNN, Reg. Log., SVM, RF) comparando 5 e 3 níveis. Todas as barras de 3 níveis são mais altas; as barras do Neps são mais altas que as do INF110.}
+  \label{fig:barras}
+\end{figure}
+
+A Tabela~\ref{tab:resultados} consolida os quatro melhores modelos (um por combinação base/escala) contra o \textit{baseline}. O KNN é o melhor no INF110 nas duas escalas. No Neps, o Random Forest lidera, efeito do maior volume, que permite aos modelos de \textit{ensemble} explorarem interações não lineares.
 
 \begin{table}[t]
-  \caption{Desempenho na escala de cinco níveis, sob validação cruzada (5 partições), ordenado por F1-macro. Valores: média $\pm$ desvio-padrão entre partições.}
+  \caption{Melhor modelo por combinação base/escala, validação cruzada (5 partições). F1-macro reportado como média $\pm$ desvio-padrão.}
   \label{tab:resultados}
-  \begin{tabular}{lccc}
+  \begin{tabular}{llccc}
     \toprule
-    Modelo & Acurácia & F1-macro & F1-pond. \\
+    Base & Modelo & Acurácia & F1-macro & F1-pond. \\
     \midrule
-    KNN ($k{=}5$)        & $0{,}425 \pm 0{,}083$ & $\mathbf{0{,}304} \pm 0{,}104$ & $0{,}397$ \\
-    Reg. Logística       & $0{,}362 \pm 0{,}073$ & $0{,}261 \pm 0{,}047$ & $0{,}348$ \\
-    SVM linear           & $0{,}425 \pm 0{,}061$ & $0{,}260 \pm 0{,}066$ & $0{,}383$ \\
-    Random Forest        & $0{,}425 \pm 0{,}073$ & $0{,}244 \pm 0{,}048$ & $0{,}384$ \\
+    INF110 (5N) & KNN            & $0{,}425$ & $0{,}302 \pm 0{,}114$ & $0{,}398$ \\
+    INF110 (3N) & KNN            & $0{,}488$ & $\mathbf{0{,}470} \pm 0{,}111$ & $0{,}474$ \\
+    Neps   (5N) & Random Forest  & $0{,}546$ & $0{,}429 \pm 0{,}026$ & $0{,}528$ \\
+    Neps   (3N) & Random Forest  & $0{,}644$ & $\mathbf{0{,}595} \pm 0{,}025$ & $0{,}635$ \\
     \midrule
-    \textit{Baseline}    & $0{,}350$             & $0{,}133$             & $0{,}185$ \\
+    INF110 (5N) & \textit{Baseline}   & $0{,}350$ & $0{,}133$ & $0{,}185$ \\
+    INF110 (3N) & \textit{Baseline}   & $0{,}475$ & $0{,}214$ & $0{,}307$ \\
+    Neps   (5N) & \textit{Baseline}   & $0{,}422$ & $0{,}119$ & $0{,}250$ \\
+    Neps   (3N) & \textit{Baseline}   & $0{,}494$ & $0{,}220$ & $0{,}326$ \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-A Figura~\ref{fig:confusao} traz a matriz de confusão do melhor modelo. Dois padrões se destacam. Primeiro, as \textbf{classes extremas nunca são previstas}: nenhuma questão foi classificada como ``muito fácil'' ou ``muito difícil'', o que é consequência direta de haver apenas 7 e 1 exemplos dessas classes, respectivamente --- quantidade insuficiente para que qualquer modelo aprenda suas fronteiras. Segundo, a confusão concentra-se entre \textbf{fácil e médio}, classes adjacentes na escala e majoritárias na base, o que é coerente com a natureza ordinal e subjetiva do rótulo.
+\subsection{O Que a Matriz de Confusão Revela}
+\label{sec:matrizes}
+
+A Figura~\ref{fig:matrizes} traz, em uma única figura, as quatro matrizes de confusão \textit{out-of-fold} correspondentes aos melhores modelos. Ler o painel de cima para baixo, da esquerda para a direita, deixa claro o argumento em favor dos três níveis.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.92\linewidth]{matriz_confusao_INF110}
-  \caption{Matriz de confusão do melhor modelo (KNN) no INF110, com predições \textit{out-of-fold}, na escala de cinco níveis. MF = muito fácil, F = fácil, M = médio, D = difícil, MD = muito difícil.}
-  \Description{Mapa de calor 5 por 5 mostrando que as predições se concentram nas colunas fácil e médio, e que as classes muito fácil e muito difícil nunca são previstas.}
-  \label{fig:confusao}
+  \includegraphics[width=\linewidth]{matrizes_consolidadas}
+  \caption{Matrizes de confusão dos melhores modelos, com predições \textit{out-of-fold}. Linhas: classe verdadeira; colunas: classe prevista. Painel superior: INF110 (5N à esquerda, 3N à direita). Painel inferior: Neps (5N à esquerda, 3N à direita).}
+  \Description{Painel 2x2 de mapas de calor: em cima INF110 (5x5 e 3x3), em baixo Neps (5x5 e 3x3). Nas de 3 níveis, a diagonal é mais forte; no INF110-5N as colunas MF e MD estão vazias.}
+  \label{fig:matrizes}
 \end{figure}
 
-\subsection{Análise de Granularidade: Cinco \textit{versus} Três Níveis}
-\label{sec:granularidade}
+No INF110 com cinco níveis (canto superior esquerdo), as colunas ``MF'' e ``MD'' \textbf{estão inteiramente vazias}: nenhuma questão foi classificada como muito fácil ou muito difícil, consequência direta de haver apenas 7 e 1 exemplos dessas classes. Ao colapsar para três níveis (canto superior direito), o problema desaparece: a classe ``difícil'' passa a receber 5 predições corretas e as três classes ficam efetivamente cobertas.
 
-Para quantificar o impacto da granularidade, repetimos todo o protocolo colapsando a escala em três níveis (unindo muito fácil + fácil e difícil + muito difícil), o que também atenua o desbalanceamento. A Tabela~\ref{tab:resultados3} e a Figura~\ref{fig:granularidade} resumem os resultados.
-
-\begin{table}[t]
-  \caption{Desempenho na escala reduzida de três níveis, sob o mesmo protocolo, ordenado por F1-macro.}
-  \label{tab:resultados3}
-  \begin{tabular}{lccc}
-    \toprule
-    Modelo & Acurácia & F1-macro & F1-pond. \\
-    \midrule
-    KNN ($k{=}3$)        & $0{,}450 \pm 0{,}100$ & $\mathbf{0{,}440} \pm 0{,}117$ & $0{,}440$ \\
-    Reg. Logística       & $0{,}512 \pm 0{,}145$ & $0{,}395 \pm 0{,}167$ & $0{,}482$ \\
-    Random Forest        & $0{,}562 \pm 0{,}068$ & $0{,}387 \pm 0{,}057$ & $0{,}514$ \\
-    SVM linear           & $0{,}512 \pm 0{,}121$ & $0{,}386 \pm 0{,}142$ & $0{,}470$ \\
-    \midrule
-    \textit{Baseline}    & $0{,}475$             & $0{,}214$             & $0{,}307$ \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=\linewidth]{comparacao_f1_INF110}
-  \caption{F1-macro por modelo (INF110) nas escalas de cinco e três níveis. A redução de granularidade melhora consistentemente o desempenho.}
-  \Description{Gráfico de barras comparando o F1-macro de KNN, Regressão Logística, SVM e Random Forest em cinco e três níveis; todas as barras de três níveis são mais altas.}
-  \label{fig:granularidade}
-\end{figure}
-
-O F1-macro do melhor modelo sobe de $0{,}30$ (cinco níveis) para $0{,}44$ (três níveis) --- um ganho de cerca de $45\%$ ---, e a melhora é consistente em todas as famílias. Mais importante, na escala de três níveis a classe ``difícil'' passa a ser efetivamente prevista (com F1 em torno de $0{,}48$ no KNN), ao contrário do que ocorria nas extremidades da escala de cinco níveis. Isso confirma que boa parte da dificuldade da tarefa não está no modelo, e sim na granularidade e no desbalanceamento dos rótulos.
-
-\subsection{Validação em Base de Maior Escala (Neps Academy)}
-\label{sec:neps}
-
-A base INF110, embora valiosa por refletir a percepção real dos alunos, é pequena (80 questões) e fortemente desbalanceada. Para verificar se a abordagem escala --- e para obter um classificador mais robusto para uso prático --- aplicamos \emph{exatamente a mesma metodologia} (limpeza, TF-IDF, as quatro famílias de modelos, validação cruzada estratificada com busca de hiperparâmetros e \textit{baseline} de classe majoritária) a uma segunda base: o \textbf{Neps Academy}, com 1.448 questões, das quais 1.333 trazem a dificuldade \textbf{atribuída por um juiz}. Diferentemente do INF110, todas as cinco classes têm ao menos 45 exemplos, permitindo estratificação plena.
-
-É importante ressaltar que os dois rótulos medem coisas distintas: o INF110 captura a dificuldade \emph{percebida pelos alunos}, enquanto o Neps reflete a dificuldade \emph{atribuída por um juiz} --- um alvo mais objetivo e menos ruidoso. Os resultados não são, portanto, diretamente comparáveis; o Neps responde a uma variante mais ``intrínseca'' da mesma tarefa.
-
-As Tabelas~\ref{tab:neps5} e~\ref{tab:neps3} apresentam o desempenho. O melhor modelo (Random Forest) atinge F1-macro de $0{,}43$ (cinco níveis) e $0{,}59$ (três níveis), bem acima dos $0{,}30$ e $0{,}44$ do INF110 (Figura~\ref{fig:neps_f1}). O ganho é coerente com o maior volume e o melhor balanceamento: a Figura~\ref{fig:neps_confusao} mostra que, ao contrário do INF110, \textbf{as classes extremas passam a ser efetivamente previstas}. É este classificador, treinado na base mais rica, que alimenta a etapa de inferência da ferramenta em uso prático.
-
-\begin{table}[t]
-  \caption{Desempenho na base Neps Academy (cinco níveis), validação cruzada, ordenado por F1-macro. Média $\pm$ desvio-padrão entre partições.}
-  \label{tab:neps5}
-  \begin{tabular}{lccc}
-    \toprule
-    Modelo & Acurácia & F1-macro & F1-pond. \\
-    \midrule
-    Random Forest        & $0{,}545 \pm 0{,}027$ & $\mathbf{0{,}426} \pm 0{,}036$ & $0{,}527$ \\
-    Reg. Logística       & $0{,}497 \pm 0{,}013$ & $0{,}423 \pm 0{,}032$ & $0{,}498$ \\
-    SVM linear           & $0{,}524 \pm 0{,}019$ & $0{,}409 \pm 0{,}032$ & $0{,}505$ \\
-    KNN                  & $0{,}467 \pm 0{,}037$ & $0{,}359 \pm 0{,}047$ & $0{,}446$ \\
-    \midrule
-    \textit{Baseline}    & $0{,}422$             & $0{,}119$             & $0{,}250$ \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-\begin{table}[t]
-  \caption{Desempenho na base Neps Academy (três níveis), sob o mesmo protocolo, ordenado por F1-macro.}
-  \label{tab:neps3}
-  \begin{tabular}{lccc}
-    \toprule
-    Modelo & Acurácia & F1-macro & F1-pond. \\
-    \midrule
-    Random Forest        & $0{,}646 \pm 0{,}029$ & $\mathbf{0{,}593} \pm 0{,}032$ & $0{,}635$ \\
-    Reg. Logística       & $0{,}621 \pm 0{,}023$ & $0{,}579 \pm 0{,}024$ & $0{,}620$ \\
-    SVM linear           & $0{,}632 \pm 0{,}020$ & $0{,}576 \pm 0{,}027$ & $0{,}621$ \\
-    KNN                  & $0{,}568 \pm 0{,}012$ & $0{,}507 \pm 0{,}023$ & $0{,}554$ \\
-    \midrule
-    \textit{Baseline}    & $0{,}494$             & $0{,}220$             & $0{,}326$ \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=0.92\linewidth]{matriz_confusao_Neps}
-  \caption{Matriz de confusão do melhor modelo (Random Forest) no Neps, cinco níveis, predições \textit{out-of-fold}. Ao contrário do INF110, as classes extremas recebem predições corretas.}
-  \Description{Mapa de calor 5 por 5 da base Neps com predições distribuídas por todas as classes, inclusive as extremas.}
-  \label{fig:neps_confusao}
-\end{figure}
-
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=\linewidth]{comparacao_f1_Neps}
-  \caption{F1-macro por modelo na base Neps, nas escalas de cinco e três níveis.}
-  \Description{Gráfico de barras comparando o F1-macro dos quatro modelos na base Neps em cinco e três níveis.}
-  \label{fig:neps_f1}
-\end{figure}
+No Neps com cinco níveis (canto inferior esquerdo), o problema não é o mesmo. As classes extremas \textbf{são} previstas (14 acertos em MF, 9 em MD), graças ao volume maior. Ainda assim, há confusão significativa entre classes adjacentes, com 94 questões de nível médio classificadas como fáceis e 103 como difíceis. Ao passar para três níveis (canto inferior direito), a diagonal principal se fortalece, com destaque para 507 acertos em ``difícil''. Esse é o cenário do classificador em produção: Random Forest treinado no Neps em três níveis.
 
 \subsection{Resposta à Pergunta de Pesquisa}
+\label{sec:pergunta}
 
-Os resultados indicam uma resposta \emph{parcialmente afirmativa}: existe sinal aproveitável no enunciado textual --- os modelos superam consistentemente o acaso e o \textit{baseline} trivial em F1-macro ---, mas esse sinal é insuficiente para uma classificação confiável em cinco níveis com a base disponível. O fator limitante predominante não parece ser a escolha do modelo (as quatro famílias têm desempenho próximo), e sim a \textbf{quantidade e o balanceamento dos dados rotulados}. A dificuldade percebida também depende de fatores externos ao texto (repertório prévio do aluno, familiaridade com paradigmas), o que estabelece um teto natural para abordagens puramente textuais.
+Recapitulando o percurso: começamos com a escala natural de cinco níveis nas duas bases e observamos que essa granularidade produz um modelo pouco útil no INF110 (classes extremas ausentes) e ainda limitado no Neps (confusão entre adjacentes). Ao colapsar para três níveis, todas as classes passaram a ser previstas e o F1-macro subiu de forma consistente, de $0{,}30$ para $0{,}47$ no INF110 e de $0{,}43$ para $0{,}60$ no Neps.
+
+A resposta à pergunta de pesquisa é, portanto, \emph{parcialmente afirmativa}. Existe sinal aproveitável no enunciado textual, suficiente para uma classificação razoável na escala de \textbf{três níveis}, mas insuficiente na escala mais fina de cinco. O fator limitante predominante não é a escolha do modelo (as quatro famílias têm desempenho próximo), e sim a \textbf{granularidade do rótulo}, razão da opção pelos três níveis, somada à \textbf{quantidade e ao balanceamento dos dados rotulados}. A dificuldade percebida também depende de fatores externos ao texto (repertório prévio do aluno, familiaridade com paradigmas), o que estabelece um teto natural para abordagens puramente textuais.
+
+\section{Código e Reprodutibilidade}
+\label{sec:codigo}
+
+Todo o código-fonte, a documentação (README com instruções passo a passo), os dados brutos e os artefatos intermediários (bases consolidadas, vetorizadores e modelos treinados) estão organizados em um repositório único e público, disponível em \url{https://github.com/<usuario>/TPFinal_INF420}\footnote{Substituir pelo link definitivo do repositório.}. O \textit{pipeline} é dividido em etapas independentes (ingestão, pré-processamento, treino, avaliação, extração de conceitos, recomendador, inferência), executáveis via linha de comando (\texttt{python -m src.<etapa>}), com configuração centralizada em um único arquivo \texttt{.env}. Todos os experimentos usam semente aleatória fixa, e o \textit{script} \texttt{rodar\_tudo.ps1} reproduz o relatório inteiro (INF110 e Neps, cinco e três níveis) do zero.
+
+\section{Considerações Éticas}
+\label{sec:etica}
+
+Foram utilizados \textbf{modelos generativos} (LLMs, servidos pela plataforma Groq) em três papéis restritos e explicitamente documentados: (i) \textit{baseline} de classificação, para comparar contra os modelos clássicos; (ii) explicador da recomendação, gerando justificativas em linguagem natural sob demanda; e (iii) extrator de conceitos por enunciado. Nenhum uso do LLM envolve dados pessoais dos alunos: as \textbf{avaliações dos alunos do INF110 são anônimas} (apenas nota 1--5 por questão, sem identificação) e o LLM \emph{nunca} recebe informações de alunos --- apenas o texto do enunciado da questão. Também não há geração automatizada de decisões com impacto sobre pessoas: as saídas do sistema (dificuldade prevista e exercícios recomendados) são \emph{sugestões}, sem substituir o julgamento do professor. Estamos cientes de vieses potenciais no rótulo (percepção de alunos no INF110 tende a refletir o repertório médio da turma) e no LLM (modelos treinados com viés de vocabulário técnico em inglês), e os apresentamos abertamente no texto. As bibliotecas utilizadas (\texttt{scikit-learn}, \texttt{NLTK}, \texttt{OpenAI-compatible client}) têm licenças permissivas e são adequadamente citadas.
+
+\section{Limitações e Lições Aprendidas}
+\label{sec:limitacoes}
+
+Entre os pontos fortes do trabalho estão a metodologia cuidadosa de avaliação (sem vazamento de informação, com \textit{baseline} de referência e validação cruzada estratificada), a modularidade do código, que suportou naturalmente a comparação entre duas bases muito diferentes, e a integração fim-a-fim de ML e LLM em uma única ferramenta prática.
+
+As principais limitações também foram bem identificadas ao longo do desenvolvimento. O tamanho reduzido e o forte desbalanceamento do INF110 limitam o teto absoluto de desempenho e produzem desvios-padrão altos na validação cruzada. A escolha entre plataformas de LLM tem custo prático, pois deprecações e tetos de requisição mudam com frequência. O cliente OpenAI-compatível intercambiável reduz esse atrito, mas não o elimina. Além disso, comparar bases com semânticas de rótulo distintas (percepção do aluno na INF110 e juízo profissional no Neps) exigiu explicitar a não-equivalência dos alvos no texto para evitar leituras enganosas dos números.
+
+Duas lições ficaram claras. A primeira é que a granularidade do rótulo pode ser uma decisão de modelagem tão relevante quanto a escolha do algoritmo, e por isso merece ser tratada como hiperparâmetro explícito, e não como convenção herdada da forma de coleta dos dados. A segunda é o valor de manter os experimentos plenamente reprodutíveis desde o começo. Semente aleatória fixa, pipeline em etapas independentes e artefatos versionados permitiram refazer a comparação inteira sempre que uma decisão foi revisitada.
 
 \section{Conclusão e Trabalhos Futuros}
 \label{sec:conclusao}
 
-Este trabalho desenvolveu e avaliou um sistema reprodutível para classificação automática da dificuldade de questões de programação a partir do enunciado, em cinco níveis derivados da percepção real de alunos. Comparamos quatro famílias de modelos clássicos sobre representações TF-IDF, com um protocolo de avaliação cuidadoso (validação cruzada estratificada, sem vazamento de informação, com \textit{baseline} de referência), integramos um LLM em três papéis e os encadeamos em uma etapa de inferência que classifica, descreve e recomenda exercícios para questões novas. O melhor modelo (KNN) atingiu F1-macro de $0{,}30$ em cinco níveis e $0{,}44$ em três, deixando claro tanto que há sinal textual explorável quanto que a tarefa é fortemente limitada pelo tamanho e pelo desbalanceamento da base. A aplicação da mesma metodologia ao Neps Academy (1.333 questões rotuladas por juiz, com classes balanceadas) elevou o F1-macro para $0{,}43$ (cinco níveis) e $0{,}59$ (três níveis), confirmando que boa parte dessa limitação advém do tamanho e do desbalanceamento da base --- e fornecendo o classificador que a ferramenta usa em produção.
+Este trabalho desenvolveu e avaliou um sistema reprodutível para classificação automática da dificuldade de questões de programação a partir do enunciado. Testamos empiricamente duas granularidades de rótulo (cinco e três níveis) em duas bases (INF110 e Neps Academy). A configuração final adota três níveis, escolha justificada pelo ganho consistente de precisão em todas as famílias de modelos e em ambas as bases. O melhor modelo atingiu F1-macro de $0{,}47$ no INF110 (KNN em três níveis) e de $0{,}60$ no Neps (Random Forest em três níveis). Este último é o classificador em produção.
 
-Como trabalhos futuros, destacam-se: (i) a incorporação de \textit{embeddings} semânticos densos (próprios de LLMs ou de modelos multilíngues abertos) como representação alternativa ou complementar ao TF-IDF; (ii) a execução da comparação quantitativa completa com as abordagens baseadas em LLM, já suportada pelo arcabouço implementado e agora viável sem custo pela camada gratuita da Groq; (iii) técnicas de mitigação de desbalanceamento, como reamostragem, ou a reformulação da tarefa como classificação ordinal; e (iv) a ampliação e o balanceamento da base de questões rotuladas, idealmente com avaliações de múltiplas instituições, para elevar o teto de desempenho alcançável.
+Como trabalhos futuros, destacam-se: (i) a incorporação de \textit{embeddings} semânticos densos como representação alternativa ou complementar ao TF-IDF; (ii) a execução da comparação quantitativa completa com as abordagens baseadas em LLM, já suportada pelo arcabouço implementado; (iii) técnicas de mitigação de desbalanceamento, como reamostragem, ou a reformulação da tarefa como classificação ordinal; e (iv) a ampliação e o balanceamento da base de questões rotuladas, idealmente com avaliações de múltiplas instituições, para elevar o teto de desempenho alcançável.
 
 \begin{acks}
 Os autores agradecem ao professor da disciplina INF420 (Inteligência Artificial) da Universidade Federal de Viçosa pela orientação e pela disponibilização da base de dados de avaliações de dificuldade utilizada neste trabalho.

@@ -3,10 +3,15 @@
 Trabalho final de **INF420 (Inteligência Artificial) — UFV**.
 
 Sistema que **classifica a dificuldade** de questões de programação (foco em
-maratonas) a partir do enunciado, em **5 níveis** (muito fácil, fácil, médio,
-difícil, muito difícil), combinando **Aprendizado de Máquina tradicional** com
-**LLMs (Groq / Llama)**, e que **recomenda novos exercícios** de forma
-personalizada com base no histórico do aluno.
+maratonas) a partir do enunciado. A escala de dificuldade é configurável: a
+versão em **3 níveis** (fácil, médio, difícil) é a **configuração de produção**,
+adotada por se mostrar experimentalmente mais efetiva; a escala completa de
+**5 níveis** (muito fácil a muito difícil) segue disponível para análise. A
+solução combina **Aprendizado de Máquina tradicional** (TF-IDF + Regressão
+Logística, KNN, SVM linear e Random Forest) com um **LLM servido pela
+plataforma Groq** (cliente OpenAI-compatível, intercambiável por configuração)
+e um **recomendador de exercícios** por conceitos em comum e dificuldade
+compatível, alimentado por múltiplas fontes de questões.
 
 **Autores:** Carlos Eduardo Pereira Oliveira (116233) · Luis Felipe Martins Pereira (112710)
 
@@ -87,16 +92,17 @@ TP_Final_INF420/
 | 1b. EDA | Distribuição das classes, tamanho dos enunciados | abrir `notebook/exploracao.ipynb` |
 | 2. Pré-processamento | Limpeza de texto + vetorização TF-IDF | `python -m src.preprocess` |
 | 3. Modelos tradicionais | LogReg, KNN, SVM, RF — validação cruzada + tuning | `python -m src.train_ml` |
-| 4. Conceitos (LLM) | LLM identifica conceitos (DP, grafos…) — feature de ML e similaridade | `python -m src.llm_concepts --n 10` |
+| 4. Conceitos (LLM) | LLM identifica conceitos (DP, grafos etc.) — feature de ML e similaridade | `python -m src.llm_concepts --n 10` |
 | 5. Baseline LLM | LLM classifica direto (zero-/few-shot) — só comparação, base de treino | `python -m src.llm_baseline --n 10 --few-shot` |
 | 6. Avaliação final | Compara ML puro vs LLM vs ML+conceitos (acurácia/F1) | `python -m src.evaluate --n 20` (ou `--no-llm`) |
-| 🎯 Inferência (questões novas) | Dificuldade (ML) + conceitos (LLM) + recomenda por conceitos/nível (§6) | `python -m src.predict_difficulty --fonte avaliar` |
-| ➕ Recomendação | Recomendador por conceitos + dificuldade (catálogo multi-fonte, §5) | `python -m src.recommend` |
-| ✎ Explicação | Justifica uma recomendação (sob demanda) | via `--explicar` na inferência |
+| 7. Inferência (questões novas) | Dificuldade (ML) + conceitos (LLM) + recomenda por conceitos/nível (§6) | `python -m src.predict_difficulty --fonte avaliar` |
+| 8. Recomendação | Recomendador por conceitos + dificuldade (catálogo multi-fonte, §5) | `python -m src.recommend` |
+| 9. Explicação | Justifica uma recomendação (sob demanda) | via `--explicar` na inferência |
 
-> ⚠️ Os comandos das etapas 4–7 acima usam amostras **pequenas** de propósito —
-> cada item vira uma chamada à API do LLM (Groq), que tem cota gratuita limitada.
-> **Aumente o `--n` aos poucos.** Detalhes e solução de problemas de cota em §3.1.
+> **Atenção:** os comandos das etapas 4-7 acima usam amostras **pequenas** de
+> propósito, pois cada item vira uma chamada à API do LLM (Groq), que tem cota
+> gratuita limitada. **Aumente o `--n` aos poucos.** Detalhes e solução de
+> problemas de cota em §3.1.
 
 > **Etapa 1 automática:** rodar a Etapa 2 (`src.preprocess`) já dispara a Etapa 1
 > sozinha se `data/raw/<DATASET>/questoes.csv` ainda não existir — então o mínimo
@@ -116,26 +122,31 @@ TP_Final_INF420/
 > classe é muito rara (ex.: `muito_dificil` com 1 questão). Inclui um *baseline*
 > de classe majoritária como piso de comparação.
 
-> **Análise de granularidade e figuras (relatório).** `python -m src.train_ml
-> --niveis 3` repete a avaliação colapsando a escala para 3 níveis
-> (fácil/médio/difícil) — sem sobrescrever os artefatos de 5 níveis — gerando
-> `ml_metrics_3niveis.csv` e `matriz_confusao_3niveis.csv`. Depois,
-> `python -m src.figuras` gera as figuras do artigo em `figuras/` (mapa de calor
-> da matriz de confusão e comparação de F1-macro 5 × 3 níveis). O relatório final
-> está em `main.tex` (classe `webmedia`, bibliografia em `referencias.bib`); para
-> compilar, é preciso o `webmedia.cls` (fornecido pelo professor em `sample/`, que
-> não é versionado).
+> **Escala de dificuldade e figuras do relatório.** `python -m src.train_ml`
+> treina em 5 níveis (canônico); `python -m src.train_ml --niveis 3` repete o
+> protocolo colapsando a escala para 3 níveis (fácil/médio/difícil), sem
+> sobrescrever os artefatos de 5 níveis. São gerados `ml_metrics_3niveis.csv`,
+> `matriz_confusao_3niveis.csv` e o modelo `best_ml_model_3niveis.joblib`
+> (usado pela inferência em produção). Depois, `python -m src.figuras` gera as
+> figuras consolidadas do artigo em `figuras/`: o painel 2x2 comparando as
+> quatro matrizes de confusão (INF110 e Neps, 5 e 3 níveis) e o gráfico de
+> barras de F1-macro por modelo, escala e base. O relatório final está em
+> `main.tex` (classe `webmedia`, bibliografia em `referencias.bib`); para
+> compilar, é preciso o `webmedia.cls` (fornecido pelo professor em `sample/`,
+> que não é versionado).
 
 ### 3.1 Etapas com LLM: provedor, chave, custo e limites da API
 
-O **provedor de LLM é modular** (`LLM_PROVIDER` no `.env`): **Groq** (padrão,
-Llama) ou **DeepSeek** — ambos com API no padrão OpenAI, trocáveis numa linha. As
-etapas que usam LLM (`llm_concepts`, `llm_baseline`, `evaluate` sem `--no-llm`, e a
-parte LLM da inferência) exigem a chave do provedor ativo no `.env`
-(Groq: <https://console.groq.com/keys>). Já a **ingestão, o pré-processamento, o
-treino, as figuras e a inferência com `--no-llm` NÃO usam a API** — o resultado do
-classificador é reproduzível **offline**. Importante: a **dificuldade das questões
-a avaliar é decidida pelo ML**, não pela LLM (a LLM extrai conceitos e explica).
+O **provedor de LLM é modular** (`LLM_PROVIDER` no `.env`): **Groq** (padrão) ou
+**DeepSeek**. Ambos com API no padrão OpenAI, trocáveis em uma linha. O modelo
+específico também é configurável (`LLM_MODEL`), então trocá-lo não exige alterar
+código. As etapas que usam LLM (`llm_concepts`, `llm_baseline`, `evaluate` sem
+`--no-llm` e a parte LLM da inferência) exigem a chave do provedor ativo no
+`.env` (Groq: <https://console.groq.com/keys>). Já a **ingestão, o
+pré-processamento, o treino, as figuras e a inferência com `--no-llm` NÃO usam
+a API**, portanto o classificador é reproduzível offline. Importante: a
+**dificuldade das questões a avaliar é decidida pelo ML**, não pelo LLM (o LLM
+extrai conceitos e explica).
 
 **Comece pequeno** — cada item vira **uma** chamada à API:
 
@@ -257,15 +268,26 @@ A base consolidada `data/raw/<DATASET>/questoes.csv` tem as colunas:
 
 ## 5. Recomendador (catálogo multi-fonte)
 
-O recomendador (`src.recommend`) é **baseado em conteúdo**: representa cada
-questão por seu vetor TF-IDF, modela o aluno como o centroide das questões que
-ele já resolveu e sugere as não resolvidas mais similares (similaridade do
-cosseno), opcionalmente filtrando pelo **próximo nível** de dificuldade.
+O recomendador (`src.recommend`) é **baseado em conteúdo**, com duas fontes de
+similaridade combinadas: os **conceitos extraídos pelo LLM** (critério
+principal, peso 0,7, via similaridade de Jaccard entre os conjuntos de
+conceitos) e o **TF-IDF do enunciado** (critério complementar, peso 0,3, via
+similaridade do cosseno). Quando os conceitos ainda não foram extraídos para
+uma fonte, o recomendador cai automaticamente para o TF-IDF sozinho. Suporta
+dois modos de consulta: (i) a partir de uma **questão nova**
+(`recomendar_por_texto`, usado pela inferência da §6) e (ii) a partir do
+**histórico do aluno**, modelado como o centroide dos vetores das questões
+resolvidas (`recomendar`). Em ambos os modos, é possível filtrar pelo nível
+de dificuldade compatível (mesmo nível ou um acima/abaixo).
 
-Como ele não depende de rótulo, **combina várias fontes num só catálogo** —
-inclusive as **não rotuladas** (`SPOJ`, `OBI`), que não servem ao classificador
-mas são candidatas válidas aqui. As fontes vêm de `RECOMMENDER_SOURCES` no `.env`
-(separadas por vírgula; vazio = só a fonte ativa). O padrão já combina as quatro:
+Como não depende de rótulo, o recomendador **combina várias fontes num só
+catálogo**, inclusive as **não rotuladas** (`SPOJ`, `OBI`), que não servem ao
+classificador mas são candidatas válidas aqui. Toda questão do catálogo recebe
+uma dificuldade efetiva: o rótulo original quando existe, ou a dificuldade
+**predita pelo modelo de ML treinado** quando não existe, de modo que o filtro
+por nível valha para toda a base. As fontes vêm de `RECOMMENDER_SOURCES` no
+`.env` (separadas por vírgula; vazio = só a fonte ativa). O padrão já combina
+as quatro:
 
 ```bash
 RECOMMENDER_SOURCES=INF110,Neps,SPOJ,OBI    # no .env
@@ -273,10 +295,8 @@ python -m src.recommend
 ```
 
 Cada fonte listada precisa ter sido consolidada antes
-(`DATASET=<fonte> python -m src.ingest`). O filtro por nível só se aplica às
-questões rotuladas; a recomendação por conteúdo puro percorre todo o catálogo
-(e aí `SPOJ`/`OBI` também aparecem). O TF-IDF do recomendador é ajustado sobre o
-catálogo combinado, independente do vetorizador do classificador.
+(`DATASET=<fonte> python -m src.ingest`). O TF-IDF do recomendador é ajustado
+sobre o catálogo combinado, independente do vetorizador do classificador.
 
 ## 6. Inferência: avaliar questões novas (`predict_difficulty`)
 

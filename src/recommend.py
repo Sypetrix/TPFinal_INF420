@@ -246,12 +246,16 @@ def run(top_k: int = 5, niveis: int = 3) -> None:
         resolvidos = rec.df.sample(min(3, len(rec.df)), random_state=config.RANDOM_SEED).index.tolist()
     print(f"Aluno (demo) resolveu os índices: {resolvidos}\n")
 
-    def _mostrar(df: pd.DataFrame) -> None:
-        d = df.assign(**{config.TEXT_COL: df[config.TEXT_COL].map(_resumo_enunciado)})
-        print(d.to_string(index=False))
-
     print(f"=== Recomendações (nível do aluno e adjacentes, top {top_k}) ===")
-    _mostrar(rec.recomendar_proximo_nivel(resolvidos, top_k=top_k))
+    df = rec.recomendar_proximo_nivel(resolvidos, top_k=top_k)
+    for _, row in df.iterrows():
+        print(f"\n{'=' * 80}")
+        print(f"[{row['fonte']} #{row[config.ID_COL]}] "
+              f"dificuldade={row['dificuldade_efetiva']} | score={row['score']:.3f}")
+        if row.get("conceitos"):
+            print(f"conceitos: {row['conceitos']}")
+        print(f"{'-' * 80}")
+        print(row[config.TEXT_COL])
 
 
 def main() -> None:
